@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cobalt — IA pour restaurants</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+  :root {
+    --ink: #060810;
+    --cream: #e8eef8;
+    --warm: #c8d4ec;
+    --cobalt: #0047ab;
+    --cobalt-light: #4488ff;
+    --sky: #7eb8f7;
+    --steel: #1a3a6e;
+    --text-muted: #5a6a8a;
+    --card-bg: rgba(68,136,255,0.04);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Mono', monospace;
+    background: var(--ink);
+    color: var(--cream);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--cobalt-light);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.2s, height 0.2s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(68,136,255,0.5);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.25s ease, width 0.3s, height 0.3s, opacity 0.3s;
+  }
+
+  /* GRAIN OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.035;
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* ANIMATED BACKGROUND */
+  .bg-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .bg-canvas::before {
+    content: '';
+    position: absolute;
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(0,71,171,0.18) 0%, transparent 65%);
+    top: -200px; right: -200px;
+    animation: orb1 18s ease-in-out infinite alternate;
+  }
+
+  .bg-canvas::after {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(68,136,255,0.12) 0%, transparent 65%);
+    bottom: 10%; left: -150px;
+    animation: orb2 22s ease-in-out infinite alternate;
+  }
+
+  .orb3 {
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(126,184,247,0.07) 0%, transparent 65%);
+    top: 40%; left: 40%;
+    animation: orb3 14s ease-in-out infinite alternate;
+  }
+
+  @keyframes orb1 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(-80px, 60px) scale(1.15); } }
+  @keyframes orb2 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(60px, -80px) scale(1.2); } }
+  @keyframes orb3 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(-40px, 40px) scale(0.9); } }
+
+  /* GRID LINES BG */
+  .grid-lines {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(68,136,255,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(68,136,255,0.05) 1px, transparent 1px);
+    background-size: 80px 80px;
+    z-index: 0;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+  }
+
+  /* HEADER */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 60px;
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+    border-bottom: 1px solid rgba(68,136,255,0.1);
+    background: rgba(10,10,8,0.7);
+    backdrop-filter: blur(20px);
+  }
+
+  .logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    letter-spacing: 0.05em;
+    color: var(--cream);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-dot {
+    width: 8px; height: 8px;
+    background: var(--cobalt-light);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  .btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid var(--cobalt-light);
+    color: var(--cobalt-light);
+    padding: 12px 28px;
+    border-radius: 3px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: none;
+  }
+
+  .btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--cobalt-light);
+    transform: translateX(-101%);
+    transition: transform 0.3s ease;
+    z-index: -1;
+  }
+
+  .btn:hover { color: var(--ink); }
+  .btn:hover::before { transform: translateX(0); }
+
+  .btn-fill {
+    background: var(--cobalt-light);
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .btn-fill::before { background: var(--sky); }
+  .btn-fill:hover { color: var(--ink); }
+
+  /* ALL CONTENT ABOVE BG */
+  header, main, footer { position: relative; z-index: 10; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 60px;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--cobalt-light);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--cobalt-light);
+    display: block;
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(52px, 7vw, 92px);
+    line-height: 1.05;
+    max-width: 820px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--sky);
+  }
+
+  .hero-sub {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 28px;
+    max-width: 460px;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 44px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 50px;
+    left: 60px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.2s forwards;
+  }
+
+  .scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, transparent, var(--cobalt-light));
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollLine { 0%, 100% { transform: scaleY(1); opacity: 1; } 50% { transform: scaleY(0.3); opacity: 0.3; } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* DIVIDER */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 0 60px;
+    max-width: 1200px;
+    margin: 0 auto 100px;
+  }
+
+  .divider-line { flex: 1; height: 1px; background: rgba(68,136,255,0.15); }
+  .divider-text { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
+
+  /* SECTION */
+  .section {
+    padding: 100px 60px;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--cobalt-light);
+    margin-bottom: 48px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--cobalt-light);
+    display: block;
+  }
+
+  .section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 60px;
+    max-width: 600px;
+  }
+
+  /* PROBLEM GRID */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(68,136,255,0.1);
+    border: 1px solid rgba(68,136,255,0.1);
+  }
+
+  .problem-item {
+    background: var(--ink);
+    padding: 44px 36px;
+    transition: background 0.3s ease;
+  }
+
+  .problem-item:hover { background: rgba(68,136,255,0.05); }
+
+  .problem-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 64px;
+    color: rgba(68,136,255,0.15);
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+
+  .problem-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--cream);
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+  }
+
+  .problem-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* FLOW */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: hidden;
+    padding: 20px 0;
+  }
+
+  .flow-step {
+    flex: 1;
+    min-width: 160px;
+    padding: 32px 24px;
+    border: 1px solid rgba(68,136,255,0.12);
+    background: var(--card-bg);
+    position: relative;
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  .flow-step:hover { border-color: rgba(68,136,255,0.4); background: rgba(68,136,255,0.05); }
+
+  .flow-step::after {
+    content: '→';
+    position: absolute;
+    right: -14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--cobalt-light);
+    font-size: 18px;
+    z-index: 2;
+    background: var(--ink);
+    padding: 0 4px;
+  }
+
+  .flow-step:last-child::after { display: none; }
+
+  .flow-icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+    color: var(--cobalt-light);
+  }
+
+  .flow-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cream);
+  }
+
+  .flow-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  /* STATS */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(68,136,255,0.1);
+    border: 1px solid rgba(68,136,255,0.1);
+    margin-top: 20px;
+  }
+
+  .stat {
+    background: var(--ink);
+    padding: 48px 32px;
+    transition: background 0.3s;
+  }
+
+  .stat:hover { background: rgba(68,136,255,0.05); }
+
+  .stat-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 52px;
+    color: var(--sky);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* SIMULATION */
+  .sim-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .sim-card {
+    border: 1px solid rgba(68,136,255,0.15);
+    background: rgba(245,240,232,0.03);
+    padding: 36px;
+  }
+
+  .sim-header {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cobalt-light);
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(68,136,255,0.1);
+  }
+
+  .message { margin-bottom: 20px; }
+
+  .msg-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+
+  .msg-bubble {
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 14px 18px;
+    background: rgba(245,240,232,0.05);
+    border-left: 2px solid transparent;
+    color: var(--cream);
+  }
+
+  .msg-bubble.ia { border-left-color: var(--cobalt-light); background: rgba(68,136,255,0.08); }
+
+  .sim-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    padding: 40px 0;
+  }
+
+  .info-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .info-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    color: rgba(68,136,255,0.3);
+    line-height: 1;
+    min-width: 40px;
+  }
+
+  .info-text { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+  .info-text strong { color: var(--cream); display: block; margin-bottom: 4px; font-weight: 500; }
+
+  /* PRODUCTS */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(68,136,255,0.1);
+    border: 1px solid rgba(68,136,255,0.1);
+  }
+
+  .product-card {
+    background: var(--ink);
+    padding: 48px 36px;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 2px;
+    background: linear-gradient(to right, var(--cobalt-light), var(--sky));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .product-card:hover { background: rgba(68,136,255,0.05); }
+  .product-card:hover::before { transform: scaleX(1); }
+
+  .product-icon { font-size: 32px; margin-bottom: 24px; }
+
+  .product-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 12px;
+  }
+
+  .product-desc { font-size: 12px; color: var(--text-muted); line-height: 1.7; }
+
+  /* CTA */
+  .cta-section {
+    margin: 80px 60px;
+    max-width: calc(1200px - 120px);
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid rgba(68,136,255,0.2);
+    background: rgba(68,136,255,0.04);
+    padding: 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(68,136,255,0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .cta-left h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(32px, 3vw, 48px);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  .cta-left p { font-size: 13px; color: var(--text-muted); line-height: 1.8; }
+
+  .form-group { margin-bottom: 16px; }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    background: rgba(245,240,232,0.04);
+    border: 1px solid rgba(68,136,255,0.15);
+    color: var(--cream);
+    padding: 14px 18px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    outline: none;
+    transition: border-color 0.3s;
+    border-radius: 0;
+    cursor: none;
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: var(--text-muted); }
+
+  .form-group input:focus,
+  .form-group textarea:focus { border-color: var(--cobalt-light); }
+
+  .form-group textarea { height: 120px; resize: none; }
+
+  /* FOOTER */
+  footer {
+    padding: 48px 60px;
+    border-top: 1px solid rgba(68,136,255,0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+  }
+
+  .footer-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: var(--text-muted);
+  }
+
+  .footer-copy { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    header { padding: 20px 24px; }
+    .hero, .section { padding-left: 24px; padding-right: 24px; }
+    .hero h1 { font-size: 42px; }
+    .problem-grid, .stats-row, .products-grid { grid-template-columns: 1fr; }
+    .sim-container, .cta-section { grid-template-columns: 1fr; }
+    .cta-section { margin: 40px 24px; padding: 48px 32px; }
+    .flow { flex-direction: column; }
+    .flow-step::after { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<div class="bg-canvas">
+  <div class="orb3"></div>
+</div>
+<div class="grid-lines"></div>
+
+<header>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    COBALT
+  </div>
+  <a href="#contact" class="btn">Audit gratuit</a>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-eyebrow">Automatisation IA pour entreprises</div>
+    <h1>Vos tâches répétitives<br>ont <em>une date d'expiration.</em></h1>
+    <p class="hero-sub">Cobalt conçoit des solutions d'intelligence artificielle sur mesure pour éliminer les tâches chronophages de votre entreprise — et redonner à vos équipes le temps de ce qui compte vraiment.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn btn-fill">Demander un audit gratuit</a>
+      <a href="#solution" class="btn">Voir comment ça marche</a>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      Découvrir
+    </div>
+  </section>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-text">Ce que nous résolvons</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <section class="section">
+    <div class="section-label">Problème</div>
+    <h2>Chaque heure perdue sur du répétitif est une heure volée à votre croissance.</h2>
+    <div class="problem-grid">
+      <div class="problem-item">
+        <div class="problem-num">01</div>
+        <div class="problem-title">Temps gaspillé</div>
+        <div class="problem-desc">Vos équipes passent des heures sur des tâches sans valeur ajoutée — plannings, relances, saisies, appels entrants. Chaque heure perdue est une heure de productivité qui disparaît.</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">02</div>
+        <div class="problem-title">Erreurs humaines</div>
+        <div class="problem-desc">La répétition engendre l'inattention. Erreurs de saisie, oublis, mauvaises transmissions — les tâches manuelles sont une source de friction constante et coûteuse.</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">03</div>
+        <div class="problem-title">Croissance bloquée</div>
+        <div class="problem-desc">Impossible de scaler une entreprise dont les processus reposent sur l'humain à chaque étape. Vos concurrents automatisent. Vous, vous attendez.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="solution">
+    <div class="section-label">Solution</div>
+    <h2>On analyse, on conçoit, on déploie. Vous récupérez du temps.</h2>
+    <div class="flow">
+      <div class="flow-step">
+        <span class="flow-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877zM15.854.146a.5.5 0 0 1 0 .708L11.707 5H14.5a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 1 0v2.793L15.146.146a.5.5 0 0 1 .708 0"/></svg>
+        </span>
+        <div class="flow-label">Audit offert</div>
+        <div class="flow-sub">On identifie vos frictions</div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M6.5 6a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z"/><path d="M5.5.5a.5.5 0 0 0-1 0V2A2.5 2.5 0 0 0 2 4.5H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2A2.5 2.5 0 0 0 4.5 14v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14a2.5 2.5 0 0 0 2.5-2.5h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14A2.5 2.5 0 0 0 11.5 2V.5a.5.5 0 0 0-1 0V2h-1V.5a.5.5 0 0 0-1 0V2h-1V.5a.5.5 0 0 0-1 0V2h-1zm1 4.5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5v-3A1.5 1.5 0 0 1 6.5 5"/></svg>
+        </span>
+        <div class="flow-label">Solution sur mesure</div>
+        <div class="flow-sub">IA adaptée à votre métier</div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708"/></svg>
+        </span>
+        <div class="flow-label">Déploiement rapide</div>
+        <div class="flow-sub">Opérationnel en jours</div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/></svg>
+        </span>
+        <div class="flow-label">Performance immédiate</div>
+        <div class="flow-sub">Résultats mesurables</div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/><path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/></svg>
+        </span>
+        <div class="flow-label">Amélioration continue</div>
+        <div class="flow-sub">L'IA s'affine avec vous</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Impact</div>
+    <h2>Des résultats concrets, pas des promesses.</h2>
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-value">−80%</div>
+        <div class="stat-label">Tâches manuelles</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">24/7</div>
+        <div class="stat-label">Disponibilité totale</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">0</div>
+        <div class="stat-label">Erreur humaine</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">×3</div>
+        <div class="stat-label">Productivité équipe</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">En action</div>
+    <h2>L'IA qui travaille pendant que vous dormez.</h2>
+    <div class="sim-container">
+      <div class="sim-card">
+        <div class="sim-header">Simulation · Agent vocal IA — Cabinet médical</div>
+        <div class="message">
+          <div class="msg-label">Patient</div>
+          <div class="msg-bubble">Bonjour, je voudrais prendre rendez-vous pour la semaine prochaine.</div>
+        </div>
+        <div class="message">
+          <div class="msg-label">Cobalt IA</div>
+          <div class="msg-bubble ia">Bien sûr. Vous êtes disponible plutôt en matinée ou en après-midi ?</div>
+        </div>
+        <div class="message">
+          <div class="msg-label">Patient</div>
+          <div class="msg-bubble">En matinée, mercredi si possible.</div>
+        </div>
+        <div class="message">
+          <div class="msg-label">Cobalt IA</div>
+          <div class="msg-bubble ia">Parfait. Je vous confirme un rendez-vous le mercredi à 9h30. Vous recevrez un rappel la veille par SMS.</div>
+        </div>
+      </div>
+      <div class="sim-info">
+        <div class="info-item">
+          <div class="info-num">—</div>
+          <div class="info-text"><strong>Adapté à votre secteur</strong>L'agent est entraîné sur votre activité, votre vocabulaire, vos processus spécifiques.</div>
+        </div>
+        <div class="info-item">
+          <div class="info-num">—</div>
+          <div class="info-text"><strong>Zéro intervention humaine</strong>Prise de rendez-vous, relances, FAQ — tout est géré automatiquement, sans faute.</div>
+        </div>
+        <div class="info-item">
+          <div class="info-num">—</div>
+          <div class="info-text"><strong>Intégré à vos outils</strong>Agenda, CRM, logiciel métier — l'IA s'intègre dans votre environnement existant.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Nos solutions</div>
+    <h2>Deux leviers. Un seul objectif : vous libérer du temps.</h2>
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-icon">🎙️</div>
+        <div class="product-title">Agent Vocal IA</div>
+        <div class="product-desc">Un assistant vocal qui répond à vos appels entrants 24h/24, 7j/7 — prise de rendez-vous, questions fréquentes, transmissions internes. Votre téléphone ne sonne plus dans le vide.</div>
+      </div>
+      <div class="product-card">
+        <div class="product-icon">⚙️</div>
+        <div class="product-title">Automatisation Interne</div>
+        <div class="product-desc">Plannings, relances, emails répétitifs, suivi client, saisies administratives — nous automatisons les processus qui mobilisent vos équipes sans créer de valeur.</div>
+      </div>
+      <div class="product-card">
+        <div class="product-icon">🌐</div>
+        <div class="product-title">Présence Digitale</div>
+        <div class="product-desc">Un site web conçu pour convertir, avec intégration native de vos outils IA — formulaires intelligents, prise de contact automatisée, SEO optimisé.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Pour qui</div>
+    <h2>Toute entreprise a des tâches répétitives. Toute entreprise peut les éliminer.</h2>
+    <div class="problem-grid">
+      <div class="problem-item" style="padding: 32px;">
+        <div class="problem-desc" style="color: var(--cream); font-size: 13px; line-height: 2;">
+          Restaurants &amp; hôtellerie<br>
+          Cabinets médicaux &amp; paramédicaux<br>
+          Agences immobilières<br>
+          Salons &amp; instituts<br>
+          Cabinets juridiques &amp; comptables<br>
+          PME &amp; artisans<br>
+          Entreprises de services
+        </div>
+      </div>
+      <div class="problem-item" style="grid-column: span 2; padding: 48px;">
+        <div class="problem-num" style="font-size: 80px; margin-bottom: 16px;">«</div>
+        <div style="font-family: 'DM Serif Display', serif; font-size: 24px; line-height: 1.4; margin-bottom: 20px; color: var(--cream);">Remplacer les tâches, pas les talents. L'objectif n'est pas de supprimer l'humain — c'est de lui redonner du temps pour ce qui compte vraiment.</div>
+        <div style="font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cobalt-light);">La mission Cobalt</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section" id="contact">
+    <div class="cta-left">
+      <div class="section-label" style="margin-bottom: 28px;">Audit gratuit</div>
+      <h2>Découvrez ce que vous pouvez automatiser dès aujourd'hui.</h2>
+      <p>En 30 minutes, on identifie ensemble les tâches répétitives de votre entreprise et on vous propose un plan d'action concret. Simple. Rapide. Sans engagement.</p>
+    </div>
+    <div class="cta-right">
+      <div class="form-group">
+        <input type="text" placeholder="Votre nom">
+      </div>
+      <div class="form-group">
+        <input type="email" placeholder="Adresse e-mail">
+      </div>
+      <div class="form-group">
+        <input type="text" placeholder="Votre entreprise &amp; secteur d'activité">
+      </div>
+      <div class="form-group">
+        <textarea placeholder="Quelles tâches vous font perdre le plus de temps ?"></textarea>
+      </div>
+      <a href="#" class="btn btn-fill" style="display: inline-block; width: 100%; text-align: center;">Prendre rendez-vous →</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-logo">COBALT</div>
+  <div class="footer-copy">© 2026 — Tous droits réservés</div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button, input, textarea, .product-card, .problem-item, .stat, .flow-step').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '20px';
+      cursor.style.height = '20px';
+      ring.style.width = '60px';
+      ring.style.height = '60px';
+      ring.style.opacity = '0.4';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '12px';
+      cursor.style.height = '12px';
+      ring.style.width = '36px';
+      ring.style.height = '36px';
+      ring.style.opacity = '1';
+    });
+  });
+
+  // Intersection observer for reveal animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.problem-item, .stat, .product-card, .flow-step, .sim-card, .info-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease, background 0.3s';
+    observer.observe(el);
+  });
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
