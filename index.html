@@ -548,6 +548,8 @@
     background: var(--ink);
     padding: 48px 32px;
     transition: background 0.3s;
+    display: flex;
+    flex-direction: column;
   }
 
   .stat:hover { background: rgba(68,136,255,0.05); }
@@ -565,6 +567,34 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .stat-context {
+    font-size: 11px;
+    color: rgba(90,106,138,0.8);
+    line-height: 1.6;
+    margin-bottom: 14px;
+    font-style: italic;
+  }
+
+  .stat-source {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-top: 1px solid rgba(68,136,255,0.1);
+    padding-top: 10px;
+    margin-top: auto;
+  }
+
+  .stat-source a {
+    color: rgba(68,136,255,0.5);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .stat-source a:hover {
+    color: var(--cobalt-light);
   }
 
   /* SIMULATION */
@@ -987,19 +1017,27 @@
     <div class="stats-row">
       <div class="stat">
         <div class="stat-value">−80%</div>
-        <div class="stat-label">Tâches manuelles</div>
+        <div class="stat-label">de no-shows grâce aux rappels automatiques</div>
+        <div class="stat-context">Gain pouvant atteindre 35h/semaine pour le secrétariat humain</div>
+        <div class="stat-source"><a href="https://www.carecall.ai/blog/automatisation/secretaire-medicale-artificielle" target="_blank" rel="noopener">CareCall, 2025</a></div>
       </div>
       <div class="stat">
-        <div class="stat-value">24/7</div>
-        <div class="stat-label">Disponibilité totale</div>
+        <div class="stat-value">73%</div>
+        <div class="stat-label">des prises de RDV en dehors des heures de bureau</div>
+        <div class="stat-context">Les patients réservent quand ça leur convient — pas quand vous êtes disponibles</div>
+        <div class="stat-source"><a href="https://latenode.com/fr/blog/patient-communication-automation-in-healthcare-settings" target="_blank" rel="noopener">Latenode / NexSanté, 2025</a></div>
       </div>
       <div class="stat">
-        <div class="stat-value">0</div>
-        <div class="stat-label">Erreur humaine</div>
+        <div class="stat-value">−30%</div>
+        <div class="stat-label">de coûts de service client</div>
+        <div class="stat-context">+25 % de taux de conversion leads pour les PME utilisant des agents IA</div>
+        <div class="stat-source"><a href="https://www.salemwise.com/insights/automate-repetitive-tasks" target="_blank" rel="noopener">Salesforce Research, 2024</a></div>
       </div>
       <div class="stat">
-        <div class="stat-value">×3</div>
-        <div class="stat-label">Productivité équipe</div>
+        <div class="stat-value">×4</div>
+        <div class="stat-label">de productivité dans les secteurs exposés à l'IA</div>
+        <div class="stat-context">CA par employé 3× supérieur pour les entreprises adoptant l'IA vs. leurs concurrents</div>
+        <div class="stat-source"><a href="https://www.pwc.fr/fr/publications/series/ai-jobs-barometer.html" target="_blank" rel="noopener">PwC AI Jobs Barometer, 2025</a></div>
       </div>
     </div>
   </section>
