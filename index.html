@@ -597,6 +597,148 @@
     color: var(--cobalt-light);
   }
 
+  /* SECTOR ACCORDIONS */
+  .sector-intro {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 52px 0 0;
+  }
+
+  .sector-intro-line {
+    flex: 1;
+    height: 1px;
+    background: rgba(68,136,255,0.12);
+  }
+
+  .sector-intro-text {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .sector-list {
+    margin-top: 16px;
+    border: 1px solid rgba(68,136,255,0.1);
+  }
+
+  .sector-item {
+    border-bottom: 1px solid rgba(68,136,255,0.1);
+  }
+
+  .sector-item:last-child { border-bottom: none; }
+
+  .sector-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 32px;
+    cursor: pointer;
+    transition: background 0.25s;
+    user-select: none;
+  }
+
+  .sector-header:hover { background: rgba(68,136,255,0.04); }
+
+  .sector-header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .sector-icon { font-size: 18px; }
+
+  .sector-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--cream);
+    letter-spacing: 0.03em;
+  }
+
+  .sector-toggle {
+    font-family: 'DM Mono', monospace;
+    font-size: 20px;
+    color: var(--cobalt-light);
+    transition: transform 0.3s ease;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .sector-item.open .sector-toggle { transform: rotate(45deg); }
+
+  .sector-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+
+  .sector-item.open .sector-body { max-height: 400px; }
+
+  .sector-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: rgba(68,136,255,0.08);
+    border-top: 1px solid rgba(68,136,255,0.1);
+  }
+
+  .sector-stat {
+    background: rgba(6,8,16,0.95);
+    padding: 32px 32px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sector-stat-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 44px;
+    color: var(--sky);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+
+  .sector-stat-label {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+
+  .sector-stat-context {
+    font-size: 11px;
+    color: rgba(90,106,138,0.8);
+    line-height: 1.6;
+    font-style: italic;
+    flex: 1;
+    margin-bottom: 14px;
+  }
+
+  .sector-stat-source {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-top: 1px solid rgba(68,136,255,0.1);
+    padding-top: 10px;
+  }
+
+  .sector-stat-source a {
+    color: rgba(68,136,255,0.45);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .sector-stat-source a:hover { color: var(--cobalt-light); }
+
+  @media (max-width: 768px) {
+    .sector-stats { grid-template-columns: 1fr; }
+    .sector-header { padding: 18px 20px; }
+    .sector-stat { padding: 24px 20px; }
+  }
+
   /* SIMULATION */
   .sim-container {
     display: grid;
@@ -1014,31 +1156,125 @@
   <section class="section">
     <div class="section-label">Impact</div>
     <h2>Des résultats concrets, pas des promesses.</h2>
+
+    <!-- Stats générales -->
     <div class="stats-row">
-      <div class="stat">
-        <div class="stat-value">−80%</div>
-        <div class="stat-label">de no-shows grâce aux rappels automatiques</div>
-        <div class="stat-context">Gain pouvant atteindre 35h/semaine pour le secrétariat humain</div>
-        <div class="stat-source"><a href="https://www.carecall.ai/blog/automatisation/secretaire-medicale-artificielle" target="_blank" rel="noopener">CareCall, 2025</a></div>
-      </div>
-      <div class="stat">
-        <div class="stat-value">73%</div>
-        <div class="stat-label">des prises de RDV en dehors des heures de bureau</div>
-        <div class="stat-context">Les patients réservent quand ça leur convient — pas quand vous êtes disponibles</div>
-        <div class="stat-source"><a href="https://latenode.com/fr/blog/patient-communication-automation-in-healthcare-settings" target="_blank" rel="noopener">Latenode / NexSanté, 2025</a></div>
-      </div>
-      <div class="stat">
-        <div class="stat-value">−30%</div>
-        <div class="stat-label">de coûts de service client</div>
-        <div class="stat-context">+25 % de taux de conversion leads pour les PME utilisant des agents IA</div>
-        <div class="stat-source"><a href="https://www.salemwise.com/insights/automate-repetitive-tasks" target="_blank" rel="noopener">Salesforce Research, 2024</a></div>
-      </div>
       <div class="stat">
         <div class="stat-value">×4</div>
         <div class="stat-label">de productivité dans les secteurs exposés à l'IA</div>
         <div class="stat-context">CA par employé 3× supérieur pour les entreprises adoptant l'IA vs. leurs concurrents</div>
         <div class="stat-source"><a href="https://www.pwc.fr/fr/publications/series/ai-jobs-barometer.html" target="_blank" rel="noopener">PwC AI Jobs Barometer, 2025</a></div>
       </div>
+      <div class="stat">
+        <div class="stat-value">−30%</div>
+        <div class="stat-label">de coûts de service client</div>
+        <div class="stat-context">+25% de taux de conversion leads pour les PME utilisant des agents IA</div>
+        <div class="stat-source"><a href="https://www.salemwise.com/insights/automate-repetitive-tasks" target="_blank" rel="noopener">Salesforce Research, 2024</a></div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">−85%</div>
+        <div class="stat-label">d'erreurs humaines sur les tâches de saisie et traitement</div>
+        <div class="stat-context">L'automatisation IA réduit également les coûts opérationnels de 40%</div>
+        <div class="stat-source"><a href="https://www.productivite.ai/blog/ia-productivite-entreprises-gains-temps-2025" target="_blank" rel="noopener">UiPath Research, 2024</a></div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">3,7×</div>
+        <div class="stat-label">le ROI moyen sur 18 mois pour une IA bien déployée</div>
+        <div class="stat-context">Les entreprises appliquant une stratégie IA alignée sur les opérations critiques</div>
+        <div class="stat-source"><a href="https://www.productivite.ai/blog/ia-productivite-entreprises-gains-temps-2025" target="_blank" rel="noopener">McKinsey & Forrester, 2024</a></div>
+      </div>
+    </div>
+
+    <!-- Accordéons sectoriels -->
+    <div class="sector-intro">
+      <span class="sector-intro-line"></span>
+      <span class="sector-intro-text">Exemples par secteur</span>
+      <span class="sector-intro-line"></span>
+    </div>
+
+    <div class="sector-list">
+
+      <!-- Cabinet médical -->
+      <div class="sector-item" data-sector="medical">
+        <div class="sector-header">
+          <div class="sector-header-left">
+            <span class="sector-icon">🏥</span>
+            <span class="sector-name">Cabinet médical &amp; paramédical</span>
+          </div>
+          <span class="sector-toggle">+</span>
+        </div>
+        <div class="sector-body">
+          <div class="sector-stats">
+            <div class="sector-stat">
+              <div class="sector-stat-value">−80%</div>
+              <div class="sector-stat-label">de rendez-vous manqués</div>
+              <div class="sector-stat-context">Grâce aux rappels automatiques. Gain pouvant atteindre 35h/semaine pour le secrétariat humain.</div>
+              <div class="sector-stat-source"><a href="https://www.carecall.ai/blog/automatisation/secretaire-medicale-artificielle" target="_blank" rel="noopener">CareCall, 2025</a></div>
+            </div>
+            <div class="sector-stat">
+              <div class="sector-stat-value">73%</div>
+              <div class="sector-stat-label">des RDV pris hors heures de bureau</div>
+              <div class="sector-stat-context">Les patients réservent quand ça leur convient — pas quand vous êtes disponibles.</div>
+              <div class="sector-stat-source"><a href="https://latenode.com/fr/blog/patient-communication-automation-in-healthcare-settings" target="_blank" rel="noopener">Latenode / NexSanté, 2025</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Restaurant -->
+      <div class="sector-item" data-sector="restaurant">
+        <div class="sector-header">
+          <div class="sector-header-left">
+            <span class="sector-icon">🍽️</span>
+            <span class="sector-name">Restaurant &amp; hôtellerie</span>
+          </div>
+          <span class="sector-toggle">+</span>
+        </div>
+        <div class="sector-body">
+          <div class="sector-stats">
+            <div class="sector-stat">
+              <div class="sector-stat-value">−30%</div>
+              <div class="sector-stat-label">d'erreurs de préparation</div>
+              <div class="sector-stat-context">Les robots et systèmes IA limitent les erreurs en cuisine et libèrent du temps pour la créativité culinaire.</div>
+              <div class="sector-stat-source"><a href="https://www.materiel-horeca.com/guide/ia-et-restauration-2025-25-de-rentabilite-moins-de-gaspillage/" target="_blank" rel="noopener">Materiel-horeca.com, 2025</a></div>
+            </div>
+            <div class="sector-stat">
+              <div class="sector-stat-value">77%</div>
+              <div class="sector-stat-label">des restaurateurs français utilisent déjà l'IA</div>
+              <div class="sector-stat-context">Pour 72 à 80% d'entre eux, le temps gagné se traduit par une présence accrue auprès des clients.</div>
+              <div class="sector-stat-source"><a href="https://fr.lightspeedhq.be/blog/ia-dans-la-restauration-un-atout-pour-moderniser-votre-restaurant/" target="_blank" rel="noopener">Lightspeed / Food Hotel Tech, 2025</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agence immobilière -->
+      <div class="sector-item" data-sector="immo">
+        <div class="sector-header">
+          <div class="sector-header-left">
+            <span class="sector-icon">🏠</span>
+            <span class="sector-name">Agence immobilière</span>
+          </div>
+          <span class="sector-toggle">+</span>
+        </div>
+        <div class="sector-body">
+          <div class="sector-stats">
+            <div class="sector-stat">
+              <div class="sector-stat-value">−70%</div>
+              <div class="sector-stat-label">de temps de traitement des demandes initiales</div>
+              <div class="sector-stat-context">L'IA automatise la qualification des leads, la rédaction d'annonces et la planification des visites.</div>
+              <div class="sector-stat-source"><a href="https://keyzia.fr/ia-immobilier/ia-agence-immobiliere/" target="_blank" rel="noopener">Keyzia / Xerfi, 2025</a></div>
+            </div>
+            <div class="sector-stat">
+              <div class="sector-stat-value">×3,6</div>
+              <div class="sector-stat-label">de taux de conversion avec scoring IA des leads</div>
+              <div class="sector-stat-context">Les agents passent de 5% à 18% de taux de conversion grâce à la qualification automatisée des prospects.</div>
+              <div class="sector-stat-source"><a href="https://ia-lab-immo.com/blog/scoring-leads-automatise-ia-immobilier" target="_blank" rel="noopener">IA LAB Immo, 2025</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -1264,6 +1500,16 @@
     el.style.transform = 'translateY(20px)';
     el.style.transition = 'opacity 0.6s ease, transform 0.6s ease, background 0.3s';
     observer.observe(el);
+  });
+
+  // Sector accordions
+  document.querySelectorAll('.sector-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const item = header.closest('.sector-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.sector-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
   });
 
   // Smooth scroll
