@@ -263,7 +263,9 @@
     -webkit-mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
     -webkit-mask-clip: padding-box, border-box;
     -webkit-mask-composite: destination-in;
-    z-index: 1;
+    z-index: 2;
+    transform: none !important;
+    background-color: transparent !important;
   }
 
   .glow-btn::before {
@@ -284,6 +286,37 @@
       transparent 100%
     );
   }
+
+  /* Override btn defaults conflicts on glow-btn */
+  .glow-btn {
+    overflow: visible;
+    border: none; /* la bordure glow remplace la bordure statique */
+  }
+
+  .glow-btn::before {
+    /* reset du fill hover hérité de .btn */
+    background: none;
+    transform: none;
+    transition: none;
+    inset: calc(var(--border-size) * -1);
+  }
+
+  .glow-btn:hover { color: var(--cobalt-light); } /* pas de changement couleur texte */
+
+  .glow-btn:hover::before { transform: none; } /* désactive le slide fill */
+
+  /* Span fill interne pour remplacer le slide hover */
+  .glow-btn .btn-fill-inner {
+    position: absolute;
+    inset: 0;
+    background: var(--cobalt-light);
+    transform: translateX(-101%);
+    transition: transform 0.3s ease;
+    z-index: -1;
+  }
+
+  .glow-btn:hover .btn-fill-inner { transform: translateX(0); }
+  .glow-btn:hover { color: var(--ink); }
 
   /* HEADER */
   header {
@@ -1269,7 +1302,7 @@
     <div class="logo-dot"></div>
     COBALT
   </div>
-  <a href="#contact" class="btn glow-btn" id="glowCta">Premier échange gratuit</a>
+  <a href="#contact" class="btn glow-btn" id="glowCta"><span class="btn-fill-inner"></span>Premier échange gratuit</a>
 </header>
 
 <main>
