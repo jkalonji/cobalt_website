@@ -477,26 +477,166 @@
     line-height: 1.7;
   }
 
-  /* CYCLE DIAGRAM */
-  .cycle-wrapper {
+  /* ORBITAL TIMELINE */
+  .orbital-container {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-top: 20px;
   }
 
-  .cycle-svg {
-    width: 100%;
-    max-width: 560px;
-    display: block;
-    margin: 0 auto;
+  .orbital-ring {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    border: 1px solid rgba(68,136,255,0.15);
+    pointer-events: none;
   }
 
-  .cycle-node {
-    cursor: default;
-    transition: opacity 0.2s;
+  .orbital-center {
+    position: absolute;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0047ab, #4488ff, #7eb8f7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
   }
 
-  .cycle-node:hover { opacity: 0.85; }
+  .orbital-core {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.85);
+  }
 
-  /* Mobile : liste verticale */
+  .orbital-center-label {
+    position: absolute;
+    top: 64px;
+    font-family: "DM Serif Display", serif;
+    font-size: 11px;
+    color: rgba(126,184,247,0.7);
+    white-space: nowrap;
+    font-style: italic;
+  }
+
+  .orbital-ping {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.2);
+    animation: orbPing 2s ease-out infinite;
+  }
+
+  .ping1 { width: 72px; height: 72px; margin: -8px; }
+  .ping2 { width: 90px; height: 90px; margin: -17px; animation-delay: 0.6s; opacity: 0.5; }
+
+  @keyframes orbPing {
+    0%  { transform: scale(0.85); opacity: 0.7; }
+    100%{ transform: scale(1.1);  opacity: 0; }
+  }
+
+  .orbital-node {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.25);
+    background: rgba(6,8,16,0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s, background 0.3s;
+    font-size: 18px;
+    z-index: 20;
+  }
+
+  .orbital-node:hover { border-color: #4488ff; transform: translate(-50%, -50%) scale(1.15); }
+
+  .orbital-node.active {
+    border-color: white;
+    background: white;
+    transform: translate(-50%, -50%) scale(1.45);
+    box-shadow: 0 0 24px rgba(255,255,255,0.25);
+    z-index: 200;
+  }
+
+  .orbital-node.pulsing {
+    animation: nodePulse 1s ease-in-out infinite;
+    border-color: rgba(68,136,255,0.8);
+  }
+
+  @keyframes nodePulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(68,136,255,0.5); }
+    50%      { box-shadow: 0 0 0 10px rgba(68,136,255,0); }
+  }
+
+  .orbital-node-label {
+    position: absolute;
+    top: 52px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-family: "DM Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(232,238,248,0.65);
+    pointer-events: none;
+    transition: color 0.3s, transform 0.3s;
+  }
+
+  .orbital-node.active .orbital-node-label { color: white; transform: translateX(-50%) scale(1.1); }
+
+  .orbital-card {
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 210px;
+    background: rgba(6,8,16,0.96);
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 16px;
+    z-index: 300;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    animation: cardIn 0.22s ease;
+    pointer-events: none;
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(8px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+
+  .orbital-card-connector {
+    position: absolute;
+    top: -14px; left: 50%;
+    transform: translateX(-50%);
+    width: 1px; height: 14px;
+    background: rgba(255,255,255,0.35);
+  }
+
+  .orbital-card-title {
+    font-family: "DM Serif Display", serif;
+    font-size: 14px;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+
+  .orbital-card-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* Mobile */
   .cycle-mobile { display: none; }
 
   .cycle-mobile-step {
@@ -537,7 +677,7 @@
   }
 
   @media (max-width: 768px) {
-    .cycle-svg { display: none; }
+    .orbital-container { display: none; }
     .cycle-mobile { display: block; }
   }
 
@@ -1119,112 +1259,72 @@
   <section class="section" id="solution">
     <div class="section-label">Solution</div>
     <h2>On analyse, on conçoit, on déploie. Vous récupérez du temps.</h2>
-    <div class="cycle-wrapper">
-      <svg class="cycle-svg" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
-            <path d="M0,0 L10,5 L0,10 Z" fill="#4488ff" fill-opacity="0.7"/>
-          </marker>
-        </defs>
+    <div class="orbital-container" id="orbitalTimeline">
 
-        <!-- Décalage global : centre à 280,285 pour avoir de la marge pour les labels -->
-        <!-- Points recalculés avec cx=280, cy=285, r=155 -->
-        <!-- 0: top        280, 130 -->
-        <!-- 1: right-top  427, 239 -->
-        <!-- 2: right-bot  372, 407 -->
-        <!-- 3: left-bot   188, 407 -->
-        <!-- 4: left-top   133, 239 -->
+      <!-- Centre pulsant -->
+      <div class="orbital-center">
+        <div class="orbital-ping ping1"></div>
+        <div class="orbital-ping ping2"></div>
+        <div class="orbital-core"></div>
+        <div class="orbital-center-label">Cobalt</div>
+      </div>
 
-        <!-- Arête 0→1 -->
-        <line x1="314" y1="143" x2="393" y2="226" stroke="#4488ff" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arr)"/>
-        <!-- Arête 1→2 -->
-        <line x1="427" y1="265" x2="400" y2="382" stroke="#4488ff" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arr)"/>
-        <!-- Arête 2→3 -->
-        <line x1="345" y1="414" x2="216" y2="414" stroke="#4488ff" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arr)"/>
-        <!-- Arête 3→4 -->
-        <line x1="161" y1="382" x2="135" y2="265" stroke="#4488ff" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arr)"/>
-        <!-- Arête 4→0 (retour = sky blue pour marquer la boucle) -->
-        <line x1="155" y1="239" x2="258" y2="145" stroke="#7eb8f7" stroke-width="1.5" stroke-opacity="0.7" marker-end="url(#arr)"/>
+      <!-- Orbite -->
+      <div class="orbital-ring"></div>
 
-        <!-- NŒUD 0 — Audit (280, 130) -->
-        <circle cx="280" cy="130" r="34" fill="#0047ab" stroke="#4488ff" stroke-width="2"/>
-        <text x="280" y="124" text-anchor="middle" font-size="18">📋</text>
-        <text x="280" y="143" text-anchor="middle" font-family="DM Mono,monospace" font-size="7.5" fill="#e8eef8" letter-spacing="0.5">AUDIT</text>
-        <text x="280" y="78" text-anchor="middle" font-family="DM Mono,monospace" font-size="12" font-weight="500" fill="#e8eef8">Audit offert</text>
-        <text x="280" y="94" text-anchor="middle" font-family="DM Mono,monospace" font-size="9" fill="#5a6a8a">On identifie vos frictions</text>
+      <!-- Nœuds injectés par JS -->
+      <div id="orbitalNodes"></div>
 
-        <!-- NŒUD 1 — Solution (427, 239) -->
-        <circle cx="427" cy="239" r="34" fill="#0047ab" stroke="#4488ff" stroke-width="2"/>
-        <text x="427" y="233" text-anchor="middle" font-size="18">⚙️</text>
-        <text x="427" y="252" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="#e8eef8" letter-spacing="0.5">SOLUTION</text>
-        <text x="480" y="226" text-anchor="start" font-family="DM Mono,monospace" font-size="12" font-weight="500" fill="#e8eef8">Solution</text>
-        <text x="480" y="241" text-anchor="start" font-family="DM Mono,monospace" font-size="9" fill="#5a6a8a">sur mesure</text>
-        <text x="480" y="254" text-anchor="start" font-family="DM Mono,monospace" font-size="9" fill="#5a6a8a">IA adaptée</text>
+    </div>
 
-        <!-- NŒUD 2 — Déploiement (372, 407) -->
-        <circle cx="372" cy="407" r="34" fill="#0047ab" stroke="#4488ff" stroke-width="2"/>
-        <text x="372" y="401" text-anchor="middle" font-size="18">🚀</text>
-        <text x="372" y="420" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="#e8eef8" letter-spacing="0.5">DÉPLOIEMENT</text>
-        <text x="404" y="454" text-anchor="middle" font-family="DM Mono,monospace" font-size="12" font-weight="500" fill="#e8eef8">Déploiement</text>
-        <text x="404" y="469" text-anchor="middle" font-family="DM Mono,monospace" font-size="9" fill="#5a6a8a">En 2 semaines</text>
+    <!-- Template carte détail (cloné par JS) -->
+    <template id="cardTemplate">
+      <div class="orbital-card">
+        <div class="orbital-card-connector"></div>
+        <div class="orbital-card-title"></div>
+        <div class="orbital-card-desc"></div>
+      </div>
+    </template>
 
-        <!-- NŒUD 3 — Résultats (188, 407) -->
-        <circle cx="188" cy="407" r="34" fill="#0047ab" stroke="#4488ff" stroke-width="2"/>
-        <text x="188" y="401" text-anchor="middle" font-size="18">📈</text>
-        <text x="188" y="420" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="#e8eef8" letter-spacing="0.5">RÉSULTATS</text>
-        <text x="156" y="454" text-anchor="middle" font-family="DM Mono,monospace" font-size="12" font-weight="500" fill="#e8eef8">Résultats</text>
-        <text x="156" y="469" text-anchor="middle" font-family="DM Mono,monospace" font-size="9" fill="#5a6a8a">Mesurables</text>
-
-        <!-- NŒUD 4 — Amélioration continue (133, 239) -->
-        <circle cx="133" cy="239" r="34" fill="#1a3a6e" stroke="#7eb8f7" stroke-width="2.5"/>
-        <text x="133" y="233" text-anchor="middle" font-size="18">🔄</text>
-        <text x="133" y="251" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="#7eb8f7" letter-spacing="0.5">AMÉLIORATION</text>
-        <text x="82" y="220" text-anchor="end" font-family="DM Mono,monospace" font-size="12" font-weight="500" fill="#7eb8f7">Amélioration</text>
-        <text x="82" y="235" text-anchor="end" font-family="DM Mono,monospace" font-size="9" fill="#5a6a8a">continue</text>
-        <text x="82" y="249" text-anchor="end" font-family="DM Mono,monospace" font-size="9" fill="#5a6a8a">L'IA s'affine avec vous</text>
-
-      </svg>
-
-      <!-- Version mobile -->
-      <div class="cycle-mobile">
-        <div class="cycle-mobile-step">
-          <div class="cycle-mobile-icon">📋</div>
-          <div class="cycle-mobile-content">
-            <div class="cycle-mobile-label">01 — Audit offert</div>
-            <div class="cycle-mobile-sub">On identifie vos frictions</div>
-          </div>
+    <!-- Version mobile -->
+    <div class="cycle-mobile">
+      <div class="cycle-mobile-step">
+        <div class="cycle-mobile-icon">📋</div>
+        <div class="cycle-mobile-content">
+          <div class="cycle-mobile-label">01 — Audit offert</div>
+          <div class="cycle-mobile-sub">On identifie vos frictions</div>
         </div>
-        <div class="cycle-mobile-arrow">↓</div>
-        <div class="cycle-mobile-step">
-          <div class="cycle-mobile-icon">⚙️</div>
-          <div class="cycle-mobile-content">
-            <div class="cycle-mobile-label">02 — Solution sur mesure</div>
-            <div class="cycle-mobile-sub">IA adaptée à votre métier</div>
-          </div>
+      </div>
+      <div class="cycle-mobile-arrow">↓</div>
+      <div class="cycle-mobile-step">
+        <div class="cycle-mobile-icon">⚙️</div>
+        <div class="cycle-mobile-content">
+          <div class="cycle-mobile-label">02 — Solution sur mesure</div>
+          <div class="cycle-mobile-sub">IA adaptée à votre métier</div>
         </div>
-        <div class="cycle-mobile-arrow">↓</div>
-        <div class="cycle-mobile-step">
-          <div class="cycle-mobile-icon">🚀</div>
-          <div class="cycle-mobile-content">
-            <div class="cycle-mobile-label">03 — Déploiement rapide</div>
-            <div class="cycle-mobile-sub">Opérationnel en 2 semaines</div>
-          </div>
+      </div>
+      <div class="cycle-mobile-arrow">↓</div>
+      <div class="cycle-mobile-step">
+        <div class="cycle-mobile-icon">🚀</div>
+        <div class="cycle-mobile-content">
+          <div class="cycle-mobile-label">03 — Déploiement rapide</div>
+          <div class="cycle-mobile-sub">Opérationnel en 2 semaines</div>
         </div>
-        <div class="cycle-mobile-arrow">↓</div>
-        <div class="cycle-mobile-step">
-          <div class="cycle-mobile-icon">📈</div>
-          <div class="cycle-mobile-content">
-            <div class="cycle-mobile-label">04 — Résultats mesurables</div>
-            <div class="cycle-mobile-sub">Dès le premier mois</div>
-          </div>
+      </div>
+      <div class="cycle-mobile-arrow">↓</div>
+      <div class="cycle-mobile-step">
+        <div class="cycle-mobile-icon">📈</div>
+        <div class="cycle-mobile-content">
+          <div class="cycle-mobile-label">04 — Résultats mesurables</div>
+          <div class="cycle-mobile-sub">Dès le premier mois</div>
         </div>
-        <div class="cycle-mobile-arrow">↺</div>
-        <div class="cycle-mobile-step cycle-mobile-highlight">
-          <div class="cycle-mobile-icon">🔄</div>
-          <div class="cycle-mobile-content">
-            <div class="cycle-mobile-label">05 — Amélioration continue</div>
-            <div class="cycle-mobile-sub">L'IA s'affine avec vous dans la durée</div>
-          </div>
+      </div>
+      <div class="cycle-mobile-arrow">↺</div>
+      <div class="cycle-mobile-step cycle-mobile-highlight">
+        <div class="cycle-mobile-icon">🔄</div>
+        <div class="cycle-mobile-content">
+          <div class="cycle-mobile-label">05 — Amélioration continue</div>
+          <div class="cycle-mobile-sub">L'IA s'affine avec vous dans la durée</div>
         </div>
       </div>
     </div>
@@ -1589,6 +1689,174 @@
     });
   });
 
+  // ── ORBITAL TIMELINE ──────────────────────────────────────────
+  const ORBITAL_DATA = [
+    {
+      id: 0,
+      icon: '📋',
+      title: 'Audit offert',
+      desc: 'On identifie ensemble vos tâches chronophages et les frictions dans vos processus. Gratuit, sans engagement.',
+      relatedIds: [1]
+    },
+    {
+      id: 1,
+      icon: '⚙️',
+      title: 'Solution sur mesure',
+      desc: 'On conçoit une solution IA adaptée à votre métier, votre vocabulaire et vos outils existants.',
+      relatedIds: [0, 2]
+    },
+    {
+      id: 2,
+      icon: '🚀',
+      title: 'Déploiement',
+      desc: 'Opérationnel en 2 semaines pour les solutions clé en main. Tests rigoureux avant mise en production.',
+      relatedIds: [1, 3]
+    },
+    {
+      id: 3,
+      icon: '📈',
+      title: 'Résultats',
+      desc: 'Des indicateurs concrets dès le premier mois : temps économisé, erreurs évitées, satisfaction client.',
+      relatedIds: [2, 4]
+    },
+    {
+      id: 4,
+      icon: '🔄',
+      title: 'Amélioration continue',
+      desc: 'Diagnostics réguliers pour faire évoluer la solution avec vous. L\'IA s\'affine à mesure que votre activité grandit.',
+      relatedIds: [3, 0]
+    }
+  ];
+
+  (function initOrbital() {
+    const container = document.getElementById('orbitalTimeline');
+    const nodesContainer = document.getElementById('orbitalNodes');
+    if (!container || !nodesContainer) return;
+
+    const RADIUS = 190;
+    let angle = 0;
+    let autoRotate = true;
+    let activeId = null;
+    let rafId = null;
+    const nodeEls = {};
+
+    // Créer les nœuds
+    ORBITAL_DATA.forEach((item) => {
+      const wrap = document.createElement('div');
+      wrap.style.position = 'absolute';
+      wrap.style.left = '50%';
+      wrap.style.top = '50%';
+
+      const node = document.createElement('div');
+      node.className = 'orbital-node';
+      node.dataset.id = item.id;
+      node.innerHTML = item.icon;
+      node.title = item.title;
+
+      const label = document.createElement('div');
+      label.className = 'orbital-node-label';
+      label.textContent = item.title;
+      node.appendChild(label);
+
+      node.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleNode(item.id);
+      });
+
+      wrap.appendChild(node);
+      nodesContainer.appendChild(wrap);
+      nodeEls[item.id] = { wrap, node };
+    });
+
+    function toggleNode(id) {
+      if (activeId === id) {
+        // Fermer
+        closeAll();
+        autoRotate = true;
+        activeId = null;
+      } else {
+        closeAll();
+        activeId = id;
+        autoRotate = false;
+
+        const el = nodeEls[id];
+        el.node.classList.add('active');
+
+        // Pulser les nœuds liés
+        const item = ORBITAL_DATA.find(d => d.id === id);
+        item.relatedIds.forEach(rid => {
+          nodeEls[rid]?.node.classList.add('pulsing');
+        });
+
+        // Carte détail
+        const card = document.createElement('div');
+        card.className = 'orbital-card';
+        card.innerHTML = `
+          <div class="orbital-card-connector"></div>
+          <div class="orbital-card-title">${item.title}</div>
+          <div class="orbital-card-desc">${item.desc}</div>
+        `;
+        el.node.appendChild(card);
+
+        // Centrer sur le nœud actif
+        const targetAngle = (id / ORBITAL_DATA.length) * 360;
+        angle = (270 - targetAngle + 360) % 360;
+        updatePositions();
+      }
+    }
+
+    function closeAll() {
+      ORBITAL_DATA.forEach(item => {
+        const el = nodeEls[item.id];
+        if (!el) return;
+        el.node.classList.remove('active', 'pulsing');
+        const card = el.node.querySelector('.orbital-card');
+        if (card) card.remove();
+      });
+    }
+
+    // Clic hors nœud → reset
+    container.addEventListener('click', () => {
+      if (activeId !== null) {
+        closeAll();
+        autoRotate = true;
+        activeId = null;
+      }
+    });
+
+    function updatePositions() {
+      ORBITAL_DATA.forEach((item, idx) => {
+        const el = nodeEls[item.id];
+        if (!el) return;
+        const theta = ((idx / ORBITAL_DATA.length) * 360 + angle) % 360;
+        const rad = (theta * Math.PI) / 180;
+        const x = RADIUS * Math.cos(rad);
+        const y = RADIUS * Math.sin(rad);
+        const opacity = Math.max(0.35, Math.min(1, 0.35 + 0.65 * ((1 + Math.sin(rad)) / 2)));
+        const zIndex = Math.round(50 + 50 * Math.cos(rad));
+
+        el.wrap.style.transform = `translate(calc(${x}px - 50%), calc(${y}px - 50%))`;
+        if (activeId !== item.id) {
+          el.node.style.opacity = opacity;
+          el.node.style.zIndex = zIndex;
+        } else {
+          el.node.style.opacity = 1;
+          el.node.style.zIndex = 200;
+        }
+      });
+    }
+
+    function tick() {
+      if (autoRotate) {
+        angle = (angle + 0.25) % 360;
+        updatePositions();
+      }
+      rafId = requestAnimationFrame(tick);
+    }
+
+    updatePositions();
+    tick();
+  })();
   // Smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
