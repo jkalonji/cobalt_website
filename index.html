@@ -1120,74 +1120,68 @@
     <div class="section-label">Solution</div>
     <h2>On analyse, on conçoit, on déploie. Vous récupérez du temps.</h2>
     <div class="cycle-wrapper">
-      <svg class="cycle-svg" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg">
-
-        <!-- Anneau de fond -->
-        <circle cx="260" cy="260" r="155" fill="none" stroke="rgba(68,136,255,0.12)" stroke-width="1"/>
-
-        <!-- Arc 1 : haut vers droite -->
-        <path d="M 300,118 A 155,155 0 0,1 398,192"
-              fill="none" stroke="#e8eef8" stroke-width="1.5" stroke-opacity="0.5"
-              marker-end="url(#ca)"/>
-        <!-- Arc 2 : droite vers bas -->
-        <path d="M 415,222 A 155,155 0 0,1 415,298"
-              fill="none" stroke="#e8eef8" stroke-width="1.5" stroke-opacity="0.5"
-              marker-end="url(#ca)"/>
-        <!-- Arc 3 : bas-droite vers bas-gauche -->
-        <path d="M 398,328 A 155,155 0 0,1 122,328"
-              fill="none" stroke="#e8eef8" stroke-width="1.5" stroke-opacity="0.5"
-              marker-end="url(#ca)"/>
-        <!-- Arc 4 : bas-gauche vers gauche -->
-        <path d="M 105,298 A 155,155 0 0,1 105,222"
-              fill="none" stroke="#e8eef8" stroke-width="1.5" stroke-opacity="0.5"
-              marker-end="url(#ca)"/>
-        <!-- Arc 5 : gauche vers haut -->
-        <path d="M 122,192 A 155,155 0 0,1 220,118"
-              fill="none" stroke="#e8eef8" stroke-width="1.5" stroke-opacity="0.5"
-              marker-end="url(#ca)"/>
-
+      <svg class="cycle-svg" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <marker id="ca" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
-            <path d="M0,1 L8,5 L0,9" fill="none" stroke="#e8eef8" stroke-width="1.5" stroke-opacity="0.7"/>
+          <marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+            <path d="M0,0 L10,5 L0,10 Z" fill="#4488ff" fill-opacity="0.7"/>
           </marker>
         </defs>
 
-        <!-- NŒUD 1 — haut — Audit (260, 105) -->
-        <circle cx="260" cy="105" r="36" fill="#4488ff"/>
-        <text x="260" y="100" text-anchor="middle" font-size="20" fill="white">📋</text>
-        <text x="260" y="118" text-anchor="middle" font-family="DM Mono,monospace" font-size="8" fill="white" letter-spacing="0.5">AUDIT</text>
-        <!-- Label haut -->
-        <text x="260" y="52" text-anchor="middle" font-family="DM Mono,monospace" font-size="12" fill="#e8eef8" font-weight="500">Audit offert</text>
-        <text x="260" y="67" text-anchor="middle" font-family="DM Mono,monospace" font-size="10" fill="#5a6a8a">On identifie vos frictions</text>
+        <!-- Décalage global : centre à 280,285 pour avoir de la marge pour les labels -->
+        <!-- Points recalculés avec cx=280, cy=285, r=155 -->
+        <!-- 0: top        280, 130 -->
+        <!-- 1: right-top  427, 239 -->
+        <!-- 2: right-bot  372, 407 -->
+        <!-- 3: left-bot   188, 407 -->
+        <!-- 4: left-top   133, 239 -->
 
-        <!-- NŒUD 2 — droite — Solution (415, 260) -->
-        <circle cx="415" cy="260" r="36" fill="#0047ab"/>
-        <text x="415" y="255" text-anchor="middle" font-size="20" fill="white">⚙️</text>
-        <text x="415" y="273" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="white" letter-spacing="0.5">SOLUTION</text>
-        <!-- Label droite -->
-        <text x="470" y="250" text-anchor="start" font-family="DM Mono,monospace" font-size="12" fill="#e8eef8" font-weight="500">Solution</text>
-        <text x="470" y="264" text-anchor="start" font-family="DM Mono,monospace" font-size="10" fill="#5a6a8a">sur mesure</text>
+        <!-- Arête 0→1 -->
+        <line x1="314" y1="143" x2="393" y2="226" stroke="#4488ff" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arr)"/>
+        <!-- Arête 1→2 -->
+        <line x1="427" y1="265" x2="400" y2="382" stroke="#4488ff" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arr)"/>
+        <!-- Arête 2→3 -->
+        <line x1="345" y1="414" x2="216" y2="414" stroke="#4488ff" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arr)"/>
+        <!-- Arête 3→4 -->
+        <line x1="161" y1="382" x2="135" y2="265" stroke="#4488ff" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arr)"/>
+        <!-- Arête 4→0 (retour = sky blue pour marquer la boucle) -->
+        <line x1="155" y1="239" x2="258" y2="145" stroke="#7eb8f7" stroke-width="1.5" stroke-opacity="0.7" marker-end="url(#arr)"/>
 
-        <!-- NŒUD 3 — bas — Déploiement (260, 415) -->
-        <circle cx="260" cy="415" r="36" fill="#7eb8f7"/>
-        <text x="260" y="410" text-anchor="middle" font-size="20" fill="white">🚀</text>
-        <text x="260" y="428" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="white" letter-spacing="0.5">DÉPLOIEMENT</text>
-        <!-- Label bas -->
-        <text x="260" y="466" text-anchor="middle" font-family="DM Mono,monospace" font-size="12" fill="#e8eef8" font-weight="500">Déploiement</text>
-        <text x="260" y="480" text-anchor="middle" font-family="DM Mono,monospace" font-size="10" fill="#5a6a8a">Opérationnel en 2 semaines</text>
+        <!-- NŒUD 0 — Audit (280, 130) -->
+        <circle cx="280" cy="130" r="34" fill="#0047ab" stroke="#4488ff" stroke-width="2"/>
+        <text x="280" y="124" text-anchor="middle" font-size="18">📋</text>
+        <text x="280" y="143" text-anchor="middle" font-family="DM Mono,monospace" font-size="7.5" fill="#e8eef8" letter-spacing="0.5">AUDIT</text>
+        <text x="280" y="78" text-anchor="middle" font-family="DM Mono,monospace" font-size="12" font-weight="500" fill="#e8eef8">Audit offert</text>
+        <text x="280" y="94" text-anchor="middle" font-family="DM Mono,monospace" font-size="9" fill="#5a6a8a">On identifie vos frictions</text>
 
-        <!-- NŒUD 4 — gauche — Résultats (105, 260) -->
-        <circle cx="105" cy="260" r="36" fill="#1a3a6e"/>
-        <text x="105" y="255" text-anchor="middle" font-size="20" fill="white">📈</text>
-        <text x="105" y="273" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="white" letter-spacing="0.5">RÉSULTATS</text>
-        <!-- Label gauche -->
-        <text x="62" y="250" text-anchor="end" font-family="DM Mono,monospace" font-size="12" fill="#e8eef8" font-weight="500">Résultats</text>
-        <text x="62" y="264" text-anchor="end" font-family="DM Mono,monospace" font-size="10" fill="#5a6a8a">mesurables</text>
+        <!-- NŒUD 1 — Solution (427, 239) -->
+        <circle cx="427" cy="239" r="34" fill="#0047ab" stroke="#4488ff" stroke-width="2"/>
+        <text x="427" y="233" text-anchor="middle" font-size="18">⚙️</text>
+        <text x="427" y="252" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="#e8eef8" letter-spacing="0.5">SOLUTION</text>
+        <text x="480" y="226" text-anchor="start" font-family="DM Mono,monospace" font-size="12" font-weight="500" fill="#e8eef8">Solution</text>
+        <text x="480" y="241" text-anchor="start" font-family="DM Mono,monospace" font-size="9" fill="#5a6a8a">sur mesure</text>
+        <text x="480" y="254" text-anchor="start" font-family="DM Mono,monospace" font-size="9" fill="#5a6a8a">IA adaptée</text>
 
-        <!-- Cercle central -->
-        <circle cx="260" cy="260" r="62" fill="rgba(0,71,171,0.15)" stroke="#4488ff" stroke-width="1" stroke-opacity="0.3"/>
-        <text x="260" y="252" text-anchor="middle" font-family="DM Serif Display,serif" font-size="12" fill="#7eb8f7" font-style="italic">amélioration</text>
-        <text x="260" y="268" text-anchor="middle" font-family="DM Serif Display,serif" font-size="12" fill="#7eb8f7" font-style="italic">continue</text>
+        <!-- NŒUD 2 — Déploiement (372, 407) -->
+        <circle cx="372" cy="407" r="34" fill="#0047ab" stroke="#4488ff" stroke-width="2"/>
+        <text x="372" y="401" text-anchor="middle" font-size="18">🚀</text>
+        <text x="372" y="420" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="#e8eef8" letter-spacing="0.5">DÉPLOIEMENT</text>
+        <text x="404" y="454" text-anchor="middle" font-family="DM Mono,monospace" font-size="12" font-weight="500" fill="#e8eef8">Déploiement</text>
+        <text x="404" y="469" text-anchor="middle" font-family="DM Mono,monospace" font-size="9" fill="#5a6a8a">En 2 semaines</text>
+
+        <!-- NŒUD 3 — Résultats (188, 407) -->
+        <circle cx="188" cy="407" r="34" fill="#0047ab" stroke="#4488ff" stroke-width="2"/>
+        <text x="188" y="401" text-anchor="middle" font-size="18">📈</text>
+        <text x="188" y="420" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="#e8eef8" letter-spacing="0.5">RÉSULTATS</text>
+        <text x="156" y="454" text-anchor="middle" font-family="DM Mono,monospace" font-size="12" font-weight="500" fill="#e8eef8">Résultats</text>
+        <text x="156" y="469" text-anchor="middle" font-family="DM Mono,monospace" font-size="9" fill="#5a6a8a">Mesurables</text>
+
+        <!-- NŒUD 4 — Amélioration continue (133, 239) -->
+        <circle cx="133" cy="239" r="34" fill="#1a3a6e" stroke="#7eb8f7" stroke-width="2.5"/>
+        <text x="133" y="233" text-anchor="middle" font-size="18">🔄</text>
+        <text x="133" y="251" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="#7eb8f7" letter-spacing="0.5">AMÉLIORATION</text>
+        <text x="82" y="220" text-anchor="end" font-family="DM Mono,monospace" font-size="12" font-weight="500" fill="#7eb8f7">Amélioration</text>
+        <text x="82" y="235" text-anchor="end" font-family="DM Mono,monospace" font-size="9" fill="#5a6a8a">continue</text>
+        <text x="82" y="249" text-anchor="end" font-family="DM Mono,monospace" font-size="9" fill="#5a6a8a">L'IA s'affine avec vous</text>
 
       </svg>
 
@@ -1228,7 +1222,7 @@
         <div class="cycle-mobile-step cycle-mobile-highlight">
           <div class="cycle-mobile-icon">🔄</div>
           <div class="cycle-mobile-content">
-            <div class="cycle-mobile-label">Amélioration continue</div>
+            <div class="cycle-mobile-label">05 — Amélioration continue</div>
             <div class="cycle-mobile-sub">L'IA s'affine avec vous dans la durée</div>
           </div>
         </div>
