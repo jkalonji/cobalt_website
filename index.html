@@ -226,6 +226,65 @@
     mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
   }
 
+  /* GLOW BUTTON */
+  .glow-btn {
+    --x: 0;
+    --y: 0;
+    --xp: 0;
+    --yp: 0;
+    --base: 220;
+    --spread: 200;
+    --radius: 3;
+    --border: 1.5;
+    --size: 180;
+    --hue: calc(var(--base) + (var(--xp) * var(--spread)));
+    --border-size: calc(var(--border) * 1px);
+    --spotlight-size: calc(var(--size) * 1px);
+    position: relative;
+    overflow: visible;
+    isolation: isolate;
+  }
+
+  .glow-btn::before,
+  .glow-btn::after {
+    pointer-events: none;
+    content: "";
+    position: absolute;
+    inset: calc(var(--border-size) * -1);
+    border: var(--border-size) solid transparent;
+    border-radius: calc(var(--radius) * 1px);
+    background-attachment: fixed;
+    background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+    mask-clip: padding-box, border-box;
+    mask-composite: intersect;
+    -webkit-mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+    -webkit-mask-clip: padding-box, border-box;
+    -webkit-mask-composite: destination-in;
+    z-index: 1;
+  }
+
+  .glow-btn::before {
+    background-image: radial-gradient(
+      calc(var(--spotlight-size) * 0.75) calc(var(--spotlight-size) * 0.75) at
+      calc(var(--x) * 1px) calc(var(--y) * 1px),
+      hsl(var(--hue) 100% 50% / 1) 0%,
+      transparent 100%
+    );
+    filter: brightness(2);
+  }
+
+  .glow-btn::after {
+    background-image: radial-gradient(
+      calc(var(--spotlight-size) * 0.5) calc(var(--spotlight-size) * 0.5) at
+      calc(var(--x) * 1px) calc(var(--y) * 1px),
+      hsl(0 100% 100% / 0.9) 0%,
+      transparent 100%
+    );
+  }
+
   /* HEADER */
   header {
     display: flex;
@@ -1210,7 +1269,7 @@
     <div class="logo-dot"></div>
     COBALT
   </div>
-  <a href="#contact" class="btn">Premier échange gratuit</a>
+  <a href="#contact" class="btn glow-btn" id="glowCta">Premier échange gratuit</a>
 </header>
 
 <main>
@@ -1615,6 +1674,17 @@
 </footer>
 
 <script>
+  // Glow CTA button
+  const glowCta = document.getElementById('glowCta');
+  if (glowCta) {
+    document.addEventListener('pointermove', (e) => {
+      glowCta.style.setProperty('--x', e.clientX.toFixed(2));
+      glowCta.style.setProperty('--y', e.clientY.toFixed(2));
+      glowCta.style.setProperty('--xp', (e.clientX / window.innerWidth).toFixed(2));
+      glowCta.style.setProperty('--yp', (e.clientY / window.innerHeight).toFixed(2));
+    });
+  }
+
   // Custom cursor
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
