@@ -690,7 +690,7 @@
     background: rgba(68,136,255,0.04);
     padding: 80px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1.4fr;
     gap: 80px;
     align-items: start;
     position: relative;
@@ -741,7 +741,52 @@
 
   .form-group textarea { height: 120px; resize: none; }
 
-  /* FOOTER */
+  /* CALENDLY WIDGET */
+.calendly-wrapper {
+  border: 1px solid rgba(68,136,255,0.15);
+  overflow: hidden;
+  background: rgba(6,8,16,0.8);
+  position: relative;
+}
+
+.calendly-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--cobalt-light), var(--sky));
+  z-index: 1;
+}
+
+.calendly-inline-widget iframe {
+  border: none !important;
+}
+
+/* REASSURANCE */
+.cta-reassurance {
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.reassurance-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.reassurance-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cobalt-light);
+  flex-shrink: 0;
+}
+
+/* FOOTER */
   footer {
     padding: 48px 60px;
     border-top: 1px solid rgba(68,136,255,0.08);
@@ -815,6 +860,7 @@
     .problem-grid, .stats-row, .products-grid { grid-template-columns: 1fr; }
     .sim-container, .cta-section { grid-template-columns: 1fr; }
     .cta-section { margin: 40px 24px; padding: 48px 32px; }
+    .calendly-inline-widget { height: 550px !important; }
     .flow { flex-direction: column; }
     .flow-step::after { display: none; }
   }
@@ -1068,24 +1114,36 @@
     <div class="cta-left">
       <div class="section-label" style="margin-bottom: 28px;">Premier échange gratuit</div>
       <h2>Découvrez ce que vous pouvez automatiser dès aujourd'hui.</h2>
-      <p>En 30 minutes, on identifie ensemble les tâches répétitives de votre entreprise et on vous propose un plan d'action concret. Simple. Rapide. Le coût de l'audit est défini lors de cet échange, en fonction de vos besoins.</p>
+      <p>En 30 minutes, on identifie ensemble les tâches répétitives de votre entreprise et on vous propose un plan d'action concret. Simple. Rapide. Sans engagement.</p>
+
+      <div class="cta-reassurance">
+        <div class="reassurance-item">
+          <span class="reassurance-dot"></span>
+          <span>Créneau confirmé instantanément</span>
+        </div>
+        <div class="reassurance-item">
+          <span class="reassurance-dot"></span>
+          <span>Échange 100 % gratuit, aucune obligation</span>
+        </div>
+        <div class="reassurance-item">
+          <span class="reassurance-dot"></span>
+          <span>Plan d'action concret à l'issue de l'appel</span>
+        </div>
+      </div>
     </div>
     <div class="cta-right">
-      <div class="form-group">
-        <input type="text" placeholder="Votre nom">
+      <div class="calendly-wrapper">
+        <div
+          class="calendly-inline-widget"
+          data-url="https://calendly.com/la-main-a-la-pate/echange-de-30mn?hide_event_type_details=1&hide_gdpr_banner=1&background_color=060810&text_color=e8eef8&primary_color=4488ff"
+          style="min-width:280px;height:660px;">
+        </div>
       </div>
-      <div class="form-group">
-        <input type="email" placeholder="Adresse e-mail">
-      </div>
-      <div class="form-group">
-        <input type="text" placeholder="Votre entreprise &amp; secteur d'activité">
-      </div>
-      <div class="form-group">
-        <textarea placeholder="Quelles tâches vous font perdre le plus de temps ?"></textarea>
-      </div>
-      <a href="#" class="btn btn-fill" style="display: inline-block; width: 100%; text-align: center;">Prendre rendez-vous →</a>
     </div>
   </section>
+
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </main>
 
 <footer>
