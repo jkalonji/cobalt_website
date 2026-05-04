@@ -1120,74 +1120,75 @@
     <div class="section-label">Solution</div>
     <h2>On analyse, on conçoit, on déploie. Vous récupérez du temps.</h2>
     <div class="cycle-wrapper">
-      <svg class="cycle-svg" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+      <svg class="cycle-svg" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg">
+
+        <!-- Anneau de fond -->
+        <circle cx="260" cy="260" r="155" fill="none" stroke="rgba(68,136,255,0.12)" stroke-width="1"/>
+
+        <!-- Arc 1 : haut vers droite -->
+        <path d="M 300,118 A 155,155 0 0,1 398,192"
+              fill="none" stroke="#e8eef8" stroke-width="1.5" stroke-opacity="0.5"
+              marker-end="url(#ca)"/>
+        <!-- Arc 2 : droite vers bas -->
+        <path d="M 415,222 A 155,155 0 0,1 415,298"
+              fill="none" stroke="#e8eef8" stroke-width="1.5" stroke-opacity="0.5"
+              marker-end="url(#ca)"/>
+        <!-- Arc 3 : bas-droite vers bas-gauche -->
+        <path d="M 398,328 A 155,155 0 0,1 122,328"
+              fill="none" stroke="#e8eef8" stroke-width="1.5" stroke-opacity="0.5"
+              marker-end="url(#ca)"/>
+        <!-- Arc 4 : bas-gauche vers gauche -->
+        <path d="M 105,298 A 155,155 0 0,1 105,222"
+              fill="none" stroke="#e8eef8" stroke-width="1.5" stroke-opacity="0.5"
+              marker-end="url(#ca)"/>
+        <!-- Arc 5 : gauche vers haut -->
+        <path d="M 122,192 A 155,155 0 0,1 220,118"
+              fill="none" stroke="#e8eef8" stroke-width="1.5" stroke-opacity="0.5"
+              marker-end="url(#ca)"/>
+
         <defs>
-          <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#0047ab"/>
-            <stop offset="100%" stop-color="#4488ff"/>
-          </linearGradient>
-          <marker id="arr1" markerWidth="12" markerHeight="12" refX="6" refY="6" orient="auto">
-            <path d="M2,2 L10,6 L2,10 Z" fill="#4488ff"/>
-          </marker>
-          <marker id="arr2" markerWidth="12" markerHeight="12" refX="6" refY="6" orient="auto">
-            <path d="M2,2 L10,6 L2,10 Z" fill="#7eb8f7"/>
+          <marker id="ca" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+            <path d="M0,1 L8,5 L0,9" fill="none" stroke="#e8eef8" stroke-width="1.5" stroke-opacity="0.7"/>
           </marker>
         </defs>
 
-        <!-- Anneau arc 1 : haut → droite (sens horaire) -->
-        <path d="M 328,138 A 170,170 0 0,1 462,328"
-              fill="none" stroke="url(#ringGrad)" stroke-width="24" stroke-linecap="round"
-              marker-end="url(#arr1)"/>
-        <!-- Anneau arc 2 : droite → bas -->
-        <path d="M 462,372 A 170,170 0 0,1 328,462"
-              fill="none" stroke="url(#ringGrad)" stroke-width="24" stroke-linecap="round"
-              marker-end="url(#arr1)"/>
-        <!-- Anneau arc 3 : bas → gauche -->
-        <path d="M 272,462 A 170,170 0 0,1 138,372"
-              fill="none" stroke="url(#ringGrad)" stroke-width="24" stroke-linecap="round"
-              marker-end="url(#arr1)"/>
-        <!-- Anneau arc 4 : gauche → haut (arc retour = bleu ciel) -->
-        <path d="M 138,228 A 170,170 0 0,1 272,138"
-              fill="none" stroke="#7eb8f7" stroke-width="24" stroke-linecap="round"
-              marker-end="url(#arr2)"/>
+        <!-- NŒUD 1 — haut — Audit (260, 105) -->
+        <circle cx="260" cy="105" r="36" fill="#4488ff"/>
+        <text x="260" y="100" text-anchor="middle" font-size="20" fill="white">📋</text>
+        <text x="260" y="118" text-anchor="middle" font-family="DM Mono,monospace" font-size="8" fill="white" letter-spacing="0.5">AUDIT</text>
+        <!-- Label haut -->
+        <text x="260" y="52" text-anchor="middle" font-family="DM Mono,monospace" font-size="12" fill="#e8eef8" font-weight="500">Audit offert</text>
+        <text x="260" y="67" text-anchor="middle" font-family="DM Mono,monospace" font-size="10" fill="#5a6a8a">On identifie vos frictions</text>
+
+        <!-- NŒUD 2 — droite — Solution (415, 260) -->
+        <circle cx="415" cy="260" r="36" fill="#0047ab"/>
+        <text x="415" y="255" text-anchor="middle" font-size="20" fill="white">⚙️</text>
+        <text x="415" y="273" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="white" letter-spacing="0.5">SOLUTION</text>
+        <!-- Label droite -->
+        <text x="470" y="250" text-anchor="start" font-family="DM Mono,monospace" font-size="12" fill="#e8eef8" font-weight="500">Solution</text>
+        <text x="470" y="264" text-anchor="start" font-family="DM Mono,monospace" font-size="10" fill="#5a6a8a">sur mesure</text>
+
+        <!-- NŒUD 3 — bas — Déploiement (260, 415) -->
+        <circle cx="260" cy="415" r="36" fill="#7eb8f7"/>
+        <text x="260" y="410" text-anchor="middle" font-size="20" fill="white">🚀</text>
+        <text x="260" y="428" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="white" letter-spacing="0.5">DÉPLOIEMENT</text>
+        <!-- Label bas -->
+        <text x="260" y="466" text-anchor="middle" font-family="DM Mono,monospace" font-size="12" fill="#e8eef8" font-weight="500">Déploiement</text>
+        <text x="260" y="480" text-anchor="middle" font-family="DM Mono,monospace" font-size="10" fill="#5a6a8a">Opérationnel en 2 semaines</text>
+
+        <!-- NŒUD 4 — gauche — Résultats (105, 260) -->
+        <circle cx="105" cy="260" r="36" fill="#1a3a6e"/>
+        <text x="105" y="255" text-anchor="middle" font-size="20" fill="white">📈</text>
+        <text x="105" y="273" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="white" letter-spacing="0.5">RÉSULTATS</text>
+        <!-- Label gauche -->
+        <text x="62" y="250" text-anchor="end" font-family="DM Mono,monospace" font-size="12" fill="#e8eef8" font-weight="500">Résultats</text>
+        <text x="62" y="264" text-anchor="end" font-family="DM Mono,monospace" font-size="10" fill="#5a6a8a">mesurables</text>
 
         <!-- Cercle central -->
-        <circle cx="300" cy="300" r="80" fill="rgba(0,71,171,0.1)" stroke="#4488ff" stroke-width="1.5" stroke-opacity="0.35"/>
-        <text x="300" y="293" text-anchor="middle" font-family="DM Serif Display,serif" font-size="14" fill="#7eb8f7" font-style="italic">relation</text>
-        <text x="300" y="314" text-anchor="middle" font-family="DM Serif Display,serif" font-size="14" fill="#7eb8f7" font-style="italic">long terme</text>
+        <circle cx="260" cy="260" r="62" fill="rgba(0,71,171,0.15)" stroke="#4488ff" stroke-width="1" stroke-opacity="0.3"/>
+        <text x="260" y="252" text-anchor="middle" font-family="DM Serif Display,serif" font-size="12" fill="#7eb8f7" font-style="italic">amélioration</text>
+        <text x="260" y="268" text-anchor="middle" font-family="DM Serif Display,serif" font-size="12" fill="#7eb8f7" font-style="italic">continue</text>
 
-        <!-- ÉTAPE 1 — Audit (haut, 300,130) -->
-        <circle cx="300" cy="130" r="30" fill="#0a1628" stroke="#4488ff" stroke-width="2.5"/>
-        <text x="300" y="124" text-anchor="middle" font-family="DM Mono,monospace" font-size="10" fill="#7eb8f7" font-weight="500">01</text>
-        <text x="300" y="141" text-anchor="middle" font-size="13" fill="#ffffff">📋</text>
-        <text x="300" y="74" text-anchor="middle" font-family="DM Mono,monospace" font-size="12" fill="#e8eef8" font-weight="500" letter-spacing="1">AUDIT</text>
-        <text x="300" y="90" text-anchor="middle" font-family="DM Mono,monospace" font-size="9" fill="#5a6a8a">On identifie vos frictions</text>
-
-        <!-- ÉTAPE 2 — Solution (droite, 470,300) -->
-        <circle cx="470" cy="300" r="30" fill="#0a1628" stroke="#4488ff" stroke-width="2.5"/>
-        <text x="470" y="294" text-anchor="middle" font-family="DM Mono,monospace" font-size="10" fill="#7eb8f7" font-weight="500">02</text>
-        <text x="470" y="311" text-anchor="middle" font-size="13" fill="#ffffff">⚙️</text>
-        <text x="556" y="294" text-anchor="middle" font-family="DM Mono,monospace" font-size="11" fill="#e8eef8" font-weight="500" letter-spacing="1">SOLUTION</text>
-        <text x="556" y="309" text-anchor="middle" font-family="DM Mono,monospace" font-size="9" fill="#5a6a8a">Sur mesure</text>
-
-        <!-- ÉTAPE 3 — Déploiement (bas, 300,470) -->
-        <circle cx="300" cy="470" r="30" fill="#0a1628" stroke="#4488ff" stroke-width="2.5"/>
-        <text x="300" y="464" text-anchor="middle" font-family="DM Mono,monospace" font-size="10" fill="#7eb8f7" font-weight="500">03</text>
-        <text x="300" y="481" text-anchor="middle" font-size="13" fill="#ffffff">🚀</text>
-        <text x="300" y="524" text-anchor="middle" font-family="DM Mono,monospace" font-size="12" fill="#e8eef8" font-weight="500" letter-spacing="1">DÉPLOIEMENT</text>
-        <text x="300" y="540" text-anchor="middle" font-family="DM Mono,monospace" font-size="9" fill="#5a6a8a">Opérationnel en 2 semaines</text>
-
-        <!-- ÉTAPE 4 — Résultats (gauche, 130,300) -->
-        <circle cx="130" cy="300" r="30" fill="#0a1628" stroke="#4488ff" stroke-width="2.5"/>
-        <text x="130" y="294" text-anchor="middle" font-family="DM Mono,monospace" font-size="10" fill="#7eb8f7" font-weight="500">04</text>
-        <text x="130" y="311" text-anchor="middle" font-size="13" fill="#ffffff">📈</text>
-        <text x="44" y="294" text-anchor="middle" font-family="DM Mono,monospace" font-size="11" fill="#e8eef8" font-weight="500" letter-spacing="1">RÉSULTATS</text>
-        <text x="44" y="309" text-anchor="middle" font-family="DM Mono,monospace" font-size="9" fill="#5a6a8a">Mesurables</text>
-
-        <!-- Badge amélioration continue sur arc gauche -->
-        <rect x="168" y="152" width="64" height="36" rx="3" fill="rgba(126,184,247,0.1)" stroke="rgba(126,184,247,0.35)" stroke-width="1"/>
-        <text x="200" y="168" text-anchor="middle" font-family="DM Mono,monospace" font-size="8" fill="#7eb8f7" letter-spacing="0.5">AMÉLIORATION</text>
-        <text x="200" y="181" text-anchor="middle" font-family="DM Mono,monospace" font-size="8" fill="#7eb8f7" letter-spacing="0.5">CONTINUE ↺</text>
       </svg>
 
       <!-- Version mobile -->
