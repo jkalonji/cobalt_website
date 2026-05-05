@@ -139,30 +139,43 @@
     background: var(--ink);
     color: var(--cream);
     overflow-x: hidden;
-    cursor: none;
   }
 
-  /* CUSTOM CURSOR */
-  .cursor {
-    width: 12px; height: 12px;
-    background: var(--cobalt-light);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: transform 0.1s ease, width 0.2s, height 0.2s;
-    mix-blend-mode: difference;
+  /* CUSTOM CURSOR — pointer devices only */
+  @media (hover: hover) and (pointer: fine) {
+    body { cursor: none; }
+    .cursor {
+      width: 12px; height: 12px;
+      background: var(--cobalt-light);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease, width 0.2s, height 0.2s;
+      mix-blend-mode: difference;
+    }
+    .cursor-ring {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(68,136,255,0.5);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.25s ease, width 0.3s, height 0.3s, opacity 0.3s;
+    }
   }
-  .cursor-ring {
-    width: 36px; height: 36px;
-    border: 1px solid rgba(68,136,255,0.5);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: transform 0.25s ease, width 0.3s, height 0.3s, opacity 0.3s;
+
+  /* Fade-in initial state — only when JS is available */
+  .js-ready .problem-item,
+  .js-ready .stat,
+  .js-ready .product-card,
+  .js-ready .sim-card,
+  .js-ready .info-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s;
   }
 
   /* GRAIN OVERLAY */
@@ -1707,6 +1720,8 @@
 </footer>
 
 <script>
+  document.documentElement.classList.add('js-ready');
+
   // Glow CTA button
   const glowCta = document.getElementById('glowCta');
   if (glowCta) {
@@ -1718,43 +1733,45 @@
     });
   }
 
-  // Custom cursor
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
+  // Custom cursor — pointer devices only
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
 
-  let mx = 0, my = 0, rx = 0, ry = 0;
+    let mx = 0, my = 0, rx = 0, ry = 0;
 
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx + 'px';
-    cursor.style.top = my + 'px';
-  });
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+    });
 
-  function animateRing() {
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
-    ring.style.left = rx + 'px';
-    ring.style.top = ry + 'px';
-    requestAnimationFrame(animateRing);
+    function animateRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    document.querySelectorAll('a, button, input, textarea, .product-card, .problem-item, .stat').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.width = '20px';
+        cursor.style.height = '20px';
+        ring.style.width = '60px';
+        ring.style.height = '60px';
+        ring.style.opacity = '0.4';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.width = '12px';
+        cursor.style.height = '12px';
+        ring.style.width = '36px';
+        ring.style.height = '36px';
+        ring.style.opacity = '1';
+      });
+    });
   }
-  animateRing();
-
-  document.querySelectorAll('a, button, input, textarea, .product-card, .problem-item, .stat').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.style.width = '20px';
-      cursor.style.height = '20px';
-      ring.style.width = '60px';
-      ring.style.height = '60px';
-      ring.style.opacity = '0.4';
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.style.width = '12px';
-      cursor.style.height = '12px';
-      ring.style.width = '36px';
-      ring.style.height = '36px';
-      ring.style.opacity = '1';
-    });
-  });
 
   // FAQ accordion
   document.querySelectorAll('.faq-item').forEach(item => {
@@ -1776,9 +1793,6 @@
   }, { threshold: 0.1 });
 
   document.querySelectorAll('.problem-item, .stat, .product-card, .sim-card, .info-item').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease, background 0.3s';
     observer.observe(el);
   });
 
@@ -1832,6 +1846,7 @@
   ];
 
   (function initOrbital() {
+    if (!window.matchMedia('(min-width: 769px)').matches) return;
     const container = document.getElementById('orbitalTimeline');
     const nodesContainer = document.getElementById('orbitalNodes');
     if (!container || !nodesContainer) return;
@@ -1956,6 +1971,11 @@
       }
       rafId = requestAnimationFrame(tick);
     }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) cancelAnimationFrame(rafId);
+      else rafId = requestAnimationFrame(tick);
+    });
 
     updatePositions();
     tick();
