@@ -926,7 +926,7 @@
     transition: max-height 0.4s ease;
   }
 
-  .sector-item.open .sector-body { max-height: 400px; }
+  .sector-item.open .sector-body { max-height: var(--sector-body-h, 9999px); }
 
   .sector-stats {
     display: grid;
@@ -1478,7 +1478,7 @@
 
       <!-- Cabinet médical -->
       <div class="sector-item" data-sector="medical">
-        <div class="sector-header">
+        <div class="sector-header" tabindex="0" role="button" aria-expanded="false">
           <div class="sector-header-left">
             <span class="sector-icon">🏥</span>
             <span class="sector-name">Cabinet médical &amp; paramédical</span>
@@ -1505,7 +1505,7 @@
 
       <!-- Restaurant -->
       <div class="sector-item" data-sector="restaurant">
-        <div class="sector-header">
+        <div class="sector-header" tabindex="0" role="button" aria-expanded="false">
           <div class="sector-header-left">
             <span class="sector-icon">🍽️</span>
             <span class="sector-name">Restaurant &amp; hôtellerie</span>
@@ -1532,7 +1532,7 @@
 
       <!-- Agence immobilière -->
       <div class="sector-item" data-sector="immo">
-        <div class="sector-header">
+        <div class="sector-header" tabindex="0" role="button" aria-expanded="false">
           <div class="sector-header-left">
             <span class="sector-icon">🏠</span>
             <span class="sector-name">Agence immobilière</span>
@@ -1650,27 +1650,27 @@
     <h2>Les questions qu'on nous pose le plus souvent.</h2>
     <div class="faq-list">
 
-      <div class="faq-item">
+      <div class="faq-item" tabindex="0" role="button" aria-expanded="false">
         <div class="faq-question">Qu'est-ce que Cobalt et à qui s'adressent ses solutions ?</div>
         <div class="faq-answer">Cobalt est une entreprise de services aux entreprises. Elle conçoit des solutions sur mesure pour éliminer les tâches répétitives et chronophages — en mobilisant, si c'est pertinent, des technologies d'intelligence artificielle. Cobalt s'adresse à toute structure ayant des processus manuels à optimiser : restaurants, cabinets médicaux, agences immobilières, salons, cabinets juridiques, PME et entreprises de services.</div>
       </div>
 
-      <div class="faq-item">
+      <div class="faq-item" tabindex="0" role="button" aria-expanded="false">
         <div class="faq-question">Comment fonctionne un agent vocal IA ?</div>
         <div class="faq-answer">L'agent vocal est configuré sur mesure selon votre activité. Une fois déployé, il répond à vos clients automatiquement pour les requêtes simples : prise de rendez-vous, questions fréquentes, prise de commande, SAV de premier niveau. Pour toute demande complexe, il redirige l'appel vers un opérateur humain.</div>
       </div>
 
-      <div class="faq-item">
+      <div class="faq-item" tabindex="0" role="button" aria-expanded="false">
         <div class="faq-question">Combien de temps faut-il pour déployer une solution ?</div>
         <div class="faq-answer">Pour une solution clé en main, le déploiement et les tests prennent environ deux semaines. Pour des besoins spécifiques, le délai est évalué lors du diagnostic initial. Cobalt s'inscrit dans une relation long terme : des diagnostics réguliers sont menés pour s'assurer que la solution reste alignée avec les réalités de votre entreprise.</div>
       </div>
 
-      <div class="faq-item">
+      <div class="faq-item" tabindex="0" role="button" aria-expanded="false">
         <div class="faq-question">Quelles tâches peut-on automatiser ?</div>
         <div class="faq-answer">Cobalt peut automatiser un large spectre de tâches : prise de contact et qualification de prospects, service après-vente de premier niveau, prise de commandes, analyse et visualisation de données, plannings, relances clients, emails répétitifs et saisies administratives.</div>
       </div>
 
-      <div class="faq-item">
+      <div class="faq-item" tabindex="0" role="button" aria-expanded="false">
         <div class="faq-question">Quel est le prix d'un audit Cobalt ?</div>
         <div class="faq-answer">Le premier échange est gratuit. Il permet d'identifier vos besoins et de dimensionner la mission ensemble. Le coût de l'audit approfondi est défini lors de ce premier contact, en fonction du périmètre et de la complexité des processus à analyser.</div>
       </div>
@@ -1775,10 +1775,20 @@
 
   // FAQ accordion
   document.querySelectorAll('.faq-item').forEach(item => {
-    item.addEventListener('click', () => {
+    const toggle = () => {
       const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-      if (!isOpen) item.classList.add('open');
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('open');
+        i.setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        item.setAttribute('aria-expanded', 'true');
+      }
+    };
+    item.addEventListener('click', toggle);
+    item.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
     });
   });
 
@@ -1798,11 +1808,23 @@
 
   // Sector accordions
   document.querySelectorAll('.sector-header').forEach(header => {
-    header.addEventListener('click', () => {
+    const toggle = () => {
       const item = header.closest('.sector-item');
       const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.sector-item').forEach(i => i.classList.remove('open'));
-      if (!isOpen) item.classList.add('open');
+      document.querySelectorAll('.sector-item').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.sector-header')?.setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        header.setAttribute('aria-expanded', 'true');
+        const body = item.querySelector('.sector-body');
+        body.style.setProperty('--sector-body-h', body.scrollHeight + 'px');
+      }
+    };
+    header.addEventListener('click', toggle);
+    header.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
     });
   });
 
@@ -1870,6 +1892,9 @@
       node.dataset.id = item.id;
       node.innerHTML = item.icon;
       node.title = item.title;
+      node.setAttribute('tabindex', '0');
+      node.setAttribute('role', 'button');
+      node.setAttribute('aria-pressed', 'false');
 
       const label = document.createElement('div');
       label.className = 'orbital-node-label';
@@ -1880,11 +1905,16 @@
         e.stopPropagation();
         toggleNode(item.id);
       });
+      node.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleNode(item.id); }
+      });
 
       wrap.appendChild(node);
       nodesContainer.appendChild(wrap);
       nodeEls[item.id] = { wrap, node };
     });
+
+    const cardTemplate = document.getElementById('cardTemplate');
 
     function toggleNode(id) {
       if (activeId === id) {
@@ -1899,6 +1929,7 @@
 
         const el = nodeEls[id];
         el.node.classList.add('active');
+        el.node.setAttribute('aria-pressed', 'true');
 
         // Pulser les nœuds liés
         const item = ORBITAL_DATA.find(d => d.id === id);
@@ -1906,14 +1937,10 @@
           nodeEls[rid]?.node.classList.add('pulsing');
         });
 
-        // Carte détail
-        const card = document.createElement('div');
-        card.className = 'orbital-card';
-        card.innerHTML = `
-          <div class="orbital-card-connector"></div>
-          <div class="orbital-card-title">${item.title}</div>
-          <div class="orbital-card-desc">${item.desc}</div>
-        `;
+        // Carte détail — template + textContent (no XSS)
+        const card = cardTemplate.content.cloneNode(true).firstElementChild;
+        card.querySelector('.orbital-card-title').textContent = item.title;
+        card.querySelector('.orbital-card-desc').textContent = item.desc;
         el.node.appendChild(card);
 
         // Centrer sur le nœud actif
@@ -1928,6 +1955,7 @@
         const el = nodeEls[item.id];
         if (!el) return;
         el.node.classList.remove('active', 'pulsing');
+        el.node.setAttribute('aria-pressed', 'false');
         const card = el.node.querySelector('.orbital-card');
         if (card) card.remove();
       });
