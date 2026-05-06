@@ -871,70 +871,78 @@
     white-space: nowrap;
   }
 
-  .sector-list {
+  /* GOOEY SECTOR TABS */
+  .sector-goo-svg { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+  .sector-tabs-wrapper {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    padding: 6px;
+    background: #060810;
+    filter: url(#sector-goo);
+    border-radius: 14px;
     margin-top: 16px;
+  }
+
+  .sector-tab-blob {
+    position: absolute;
+    background: var(--cobalt-light);
+    border-radius: 10px;
+    transition:
+      top 0.45s cubic-bezier(0.34, 1.1, 0.64, 1),
+      left 0.45s cubic-bezier(0.34, 1.1, 0.64, 1),
+      width 0.3s ease,
+      height 0.3s ease;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+  }
+
+  .sector-tab-blob.ready { opacity: 1; }
+
+  .sector-tab {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 16px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    color: var(--text-muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    width: 100%;
+  }
+
+  .sector-tab.active { color: #060810; font-weight: 600; }
+  .sector-tab:not(.active):hover { color: var(--cream); }
+  .sector-tab-icon { font-size: 15px; flex-shrink: 0; }
+  .sector-tab-label { overflow: hidden; text-overflow: ellipsis; }
+
+  .sector-panels {
+    margin-top: 2px;
     border: 1px solid rgba(68,136,255,0.1);
   }
 
-  .sector-item {
-    border-bottom: 1px solid rgba(68,136,255,0.1);
-  }
-
-  .sector-item:last-child { border-bottom: none; }
-
-  .sector-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 22px 32px;
-    cursor: pointer;
-    transition: background 0.25s;
-    user-select: none;
-  }
-
-  .sector-header:hover { background: rgba(68,136,255,0.04); }
-
-  .sector-header-left {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .sector-icon { font-size: 18px; }
-
-  .sector-name {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--cream);
-    letter-spacing: 0.03em;
-  }
-
-  .sector-toggle {
-    font-family: 'DM Mono', monospace;
-    font-size: 20px;
-    color: var(--cobalt-light);
-    transition: transform 0.3s ease;
-    line-height: 1;
-    flex-shrink: 0;
-  }
-
-  .sector-item.open .sector-toggle { transform: rotate(45deg); }
-
-  .sector-body {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease;
-  }
-
-  .sector-item.open .sector-body { max-height: var(--sector-body-h, 9999px); }
-
-  .sector-stats {
-    display: grid;
+  .sector-panel {
+    display: none;
     grid-template-columns: 1fr 1fr;
     gap: 1px;
     background: rgba(68,136,255,0.08);
-    border-top: 1px solid rgba(68,136,255,0.1);
   }
+
+  .sector-panel.active { display: grid; }
 
   .sector-stat {
     background: rgba(6,8,16,0.95);
@@ -986,8 +994,8 @@
   .sector-stat-source a:hover { color: var(--cobalt-light); }
 
   @media (max-width: 768px) {
-    .sector-stats { grid-template-columns: 1fr; }
-    .sector-header { padding: 18px 20px; }
+    .sector-tabs-wrapper { grid-template-columns: repeat(2, 1fr); }
+    .sector-panel { grid-template-columns: 1fr; }
     .sector-stat { padding: 24px 20px; }
   }
 
@@ -1468,168 +1476,138 @@
       <span class="sector-intro-line"></span>
     </div>
 
-    <div class="sector-list">
+    <!-- Gooey SVG filter -->
+    <svg class="sector-goo-svg" aria-hidden="true">
+      <defs>
+        <filter id="sector-goo">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" />
+          <feColorMatrix in="blur" type="matrix"
+            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
+            result="goo" />
+          <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+        </filter>
+      </defs>
+    </svg>
 
-      <!-- Cabinet médical -->
-      <div class="sector-item" data-sector="medical">
-        <div class="sector-header" tabindex="0" role="button" aria-expanded="false">
-          <div class="sector-header-left">
-            <span class="sector-icon">🏥</span>
-            <span class="sector-name">Cabinet médical &amp; paramédical</span>
-          </div>
-          <span class="sector-toggle">+</span>
+    <!-- Tab navigation -->
+    <div class="sector-tabs-wrapper" role="tablist" aria-label="Secteurs d'activité">
+      <div class="sector-tab-blob" aria-hidden="true"></div>
+      <button class="sector-tab" data-sector="medical" role="tab" tabindex="0">
+        <span class="sector-tab-icon">🏥</span>
+        <span class="sector-tab-label">Cabinet médical</span>
+      </button>
+      <button class="sector-tab" data-sector="restaurant" role="tab" tabindex="-1">
+        <span class="sector-tab-icon">🍽️</span>
+        <span class="sector-tab-label">Restaurant &amp; hôtellerie</span>
+      </button>
+      <button class="sector-tab" data-sector="immo" role="tab" tabindex="-1">
+        <span class="sector-tab-icon">🏠</span>
+        <span class="sector-tab-label">Agence immobilière</span>
+      </button>
+      <button class="sector-tab" data-sector="salon" role="tab" tabindex="-1">
+        <span class="sector-tab-icon">💇</span>
+        <span class="sector-tab-label">Salon &amp; Institut</span>
+      </button>
+      <button class="sector-tab" data-sector="juridique" role="tab" tabindex="-1">
+        <span class="sector-tab-icon">⚖️</span>
+        <span class="sector-tab-label">Cabinet juridique</span>
+      </button>
+      <button class="sector-tab" data-sector="pme" role="tab" tabindex="-1">
+        <span class="sector-tab-icon">🏭</span>
+        <span class="sector-tab-label">PME &amp; Artisans</span>
+      </button>
+    </div>
+
+    <!-- Content panels -->
+    <div class="sector-panels">
+
+      <div class="sector-panel" data-sector="medical" role="tabpanel">
+        <div class="sector-stat">
+          <div class="sector-stat-value">−80%</div>
+          <div class="sector-stat-label">de rendez-vous manqués</div>
+          <div class="sector-stat-context">Grâce aux rappels automatiques. Gain pouvant atteindre 35h/semaine pour le secrétariat humain.</div>
+          <div class="sector-stat-source"><a href="https://www.carecall.ai/blog/automatisation/secretaire-medicale-artificielle" target="_blank" rel="noopener">CareCall, 2025</a></div>
         </div>
-        <div class="sector-body">
-          <div class="sector-stats">
-            <div class="sector-stat">
-              <div class="sector-stat-value">−80%</div>
-              <div class="sector-stat-label">de rendez-vous manqués</div>
-              <div class="sector-stat-context">Grâce aux rappels automatiques. Gain pouvant atteindre 35h/semaine pour le secrétariat humain.</div>
-              <div class="sector-stat-source"><a href="https://www.carecall.ai/blog/automatisation/secretaire-medicale-artificielle" target="_blank" rel="noopener">CareCall, 2025</a></div>
-            </div>
-            <div class="sector-stat">
-              <div class="sector-stat-value">73%</div>
-              <div class="sector-stat-label">des RDV pris hors heures de bureau</div>
-              <div class="sector-stat-context">Les patients réservent quand ça leur convient (pas quand vous êtes disponibles).</div>
-              <div class="sector-stat-source"><a href="https://latenode.com/fr/blog/patient-communication-automation-in-healthcare-settings" target="_blank" rel="noopener">Latenode / NexSanté, 2025</a></div>
-            </div>
-          </div>
+        <div class="sector-stat">
+          <div class="sector-stat-value">73%</div>
+          <div class="sector-stat-label">des RDV pris hors heures de bureau</div>
+          <div class="sector-stat-context">Les patients réservent quand ça leur convient (pas quand vous êtes disponibles).</div>
+          <div class="sector-stat-source"><a href="https://latenode.com/fr/blog/patient-communication-automation-in-healthcare-settings" target="_blank" rel="noopener">Latenode / NexSanté, 2025</a></div>
         </div>
       </div>
 
-      <!-- Restaurant -->
-      <div class="sector-item" data-sector="restaurant">
-        <div class="sector-header" tabindex="0" role="button" aria-expanded="false">
-          <div class="sector-header-left">
-            <span class="sector-icon">🍽️</span>
-            <span class="sector-name">Restaurant &amp; hôtellerie</span>
-          </div>
-          <span class="sector-toggle">+</span>
+      <div class="sector-panel" data-sector="restaurant" role="tabpanel">
+        <div class="sector-stat">
+          <div class="sector-stat-value">−30%</div>
+          <div class="sector-stat-label">d'erreurs de préparation</div>
+          <div class="sector-stat-context">Les robots et systèmes IA limitent les erreurs en cuisine et libèrent du temps pour la créativité culinaire.</div>
+          <div class="sector-stat-source"><a href="https://www.materiel-horeca.com/guide/ia-et-restauration-2025-25-de-rentabilite-moins-de-gaspillage/" target="_blank" rel="noopener">Materiel-horeca.com, 2025</a></div>
         </div>
-        <div class="sector-body">
-          <div class="sector-stats">
-            <div class="sector-stat">
-              <div class="sector-stat-value">−30%</div>
-              <div class="sector-stat-label">d'erreurs de préparation</div>
-              <div class="sector-stat-context">Les robots et systèmes IA limitent les erreurs en cuisine et libèrent du temps pour la créativité culinaire.</div>
-              <div class="sector-stat-source"><a href="https://www.materiel-horeca.com/guide/ia-et-restauration-2025-25-de-rentabilite-moins-de-gaspillage/" target="_blank" rel="noopener">Materiel-horeca.com, 2025</a></div>
-            </div>
-            <div class="sector-stat">
-              <div class="sector-stat-value">77%</div>
-              <div class="sector-stat-label">des restaurateurs français utilisent déjà l'IA</div>
-              <div class="sector-stat-context">Pour 72 à 80% d'entre eux, le temps gagné se traduit par une présence accrue auprès des clients.</div>
-              <div class="sector-stat-source"><a href="https://fr.lightspeedhq.be/blog/ia-dans-la-restauration-un-atout-pour-moderniser-votre-restaurant/" target="_blank" rel="noopener">Lightspeed / Food Hotel Tech, 2025</a></div>
-            </div>
-          </div>
+        <div class="sector-stat">
+          <div class="sector-stat-value">77%</div>
+          <div class="sector-stat-label">des restaurateurs français utilisent déjà l'IA</div>
+          <div class="sector-stat-context">Pour 72 à 80% d'entre eux, le temps gagné se traduit par une présence accrue auprès des clients.</div>
+          <div class="sector-stat-source"><a href="https://fr.lightspeedhq.be/blog/ia-dans-la-restauration-un-atout-pour-moderniser-votre-restaurant/" target="_blank" rel="noopener">Lightspeed / Food Hotel Tech, 2025</a></div>
         </div>
       </div>
 
-      <!-- Agence immobilière -->
-      <div class="sector-item" data-sector="immo">
-        <div class="sector-header" tabindex="0" role="button" aria-expanded="false">
-          <div class="sector-header-left">
-            <span class="sector-icon">🏠</span>
-            <span class="sector-name">Agence immobilière</span>
-          </div>
-          <span class="sector-toggle">+</span>
+      <div class="sector-panel" data-sector="immo" role="tabpanel">
+        <div class="sector-stat">
+          <div class="sector-stat-value">−70%</div>
+          <div class="sector-stat-label">de temps de traitement des demandes initiales</div>
+          <div class="sector-stat-context">L'IA automatise la qualification des leads, la rédaction d'annonces et la planification des visites.</div>
+          <div class="sector-stat-source"><a href="https://keyzia.fr/ia-immobilier/ia-agence-immobiliere/" target="_blank" rel="noopener">Keyzia / Xerfi, 2025</a></div>
         </div>
-        <div class="sector-body">
-          <div class="sector-stats">
-            <div class="sector-stat">
-              <div class="sector-stat-value">−70%</div>
-              <div class="sector-stat-label">de temps de traitement des demandes initiales</div>
-              <div class="sector-stat-context">L'IA automatise la qualification des leads, la rédaction d'annonces et la planification des visites.</div>
-              <div class="sector-stat-source"><a href="https://keyzia.fr/ia-immobilier/ia-agence-immobiliere/" target="_blank" rel="noopener">Keyzia / Xerfi, 2025</a></div>
-            </div>
-            <div class="sector-stat">
-              <div class="sector-stat-value">×3,6</div>
-              <div class="sector-stat-label">de taux de conversion avec scoring IA des leads</div>
-              <div class="sector-stat-context">Les agents passent de 5% à 18% de taux de conversion grâce à la qualification automatisée des prospects.</div>
-              <div class="sector-stat-source"><a href="https://ia-lab-immo.com/blog/scoring-leads-automatise-ia-immobilier" target="_blank" rel="noopener">IA LAB Immo, 2025</a></div>
-            </div>
-          </div>
+        <div class="sector-stat">
+          <div class="sector-stat-value">×3,6</div>
+          <div class="sector-stat-label">de taux de conversion avec scoring IA des leads</div>
+          <div class="sector-stat-context">Les agents passent de 5% à 18% de taux de conversion grâce à la qualification automatisée des prospects.</div>
+          <div class="sector-stat-source"><a href="https://ia-lab-immo.com/blog/scoring-leads-automatise-ia-immobilier" target="_blank" rel="noopener">IA LAB Immo, 2025</a></div>
         </div>
       </div>
 
-
-      <!-- Salon & Institut -->
-      <div class="sector-item" data-sector="salon">
-        <div class="sector-header" tabindex="0" role="button" aria-expanded="false">
-          <div class="sector-header-left">
-            <span class="sector-icon">💇</span>
-            <span class="sector-name">Salon &amp; Institut de beauté</span>
-          </div>
-          <span class="sector-toggle">+</span>
+      <div class="sector-panel" data-sector="salon" role="tabpanel">
+        <div class="sector-stat">
+          <div class="sector-stat-value">−40%</div>
+          <div class="sector-stat-label">de rendez-vous non honorés</div>
+          <div class="sector-stat-context">Les rappels automatisés par SMS/email réduisent les no-shows de 30 % à moins de 5 %. Un salon moyen perd entre 2 500 et 5 000 €/mois sur les annulations de dernière minute.</div>
+          <div class="sector-stat-source"><a href="https://vocalyai.com/blog/salon-spa-appointment-booking-reduce-no-shows" target="_blank" rel="noopener">Vocaly AI, 2024</a></div>
         </div>
-        <div class="sector-body">
-          <div class="sector-stats">
-            <div class="sector-stat">
-              <div class="sector-stat-value">−40%</div>
-              <div class="sector-stat-label">de rendez-vous non honorés</div>
-              <div class="sector-stat-context">Les rappels automatisés par SMS/email réduisent les no-shows de 30 % à moins de 5 %. Un salon moyen perd entre 2 500 et 5 000 €/mois sur les annulations de dernière minute.</div>
-              <div class="sector-stat-source"><a href="https://vocalyai.com/blog/salon-spa-appointment-booking-reduce-no-shows" target="_blank" rel="noopener">Vocaly AI, 2024</a></div>
-            </div>
-            <div class="sector-stat">
-              <div class="sector-stat-value">50%</div>
-              <div class="sector-stat-label">des réservations prises hors heures d'ouverture</div>
-              <div class="sector-stat-context">Les salons les plus performants affichent 61 % de réservations en ligne de plus que la moyenne. Près de la moitié des RDV se prennent quand le salon est fermé.</div>
-              <div class="sector-stat-source"><a href="https://www.zenoti.com/thecheckin/beauty-wellness-industry-statistics-2024" target="_blank" rel="noopener">Zenoti, 2024</a></div>
-            </div>
-          </div>
+        <div class="sector-stat">
+          <div class="sector-stat-value">50%</div>
+          <div class="sector-stat-label">des réservations prises hors heures d'ouverture</div>
+          <div class="sector-stat-context">Les salons les plus performants affichent 61 % de réservations en ligne de plus que la moyenne. Près de la moitié des RDV se prennent quand le salon est fermé.</div>
+          <div class="sector-stat-source"><a href="https://www.zenoti.com/thecheckin/beauty-wellness-industry-statistics-2024" target="_blank" rel="noopener">Zenoti, 2024</a></div>
         </div>
       </div>
 
-      <!-- Cabinet juridique & comptable -->
-      <div class="sector-item" data-sector="juridique">
-        <div class="sector-header" tabindex="0" role="button" aria-expanded="false">
-          <div class="sector-header-left">
-            <span class="sector-icon">⚖️</span>
-            <span class="sector-name">Cabinet juridique &amp; comptable</span>
-          </div>
-          <span class="sector-toggle">+</span>
+      <div class="sector-panel" data-sector="juridique" role="tabpanel">
+        <div class="sector-stat">
+          <div class="sector-stat-value">74%</div>
+          <div class="sector-stat-label">des tâches facturables automatisables par l'IA</div>
+          <div class="sector-stat-context">Collecte d'informations, analyse de données, rédaction : les trois quarts des heures facturées peuvent être automatisées. L'adoption de l'IA dans les cabinets juridiques est passée de 19 % à 79 % en un an.</div>
+          <div class="sector-stat-source"><a href="https://www.clio.com/resources/legal-trends/2024-report/" target="_blank" rel="noopener">Clio Legal Trends Report, 2024</a></div>
         </div>
-        <div class="sector-body">
-          <div class="sector-stats">
-            <div class="sector-stat">
-              <div class="sector-stat-value">74%</div>
-              <div class="sector-stat-label">des tâches facturables automatisables par l'IA</div>
-              <div class="sector-stat-context">Collecte d'informations, analyse de données, rédaction : les trois quarts des heures facturées peuvent être automatisées. L'adoption de l'IA dans les cabinets juridiques est passée de 19 % à 79 % en un an.</div>
-              <div class="sector-stat-source"><a href="https://www.clio.com/resources/legal-trends/2024-report/" target="_blank" rel="noopener">Clio Legal Trends Report, 2024</a></div>
-            </div>
-            <div class="sector-stat">
-              <div class="sector-stat-value">+32,5</div>
-              <div class="sector-stat-label">jours de travail récupérés par collaborateur et par an</div>
-              <div class="sector-stat-context">La moitié des professionnels du droit économisent 1 à 5 heures par semaine grâce à l'IA générative, soit jusqu'à 260 heures — 32,5 jours ouvrés — récupérées chaque année.</div>
-              <div class="sector-stat-source"><a href="https://www.everlaw.com/blog/ai-and-law/lawyers-report-saving-up-to-32-5-working-days-per-year-with-generative-ai/" target="_blank" rel="noopener">Everlaw / ACEDS / ILTA, 2025</a></div>
-            </div>
-          </div>
+        <div class="sector-stat">
+          <div class="sector-stat-value">+32,5</div>
+          <div class="sector-stat-label">jours de travail récupérés par collaborateur et par an</div>
+          <div class="sector-stat-context">La moitié des professionnels du droit économisent 1 à 5 heures par semaine grâce à l'IA générative, soit jusqu'à 260 heures (32,5 jours ouvrés) récupérées chaque année.</div>
+          <div class="sector-stat-source"><a href="https://www.everlaw.com/blog/ai-and-law/lawyers-report-saving-up-to-32-5-working-days-per-year-with-generative-ai/" target="_blank" rel="noopener">Everlaw / ACEDS / ILTA, 2025</a></div>
         </div>
       </div>
 
-      <!-- PME & Artisans -->
-      <div class="sector-item" data-sector="pme">
-        <div class="sector-header" tabindex="0" role="button" aria-expanded="false">
-          <div class="sector-header-left">
-            <span class="sector-icon">🏭</span>
-            <span class="sector-name">PME &amp; Artisans</span>
-          </div>
-          <span class="sector-toggle">+</span>
+      <div class="sector-panel" data-sector="pme" role="tabpanel">
+        <div class="sector-stat">
+          <div class="sector-stat-value">91%</div>
+          <div class="sector-stat-label">des PME utilisant l'IA déclarent des gains d'efficacité</div>
+          <div class="sector-stat-context">Sur 5 000 PME interrogées dans 7 pays, 91 % constatent des gains d'efficacité, 76 % citent une innovation accrue et 65 % une amélioration des performances de leurs équipes.</div>
+          <div class="sector-stat-source"><a href="https://www.oecd.org/en/publications/ai-adoption-by-small-and-medium-sized-enterprises_426399c1-en.html" target="_blank" rel="noopener">OCDE, 2025</a></div>
         </div>
-        <div class="sector-body">
-          <div class="sector-stats">
-            <div class="sector-stat">
-              <div class="sector-stat-value">91%</div>
-              <div class="sector-stat-label">des PME utilisant l'IA déclarent des gains d'efficacité</div>
-              <div class="sector-stat-context">Sur 5 000 PME interrogées dans 7 pays, 91 % constatent des gains d'efficacité après adoption de l'IA générative, 76 % citent une innovation accrue et 65 % une amélioration des performances de leurs équipes.</div>
-              <div class="sector-stat-source"><a href="https://www.oecd.org/en/publications/ai-adoption-by-small-and-medium-sized-enterprises_426399c1-en.html" target="_blank" rel="noopener">OCDE, 2025</a></div>
-            </div>
-            <div class="sector-stat">
-              <div class="sector-stat-value">55%</div>
-              <div class="sector-stat-label">des TPE-PME françaises utilisent déjà l'IA</div>
-              <div class="sector-stat-context">En deux ans, l'adoption est passée de 15 % à 55 % dans les TPE-PME françaises. 58 % des dirigeants estiment que l'IA est un enjeu de survie à moyen terme pour leur entreprise.</div>
-              <div class="sector-stat-source"><a href="https://lelab.bpifrance.fr/Etudes/31-des-tpe-et-pme-utilisent-l-ia-generative" target="_blank" rel="noopener">Bpifrance Le Lab, 2025</a></div>
-            </div>
-          </div>
+        <div class="sector-stat">
+          <div class="sector-stat-value">55%</div>
+          <div class="sector-stat-label">des TPE-PME françaises utilisent déjà l'IA</div>
+          <div class="sector-stat-context">En deux ans, l'adoption est passée de 15 % à 55 % dans les TPE-PME françaises. 58 % des dirigeants estiment que l'IA est un enjeu de survie à moyen terme.</div>
+          <div class="sector-stat-source"><a href="https://lelab.bpifrance.fr/Etudes/31-des-tpe-et-pme-utilisent-l-ia-generative" target="_blank" rel="noopener">Bpifrance Le Lab, 2025</a></div>
         </div>
       </div>
 
@@ -1882,27 +1860,56 @@
     observer.observe(el);
   });
 
-  // Sector accordions
-  document.querySelectorAll('.sector-header').forEach(header => {
-    const toggle = () => {
-      const item = header.closest('.sector-item');
-      const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.sector-item').forEach(i => {
-        i.classList.remove('open');
-        i.querySelector('.sector-header')?.setAttribute('aria-expanded', 'false');
+  // Gooey sector tabs
+  (function () {
+    const wrapper = document.querySelector('.sector-tabs-wrapper');
+    const blob = document.querySelector('.sector-tab-blob');
+    const tabs = document.querySelectorAll('.sector-tab');
+    const panels = document.querySelectorAll('.sector-panel');
+    if (!wrapper || !blob || !tabs.length) return;
+
+    function moveBlob(tab) {
+      const wr = wrapper.getBoundingClientRect();
+      const tr = tab.getBoundingClientRect();
+      blob.style.top    = (tr.top  - wr.top)  + 'px';
+      blob.style.left   = (tr.left - wr.left) + 'px';
+      blob.style.width  = tr.width  + 'px';
+      blob.style.height = tr.height + 'px';
+    }
+
+    function activateTab(tab) {
+      tabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+        t.tabIndex = -1;
       });
-      if (!isOpen) {
-        item.classList.add('open');
-        header.setAttribute('aria-expanded', 'true');
-        const body = item.querySelector('.sector-body');
-        body.style.setProperty('--sector-body-h', body.scrollHeight + 'px');
-      }
-    };
-    header.addEventListener('click', toggle);
-    header.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      tab.tabIndex = 0;
+      moveBlob(tab);
+      const sector = tab.dataset.sector;
+      panels.forEach(p => p.classList.toggle('active', p.dataset.sector === sector));
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => activateTab(tab));
+      tab.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateTab(tab); }
+      });
     });
-  });
+
+    // Init — defer one frame so layout is painted before measuring
+    requestAnimationFrame(() => {
+      activateTab(tabs[0]);
+      blob.classList.add('ready');
+    });
+
+    // Reposition blob on resize
+    window.addEventListener('resize', () => {
+      const active = wrapper.querySelector('.sector-tab.active');
+      if (active) moveBlob(active);
+    });
+  }());
 
   // ── ORBITAL TIMELINE ──────────────────────────────────────────
   const ORBITAL_DATA = [
