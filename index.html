@@ -612,6 +612,14 @@
     align-items: center;
     justify-content: center;
     z-index: 10;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .orbital-center.hidden {
+    opacity: 0;
+    transform: scale(0.3);
+    pointer-events: none;
+    z-index: 1;
   }
 
   .orbital-core {
@@ -1938,16 +1946,20 @@
 
     const cardTemplate = document.getElementById('cardTemplate');
 
+    const orbitalCenter = container.querySelector('.orbital-center');
+
     function toggleNode(id) {
       if (activeId === id) {
         // Fermer
         closeAll();
         autoRotate = true;
         activeId = null;
+        orbitalCenter.classList.remove('hidden');
       } else {
         closeAll();
         activeId = id;
         autoRotate = false;
+        orbitalCenter.classList.add('hidden');
 
         const el = nodeEls[id];
         el.node.classList.add('active');
@@ -1989,6 +2001,7 @@
         closeAll();
         autoRotate = true;
         activeId = null;
+        orbitalCenter.classList.remove('hidden');
       }
     });
 
