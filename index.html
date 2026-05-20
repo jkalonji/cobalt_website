@@ -42,12 +42,22 @@
       "inLanguage": "fr-FR"
     },
     {
-      "@type": "Organization",
+      "@type": ["Organization", "LocalBusiness"],
       "@id": "https://cobaltgroupe.xyz/#organization",
       "name": "Cobalt",
       "url": "https://cobaltgroupe.xyz/",
       "description": "Cobalt est une entreprise de services aux entreprises qui conçoit des solutions sur mesure pour automatiser les tâches répétitives. Selon les besoins du client, Cobalt mobilise des solutions d'intelligence artificielle, notamment des agents vocaux IA et des outils d'automatisation de processus internes.",
-      "areaServed": "FR",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "75 quai de la Seine",
+        "addressLocality": "Paris",
+        "postalCode": "75019",
+        "addressCountry": "FR"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "France"
+      },
       "knowsAbout": [
         "Automatisation de processus métier",
         "Agent vocal IA",
@@ -58,6 +68,10 @@
       "audience": {
         "@type": "Audience",
         "audienceType": "Entreprises, PME, cabinets médicaux, restaurants, agences immobilières, salons, cabinets juridiques et comptables"
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": ["#hero", "#solution", "#faq"]
       }
     },
     {
