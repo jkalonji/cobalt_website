@@ -506,6 +506,233 @@
     </div>
   </section>
 
+  <!-- ═══ QUIZ PROFIL ═══ -->
+  <section class="section" id="profil-quiz">
+    <div class="section-label">Votre profil</div>
+    <h2 style="margin-bottom: 16px;">Trouvez le contenu fait pour vous.</h2>
+    <p style="color: var(--text-muted); margin-bottom: 48px; max-width: 560px;">Deux questions, un résultat personnalisé. Sélectionnez votre situation et votre rapport à l'IA.</p>
+
+    <div class="quiz-block">
+      <!-- Question 1 -->
+      <div class="quiz-question-label">Vous êtes…</div>
+      <div class="quiz-chips" id="quiz-who">
+        <button class="quiz-chip" data-group="who" data-value="individu" onclick="quizPick(this)">
+          <span class="chip-icon"><i class="bi bi-person"></i></span>
+          <span class="chip-label">Individu</span>
+        </button>
+        <button class="quiz-chip" data-group="who" data-value="pme" onclick="quizPick(this)">
+          <span class="chip-icon"><i class="bi bi-shop"></i></span>
+          <span class="chip-label">Petite entreprise</span>
+        </button>
+        <button class="quiz-chip" data-group="who" data-value="corp" onclick="quizPick(this)">
+          <span class="chip-icon"><i class="bi bi-building"></i></span>
+          <span class="chip-label">Grande entreprise</span>
+        </button>
+      </div>
+
+      <!-- Question 2 -->
+      <div class="quiz-question-label" style="margin-top: 32px;">Votre niveau en IA…</div>
+      <div class="quiz-chips" id="quiz-level">
+        <button class="quiz-chip" data-group="level" data-value="curieux" onclick="quizPick(this)">
+          <span class="chip-icon"><i class="bi bi-lightbulb"></i></span>
+          <span class="chip-label">Curieux</span>
+        </button>
+        <button class="quiz-chip" data-group="level" data-value="expert" onclick="quizPick(this)">
+          <span class="chip-icon"><i class="bi bi-cpu"></i></span>
+          <span class="chip-label">Expert</span>
+        </button>
+      </div>
+
+      <!-- Zone résultat -->
+      <div class="quiz-result" id="quiz-result" aria-live="polite">
+        <div class="quiz-result-inner" id="quiz-result-inner"></div>
+      </div>
+
+      <!-- Bouton reset -->
+      <button class="quiz-reset" id="quiz-reset" onclick="quizReset()" style="display:none;">
+        <i class="bi bi-arrow-counterclockwise"></i> Refaire le test
+      </button>
+    </div>
+  </section>
+
+  <style>
+    .quiz-block {
+      max-width: 720px;
+    }
+    .quiz-question-label {
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .quiz-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .quiz-chip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 22px;
+      border-radius: 8px;
+      border: 1px solid rgba(68, 136, 255, 0.25);
+      background: rgba(68, 136, 255, 0.04);
+      color: #e8eef8;
+      cursor: pointer;
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+    }
+    .quiz-chip:hover {
+      border-color: rgba(68, 136, 255, 0.6);
+      background: rgba(68, 136, 255, 0.08);
+    }
+    .quiz-chip.active {
+      border-color: var(--cobalt-light);
+      background: rgba(68, 136, 255, 0.15);
+      color: var(--cobalt-light);
+    }
+    .chip-icon {
+      font-size: 18px;
+      line-height: 1;
+    }
+    .chip-label {
+      font-weight: 400;
+    }
+    .quiz-result {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+      opacity: 0;
+      margin-top: 0;
+    }
+    .quiz-result.visible {
+      max-height: 600px;
+      opacity: 1;
+      margin-top: 40px;
+    }
+    .quiz-result-inner {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .quiz-card {
+      padding: 24px;
+      border-radius: 10px;
+      border: 1px solid rgba(68, 136, 255, 0.2);
+      background: rgba(26, 58, 110, 0.18);
+      transition: border-color 0.2s;
+    }
+    .quiz-card:hover {
+      border-color: rgba(68, 136, 255, 0.5);
+    }
+    .quiz-card-icon {
+      font-size: 22px;
+      color: var(--cobalt-light);
+      margin-bottom: 12px;
+    }
+    .quiz-card-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: #e8eef8;
+      margin-bottom: 8px;
+    }
+    .quiz-card-text {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .quiz-reset {
+      margin-top: 24px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      padding: 8px 0;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .quiz-reset:hover { color: var(--cobalt-light); }
+    @media (max-width: 768px) {
+      .quiz-chips { gap: 8px; }
+      .quiz-chip { padding: 12px 16px; font-size: 13px; }
+      .quiz-result-inner { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <script>
+    const quizState = { who: null, level: null };
+
+    const quizContent = {
+      individu_curieux: [
+        { icon: 'bi bi-rocket-takeoff', title: 'Par où commencer ?', text: 'Contenu personnalisé pour individu curieux — à compléter avec votre PDF.' },
+        { icon: 'bi bi-journal-text', title: 'Premiers pas concrets', text: 'Contenu personnalisé pour individu curieux — à compléter avec votre PDF.' }
+      ],
+      individu_expert: [
+        { icon: 'bi bi-code-slash', title: 'Aller plus loin', text: 'Contenu personnalisé pour individu expert — à compléter avec votre PDF.' },
+        { icon: 'bi bi-diagram-3', title: 'Automatisez en profondeur', text: 'Contenu personnalisé pour individu expert — à compléter avec votre PDF.' }
+      ],
+      pme_curieux: [
+        { icon: 'bi bi-graph-up-arrow', title: 'Ce que l'IA peut faire pour vous', text: 'Contenu personnalisé pour petite entreprise curieuse — à compléter avec votre PDF.' },
+        { icon: 'bi bi-clock-history', title: 'Tâches à déléguer dès maintenant', text: 'Contenu personnalisé pour petite entreprise curieuse — à compléter avec votre PDF.' }
+      ],
+      pme_expert: [
+        { icon: 'bi bi-gear-wide-connected', title: 'Intégration avancée', text: 'Contenu personnalisé pour petite entreprise experte — à compléter avec votre PDF.' },
+        { icon: 'bi bi-arrow-repeat', title: 'Automatisation complète', text: 'Contenu personnalisé pour petite entreprise experte — à compléter avec votre PDF.' }
+      ],
+      corp_curieux: [
+        { icon: 'bi bi-people', title: 'Transformation IA d'équipe', text: 'Contenu personnalisé pour grande entreprise curieuse — à compléter avec votre PDF.' },
+        { icon: 'bi bi-shield-check', title: 'Déploiement structuré', text: 'Contenu personnalisé pour grande entreprise curieuse — à compléter avec votre PDF.' }
+      ],
+      corp_expert: [
+        { icon: 'bi bi-server', title: 'Architecture IA', text: 'Contenu personnalisé pour grande entreprise experte — à compléter avec votre PDF.' },
+        { icon: 'bi bi-lock', title: 'Gouvernance & conformité', text: 'Contenu personnalisé pour grande entreprise experte — à compléter avec votre PDF.' }
+      ]
+    };
+
+    function quizPick(el) {
+      const group = el.dataset.group;
+      document.querySelectorAll(`.quiz-chip[data-group="${group}"]`).forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      quizState[group] = el.dataset.value;
+      quizRender();
+    }
+
+    function quizRender() {
+      if (!quizState.who || !quizState.level) return;
+      const key = `${quizState.who}_${quizState.level}`;
+      const cards = quizContent[key] || [];
+      const html = cards.map(c => `
+        <div class="quiz-card">
+          <div class="quiz-card-icon"><i class="${c.icon}"></i></div>
+          <div class="quiz-card-title">${c.title}</div>
+          <div class="quiz-card-text">${c.text}</div>
+        </div>
+      `).join('');
+      document.getElementById('quiz-result-inner').innerHTML = html;
+      const result = document.getElementById('quiz-result');
+      result.classList.add('visible');
+      document.getElementById('quiz-reset').style.display = 'flex';
+    }
+
+    function quizReset() {
+      quizState.who = null;
+      quizState.level = null;
+      document.querySelectorAll('.quiz-chip').forEach(c => c.classList.remove('active'));
+      const result = document.getElementById('quiz-result');
+      result.classList.remove('visible');
+      document.getElementById('quiz-reset').style.display = 'none';
+      document.getElementById('quiz-result-inner').innerHTML = '';
+    }
+  </script>
+
   <section class="cta-section" id="contact">
     <div class="cta-left">
       <div class="section-label" style="margin-bottom: 28px;">Premier échange gratuit</div>
