@@ -556,114 +556,176 @@
   </section>
 
   <style>
-    .quiz-block {
-      max-width: 720px;
-    }
+    .quiz-block { max-width: 780px; }
     .quiz-question-label {
-      font-size: 13px;
-      letter-spacing: 0.12em;
+      font-size: 11px;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--text-muted);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
-    .quiz-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
+    .quiz-chips { display: flex; flex-wrap: wrap; gap: 10px; }
     .quiz-chip {
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 14px 22px;
+      padding: 13px 20px;
       border-radius: 8px;
-      border: 1px solid rgba(68, 136, 255, 0.25);
-      background: rgba(68, 136, 255, 0.04);
+      border: 1px solid rgba(68,136,255,0.22);
+      background: rgba(68,136,255,0.04);
       color: #e8eef8;
       cursor: pointer;
       font-family: 'DM Mono', monospace;
-      font-size: 14px;
+      font-size: 13px;
       transition: border-color 0.2s, background 0.2s, color 0.2s;
     }
     .quiz-chip:hover {
-      border-color: rgba(68, 136, 255, 0.6);
-      background: rgba(68, 136, 255, 0.08);
+      border-color: rgba(68,136,255,0.55);
+      background: rgba(68,136,255,0.08);
     }
     .quiz-chip.active {
       border-color: var(--cobalt-light);
-      background: rgba(68, 136, 255, 0.15);
+      background: rgba(68,136,255,0.14);
       color: var(--cobalt-light);
     }
-    .chip-icon {
-      font-size: 18px;
-      line-height: 1;
-    }
-    .chip-label {
-      font-weight: 400;
-    }
+    .chip-icon { font-size: 17px; line-height: 1; }
     .quiz-result {
       overflow: hidden;
       max-height: 0;
-      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
       opacity: 0;
       margin-top: 0;
+      transition: max-height 0.55s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease, margin-top 0.4s ease;
     }
     .quiz-result.visible {
-      max-height: 600px;
+      max-height: 1200px;
       opacity: 1;
-      margin-top: 40px;
+      margin-top: 48px;
     }
-    .quiz-result-inner {
+    .quiz-result-header {
+      margin-bottom: 28px;
+    }
+    .quiz-result-tag {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cobalt-light);
+      margin-bottom: 10px;
+    }
+    .quiz-result-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(20px, 3vw, 26px);
+      color: #e8eef8;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .quiz-result-intro {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 580px;
+    }
+    .quiz-cards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 16px;
+      margin-bottom: 32px;
     }
     .quiz-card {
       padding: 24px;
       border-radius: 10px;
-      border: 1px solid rgba(68, 136, 255, 0.2);
-      background: rgba(26, 58, 110, 0.18);
-      transition: border-color 0.2s;
+      border: 1px solid rgba(68,136,255,0.18);
+      background: rgba(26,58,110,0.15);
+      transition: border-color 0.2s, background 0.2s;
     }
     .quiz-card:hover {
-      border-color: rgba(68, 136, 255, 0.5);
+      border-color: rgba(68,136,255,0.45);
+      background: rgba(26,58,110,0.25);
     }
     .quiz-card-icon {
-      font-size: 22px;
+      font-size: 20px;
       color: var(--cobalt-light);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
     .quiz-card-title {
-      font-size: 15px;
-      font-weight: 500;
+      font-size: 14px;
+      font-weight: 600;
       color: #e8eef8;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+      letter-spacing: 0.01em;
     }
     .quiz-card-text {
       font-size: 13px;
       color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+    .quiz-card-bullets {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .quiz-card-bullets li {
+      font-size: 12px;
+      color: var(--text-muted);
       line-height: 1.6;
+      padding-left: 14px;
+      position: relative;
+      margin-bottom: 4px;
+    }
+    .quiz-card-bullets li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--cobalt-light);
+      opacity: 0.6;
+    }
+    .quiz-result-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 24px;
+      border-radius: 8px;
+      border: 1px solid var(--cobalt-light);
+      color: var(--cobalt-light);
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: background 0.2s, color 0.2s;
+    }
+    .quiz-result-cta:hover {
+      background: var(--cobalt-light);
+      color: #060810;
+    }
+    .quiz-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(68,136,255,0.12);
+      margin: 36px 0;
     }
     .quiz-reset {
-      margin-top: 24px;
+      margin-top: 20px;
       background: none;
       border: none;
       color: var(--text-muted);
       font-family: 'DM Mono', monospace;
-      font-size: 12px;
-      letter-spacing: 0.08em;
+      font-size: 11px;
+      letter-spacing: 0.1em;
       cursor: pointer;
-      padding: 8px 0;
+      padding: 6px 0;
       transition: color 0.2s;
-      display: flex;
+      display: none;
       align-items: center;
       gap: 6px;
+      text-transform: uppercase;
     }
     .quiz-reset:hover { color: var(--cobalt-light); }
     @media (max-width: 768px) {
       .quiz-chips { gap: 8px; }
-      .quiz-chip { padding: 12px 16px; font-size: 13px; }
-      .quiz-result-inner { grid-template-columns: 1fr; }
+      .quiz-chip { padding: 11px 14px; font-size: 12px; }
+      .quiz-cards-grid { grid-template-columns: 1fr; }
     }
   </style>
 
@@ -671,30 +733,156 @@
     const quizState = { who: null, level: null };
 
     const quizContent = {
-      individu_curieux: [
-        { icon: 'bi bi-rocket-takeoff', title: 'Par où commencer ?', text: 'Contenu personnalisé pour individu curieux — à compléter avec votre PDF.' },
-        { icon: 'bi bi-journal-text', title: 'Premiers pas concrets', text: 'Contenu personnalisé pour individu curieux — à compléter avec votre PDF.' }
-      ],
-      individu_expert: [
-        { icon: 'bi bi-code-slash', title: 'Aller plus loin', text: 'Contenu personnalisé pour individu expert — à compléter avec votre PDF.' },
-        { icon: 'bi bi-diagram-3', title: 'Automatisez en profondeur', text: 'Contenu personnalisé pour individu expert — à compléter avec votre PDF.' }
-      ],
-      pme_curieux: [
-        { icon: 'bi bi-graph-up-arrow', title: 'Ce que l'IA peut faire pour vous', text: 'Contenu personnalisé pour petite entreprise curieuse — à compléter avec votre PDF.' },
-        { icon: 'bi bi-clock-history', title: 'Tâches à déléguer dès maintenant', text: 'Contenu personnalisé pour petite entreprise curieuse — à compléter avec votre PDF.' }
-      ],
-      pme_expert: [
-        { icon: 'bi bi-gear-wide-connected', title: 'Intégration avancée', text: 'Contenu personnalisé pour petite entreprise experte — à compléter avec votre PDF.' },
-        { icon: 'bi bi-arrow-repeat', title: 'Automatisation complète', text: 'Contenu personnalisé pour petite entreprise experte — à compléter avec votre PDF.' }
-      ],
-      corp_curieux: [
-        { icon: 'bi bi-people', title: 'Transformation IA d'équipe', text: 'Contenu personnalisé pour grande entreprise curieuse — à compléter avec votre PDF.' },
-        { icon: 'bi bi-shield-check', title: 'Déploiement structuré', text: 'Contenu personnalisé pour grande entreprise curieuse — à compléter avec votre PDF.' }
-      ],
-      corp_expert: [
-        { icon: 'bi bi-server', title: 'Architecture IA', text: 'Contenu personnalisé pour grande entreprise experte — à compléter avec votre PDF.' },
-        { icon: 'bi bi-lock', title: 'Gouvernance & conformité', text: 'Contenu personnalisé pour grande entreprise experte — à compléter avec votre PDF.' }
-      ]
+      individu_curieux: {
+        tag: 'Individu · Curieux',
+        title: 'L\'IA, par où commencer concrètement ?',
+        intro: 'Vous entendez parler d\'IA partout mais vous ne savez pas encore comment l\'utiliser dans votre quotidien. Bonne nouvelle : les premières applications utiles sont simples, gratuites et accessibles dès aujourd\'hui.',
+        cards: [
+          {
+            icon: 'bi bi-lightbulb',
+            title: 'Comprendre avant d\'utiliser',
+            text: 'L\'IA ne devine pas vos intentions — elle interprète exactement ce que vous lui écrivez. Plus votre demande est précise, meilleur est le résultat.',
+            bullets: ['Donnez un rôle, un contexte et un objectif', 'Précisez le format attendu (liste, email, tableau…)', 'Affinez en plusieurs échanges plutôt qu\'en une seule demande']
+          },
+          {
+            icon: 'bi bi-journal-text',
+            title: 'La méthode C.O.R.E.',
+            text: 'Un cadre mnémotechnique simple pour structurer n\'importe quelle demande à une IA et obtenir des réponses directement utilisables.',
+            bullets: ['C — Contexte : votre situation actuelle', 'O — Objectif : ce que vous voulez obtenir', 'R — Rôle : quel expert l\'IA doit incarner', 'E — Exigences : format, ton, longueur']
+          },
+          {
+            icon: 'bi bi-rocket-takeoff',
+            title: 'Vos premiers gains rapides',
+            text: 'Des tâches du quotidien que vous pouvez déléguer à l\'IA dès cette semaine, sans aucune compétence technique préalable.',
+            bullets: ['Rédiger ou reformuler des emails professionnels', 'Résumer un long document en points clés', 'Préparer une liste de questions pour un entretien', 'Générer des idées sur n\'importe quel sujet']
+          }
+        ]
+      },
+      individu_expert: {
+        tag: 'Individu · Expert',
+        title: 'Automatisez votre quotidien avec des workflows IA.',
+        intro: 'Vous maîtrisez déjà les bases du prompting. L\'étape suivante consiste à chaîner les outils, automatiser des flux récurrents et gagner du temps sur les tâches à faible valeur ajoutée.',
+        cards: [
+          {
+            icon: 'bi bi-diagram-3',
+            title: 'Chaîner les outils IA',
+            text: 'Combiner plusieurs modèles et services pour créer des workflows autonomes qui traitent des tâches de bout en bout sans intervention manuelle.',
+            bullets: ['Connecter un LLM à vos sources de données', 'Automatiser la veille et la synthèse d\'information', 'Créer des agents spécialisés par domaine']
+          },
+          {
+            icon: 'bi bi-code-slash',
+            title: 'Prompts avancés & Few-shot',
+            text: 'Aller au-delà du prompt simple : guider le modèle avec des exemples, contraindre les sorties et fiabiliser les résultats sur des tâches complexes.',
+            bullets: ['Few-shot learning : montrer des exemples de résultats attendus', 'Chain-of-thought pour les raisonnements complexes', 'Contraindre les sorties en JSON pour l\'intégration']
+          },
+          {
+            icon: 'bi bi-arrow-repeat',
+            title: 'Construire un système personnel',
+            text: 'Concevoir un environnement de travail augmenté par l\'IA : vos propres templates, vos raccourcis et vos flux récurrents entièrement automatisés.',
+            bullets: ['Bibliothèque de prompts réutilisables par contexte', 'Intégration à vos outils (Notion, Gmail, Sheets…)', 'Revue et amélioration continue des workflows']
+          }
+        ]
+      },
+      pme_curieux: {
+        tag: 'Petite entreprise · Curieuse',
+        title: 'Ce que l\'IA peut faire pour votre entreprise dès maintenant.',
+        intro: 'Vous gérez une structure à taille humaine et cherchez à gagner du temps sans embaucher. L\'automatisation intelligente peut prendre en charge les tâches répétitives et libérer vos équipes pour ce qui a vraiment de la valeur.',
+        cards: [
+          {
+            icon: 'bi bi-telephone',
+            title: 'Ne manquez plus aucun appel',
+            text: 'Un agent vocal IA répond à vos clients 24h/24, prend les messages, fixe les rendez-vous et transfère les appels complexes à un humain. Sans coût fixe élevé.',
+            bullets: ['Prise de rendez-vous automatique', 'Réponses aux questions fréquentes', 'Qualification des demandes entrantes', 'Transfert intelligent vers votre équipe']
+          },
+          {
+            icon: 'bi bi-clock-history',
+            title: '3 tâches à déléguer dès cette semaine',
+            text: 'Des automatisations simples à mettre en place qui génèrent un gain de temps mesurable dès les premiers jours.',
+            bullets: ['Relances clients et suivi de devis par email', 'Génération de comptes-rendus de réunions', 'Réponses aux avis clients (Google, TripAdvisor…)']
+          },
+          {
+            icon: 'bi bi-graph-up-arrow',
+            title: 'Résultats mesurables',
+            text: 'Les entreprises qui automatisent leurs processus répétitifs observent des gains concrets sur leurs indicateurs opérationnels clés.',
+            bullets: ['Jusqu\'à 30% de réduction du temps de traitement administratif', '90% des appels simples traités sans intervention humaine', 'Délai de réponse client réduit de plusieurs heures à quelques secondes']
+          }
+        ]
+      },
+      pme_expert: {
+        tag: 'Petite entreprise · Experte',
+        title: 'Intégrez l\'IA au cœur de vos processus métier.',
+        intro: 'Vous connaissez déjà la valeur de l\'automatisation. L\'enjeu maintenant est d\'aller plus loin : connecter l\'IA à vos outils existants, fiabiliser les flux et construire un avantage compétitif durable.',
+        cards: [
+          {
+            icon: 'bi bi-gear-wide-connected',
+            title: 'Connecter l\'IA à vos outils',
+            text: 'Intégrer des solutions IA directement dans votre stack : CRM, ERP, outils de communication, bases de données internes. Zéro rupture dans vos flux existants.',
+            bullets: ['API et webhooks vers vos systèmes actuels', 'Synchronisation en temps réel des données', 'Déclencheurs automatiques sur événements métier']
+          },
+          {
+            icon: 'bi bi-funnel',
+            title: 'Automatiser la qualification et le suivi',
+            text: 'Mettre en place un pipeline commercial ou opérationnel entièrement automatisé, de la première interaction jusqu\'au suivi post-prestation.',
+            bullets: ['Scoring automatique des prospects entrants', 'Nurturing personnalisé selon le profil', 'Alertes intelligentes pour vos commerciaux']
+          },
+          {
+            icon: 'bi bi-bar-chart-line',
+            title: 'Piloter par les données',
+            text: 'Transformer vos données opérationnelles brutes en tableaux de bord actionnables, avec des insights générés automatiquement chaque semaine.',
+            bullets: ['Synthèse automatique des KPIs clés', 'Détection d\'anomalies et alertes proactives', 'Rapports hebdomadaires générés sans intervention']
+          }
+        ]
+      },
+      corp_curieux: {
+        tag: 'Grande entreprise · Curieuse',
+        title: 'Par où commencer une transformation IA structurée ?',
+        intro: 'Dans une grande organisation, l\'IA ne s\'improvise pas : elle se déploie de manière méthodique, service par service, avec une gouvernance adaptée et des cas d\'usage à fort ROI identifiés en amont.',
+        cards: [
+          {
+            icon: 'bi bi-map',
+            title: 'Cartographier avant d\'automatiser',
+            text: 'Identifier les processus à fort volume et faible valeur ajoutée humaine est la première étape d\'une transformation IA réussie et mesurable.',
+            bullets: ['Audit des processus répétitifs par département', 'Évaluation du potentiel d\'automatisation et du ROI', 'Priorisation selon l\'impact et la complexité technique']
+          },
+          {
+            icon: 'bi bi-people',
+            title: 'Embarquer les équipes',
+            text: 'La résistance au changement est le principal frein à l\'adoption de l\'IA en entreprise. Une stratégie d\'acculturation structurée fait toute la différence.',
+            bullets: ['Formations adaptées par niveau et par métier', 'Identification des ambassadeurs internes', 'Communication transparente sur les objectifs']
+          },
+          {
+            icon: 'bi bi-shield-check',
+            title: 'Poser les bases de la gouvernance',
+            text: 'Déployer l\'IA sans cadre de gouvernance expose l\'entreprise à des risques réglementaires, de sécurité et de réputation évitables.',
+            bullets: ['Politique d\'usage acceptable de l\'IA', 'Gestion des données sensibles et conformité RGPD', 'Processus de validation avant mise en production']
+          }
+        ]
+      },
+      corp_expert: {
+        tag: 'Grande entreprise · Experte',
+        title: 'Industrialisez votre stack IA et sécurisez le déploiement.',
+        intro: 'Vous avez déjà des projets IA en cours. L\'enjeu est désormais de passer à l\'échelle, de sécuriser l\'architecture et de mettre en place une gouvernance qui garantit fiabilité et conformité sur le long terme.',
+        cards: [
+          {
+            icon: 'bi bi-server',
+            title: 'Architecture IA à l\'échelle',
+            text: 'Concevoir une infrastructure robuste qui supporte plusieurs modèles, gère les montées en charge et garantit la disponibilité des services automatisés.',
+            bullets: ['Orchestration multi-modèles (LLM, vision, voix)', 'Gestion des coûts et optimisation des appels API', 'Monitoring des performances et détection de dérive']
+          },
+          {
+            icon: 'bi bi-lock',
+            title: 'Sécurité & conformité avancées',
+            text: 'Mettre en place les contrôles techniques et organisationnels nécessaires pour déployer l\'IA dans un environnement réglementé.',
+            bullets: ['Anonymisation et cloisonnement des données sensibles', 'Audit trail complet sur les décisions automatisées', 'Alignement avec l\'AI Act européen et le RGPD']
+          },
+          {
+            icon: 'bi bi-diagram-2',
+            title: 'Centre d\'excellence IA',
+            text: 'Structurer une équipe transversale chargée de piloter la stratégie IA, mutualiser les ressources et garantir la cohérence des déploiements.',
+            bullets: ['Définition des standards et bonnes pratiques internes', 'Veille technologique et roadmap d\'évolution', 'Accompagnement des équipes métier dans leurs projets']
+          }
+        ]
+      }
     };
 
     function quizPick(el) {
@@ -708,18 +896,41 @@
     function quizRender() {
       if (!quizState.who || !quizState.level) return;
       const key = `${quizState.who}_${quizState.level}`;
-      const cards = quizContent[key] || [];
-      const html = cards.map(c => `
+      const data = quizContent[key];
+      if (!data) return;
+
+      const cardsHtml = data.cards.map(c => `
         <div class="quiz-card">
           <div class="quiz-card-icon"><i class="${c.icon}"></i></div>
           <div class="quiz-card-title">${c.title}</div>
           <div class="quiz-card-text">${c.text}</div>
+          <ul class="quiz-card-bullets">
+            ${c.bullets.map(b => `<li>${b}</li>`).join('')}
+          </ul>
         </div>
       `).join('');
-      document.getElementById('quiz-result-inner').innerHTML = html;
+
+      document.getElementById('quiz-result-inner').innerHTML = `
+        <div class="quiz-result-header">
+          <div class="quiz-result-tag">${data.tag}</div>
+          <div class="quiz-result-title">${data.title}</div>
+          <div class="quiz-result-intro">${data.intro}</div>
+        </div>
+        <div class="quiz-cards-grid">${cardsHtml}</div>
+        <div class="quiz-divider"></div>
+        <a href="#contact" class="quiz-result-cta">
+          <i class="bi bi-calendar2-check"></i>
+          Discutons de votre situation
+        </a>
+      `;
+
       const result = document.getElementById('quiz-result');
       result.classList.add('visible');
       document.getElementById('quiz-reset').style.display = 'flex';
+
+      setTimeout(() => {
+        result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 100);
     }
 
     function quizReset() {
