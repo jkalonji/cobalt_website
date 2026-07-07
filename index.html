@@ -605,6 +605,16 @@
     .quiz-divider { width: 100%; height: 1px; background: rgba(68,136,255,0.12); margin: 36px 0; }
     .quiz-result-cta { display: inline-flex; align-items: center; gap: 8px; padding: 13px 24px; border-radius: 8px; border: 1px solid var(--cobalt-light); color: var(--cobalt-light); font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-decoration: none; text-transform: uppercase; transition: background 0.2s, color 0.2s; }
     .quiz-result-cta:hover { background: var(--cobalt-light); color: #060810; }
+    .quiz-cta-zone { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .quiz-download-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 24px; border-radius: 8px;
+      background: rgba(68,136,255,0.1); border: 1px solid rgba(68,136,255,0.35);
+      color: var(--cobalt-light); font-family: 'DM Mono', monospace;
+      font-size: 12px; letter-spacing: 0.08em; text-decoration: none;
+      text-transform: uppercase; transition: background 0.2s, border-color 0.2s;
+    }
+    .quiz-download-btn:hover { background: rgba(68,136,255,0.2); border-color: var(--cobalt-light); }
     .quiz-reset { margin-top: 20px; background: none; border: none; color: var(--text-muted); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; cursor: pointer; padding: 6px 0; transition: color 0.2s; display: none; align-items: center; gap: 6px; text-transform: uppercase; }
     .quiz-reset:hover { color: var(--cobalt-light); }
     @media (max-width: 768px) {
@@ -1045,8 +1055,28 @@
         ${data.quote ? `<div class="quiz-result-quote">&laquo;&nbsp;${data.quote}&nbsp;&raquo;</div>` : ''}
         <div class="quiz-accordion">${accordionHtml}</div>
         <div class="quiz-divider"></div>
-        <a href="#contact" class="quiz-result-cta"><i class="bi bi-calendar2-check"></i> Discutons de votre situation</a>
+        <div class="quiz-cta-zone">
+          <a href="#contact" class="quiz-result-cta"><i class="bi bi-calendar2-check"></i> Discutons de votre situation</a>
+        </div>
       `;
+
+      const pdfMap = {
+        individu_curieux: 'pdfs/cobalt-individu-curieux.pdf',
+        individu_expert:  'pdfs/cobalt-individu-expert.pdf',
+        pme_curieux:      'pdfs/cobalt-pme-curieux.pdf',
+        pme_expert:       'pdfs/cobalt-pme-expert.pdf',
+        corp_curieux:     'pdfs/cobalt-corp-curieux.pdf',
+        corp_expert:      'pdfs/cobalt-corp-expert.pdf',
+      };
+      const pdfUrl = pdfMap[key];
+      const ctaZone = document.getElementById('quiz-result-inner').querySelector('.quiz-cta-zone');
+      if (ctaZone && pdfUrl) {
+        ctaZone.insertAdjacentHTML('beforeend', `
+          <a href="${pdfUrl}" download class="quiz-download-btn">
+            <i class="bi bi-download"></i> Télécharger le dossier PDF
+          </a>
+        `);
+      }
 
       const result = document.getElementById('quiz-result');
       result.classList.add('visible');
