@@ -557,175 +557,60 @@
 
   <style>
     .quiz-block { max-width: 780px; }
-    .quiz-question-label {
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 14px;
-    }
+    .quiz-question-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 14px; }
     .quiz-chips { display: flex; flex-wrap: wrap; gap: 10px; }
-    .quiz-chip {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 13px 20px;
-      border-radius: 8px;
-      border: 1px solid rgba(68,136,255,0.22);
-      background: rgba(68,136,255,0.04);
-      color: #e8eef8;
-      cursor: pointer;
-      font-family: 'DM Mono', monospace;
-      font-size: 13px;
-      transition: border-color 0.2s, background 0.2s, color 0.2s;
-    }
-    .quiz-chip:hover {
-      border-color: rgba(68,136,255,0.55);
-      background: rgba(68,136,255,0.08);
-    }
-    .quiz-chip.active {
-      border-color: var(--cobalt-light);
-      background: rgba(68,136,255,0.14);
-      color: var(--cobalt-light);
-    }
+    .quiz-chip { display: flex; align-items: center; gap: 10px; padding: 13px 20px; border-radius: 8px; border: 1px solid rgba(68,136,255,0.22); background: rgba(68,136,255,0.04); color: #e8eef8; cursor: pointer; font-family: 'DM Mono', monospace; font-size: 13px; transition: border-color 0.2s, background 0.2s, color 0.2s; }
+    .quiz-chip:hover { border-color: rgba(68,136,255,0.55); background: rgba(68,136,255,0.08); }
+    .quiz-chip.active { border-color: var(--cobalt-light); background: rgba(68,136,255,0.14); color: var(--cobalt-light); }
     .chip-icon { font-size: 17px; line-height: 1; }
-    .quiz-result {
-      overflow: hidden;
-      max-height: 0;
-      opacity: 0;
-      margin-top: 0;
-      transition: max-height 0.55s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease, margin-top 0.4s ease;
-    }
-    .quiz-result.visible {
-      max-height: 1200px;
-      opacity: 1;
-      margin-top: 48px;
-    }
-    .quiz-result-header {
-      margin-bottom: 28px;
-    }
-    .quiz-result-tag {
-      display: inline-block;
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--cobalt-light);
-      margin-bottom: 10px;
-    }
-    .quiz-result-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(20px, 3vw, 26px);
-      color: #e8eef8;
-      margin-bottom: 10px;
-      line-height: 1.3;
-    }
-    .quiz-result-intro {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.7;
-      max-width: 580px;
-    }
-    .quiz-cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin-bottom: 32px;
-    }
-    .quiz-card {
-      padding: 24px;
-      border-radius: 10px;
-      border: 1px solid rgba(68,136,255,0.18);
-      background: rgba(26,58,110,0.15);
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .quiz-card:hover {
-      border-color: rgba(68,136,255,0.45);
-      background: rgba(26,58,110,0.25);
-    }
-    .quiz-card-icon {
-      font-size: 20px;
-      color: var(--cobalt-light);
-      margin-bottom: 14px;
-    }
-    .quiz-card-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: #e8eef8;
-      margin-bottom: 10px;
-      letter-spacing: 0.01em;
-    }
-    .quiz-card-text {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.65;
-      margin-bottom: 12px;
-    }
-    .quiz-card-bullets {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .quiz-card-bullets li {
-      font-size: 12px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      padding-left: 14px;
-      position: relative;
-      margin-bottom: 4px;
-    }
-    .quiz-card-bullets li::before {
-      content: '—';
-      position: absolute;
-      left: 0;
-      color: var(--cobalt-light);
-      opacity: 0.6;
-    }
-    .quiz-result-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 13px 24px;
-      border-radius: 8px;
-      border: 1px solid var(--cobalt-light);
-      color: var(--cobalt-light);
-      font-family: 'DM Mono', monospace;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-decoration: none;
-      text-transform: uppercase;
-      transition: background 0.2s, color 0.2s;
-    }
-    .quiz-result-cta:hover {
-      background: var(--cobalt-light);
-      color: #060810;
-    }
-    .quiz-divider {
-      width: 100%;
-      height: 1px;
-      background: rgba(68,136,255,0.12);
-      margin: 36px 0;
-    }
-    .quiz-reset {
-      margin-top: 20px;
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      cursor: pointer;
-      padding: 6px 0;
-      transition: color 0.2s;
-      display: none;
-      align-items: center;
-      gap: 6px;
-      text-transform: uppercase;
-    }
+
+    .quiz-result { overflow: hidden; max-height: 0; opacity: 0; margin-top: 0; transition: max-height 0.55s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease, margin-top 0.4s ease; }
+    .quiz-result.visible { max-height: 9000px; opacity: 1; margin-top: 48px; }
+
+    .quiz-result-tag { display: inline-block; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cobalt-light); margin-bottom: 10px; }
+    .quiz-result-title { font-family: 'DM Serif Display', serif; font-size: clamp(20px, 3vw, 26px); color: #e8eef8; margin-bottom: 10px; line-height: 1.3; font-weight: 400; }
+    .quiz-result-intro { font-size: 14px; color: var(--text-muted); line-height: 1.75; max-width: 620px; margin-bottom: 36px; }
+    .quiz-result-quote { font-size: 13px; color: var(--cobalt-light); font-style: italic; border-left: 2px solid var(--cobalt-light); padding-left: 16px; margin: 24px 0 32px; opacity: 0.85; max-width: 580px; line-height: 1.6; }
+
+    /* Accordéon */
+    .quiz-accordion { display: flex; flex-direction: column; gap: 8px; margin-bottom: 36px; }
+    .qacc-item { border: 1px solid rgba(68,136,255,0.18); border-radius: 10px; background: rgba(26,58,110,0.12); overflow: hidden; transition: border-color 0.2s; }
+    .qacc-item:hover { border-color: rgba(68,136,255,0.38); }
+    .qacc-item.open { border-color: rgba(68,136,255,0.45); background: rgba(26,58,110,0.2); }
+    .qacc-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 22px; cursor: pointer; gap: 16px; }
+    .qacc-header-left { display: flex; align-items: center; gap: 14px; }
+    .qacc-icon { font-size: 18px; color: var(--cobalt-light); flex-shrink: 0; }
+    .qacc-title { font-size: 14px; font-weight: 500; color: #e8eef8; }
+    .qacc-chevron { font-size: 14px; color: var(--text-muted); transition: transform 0.3s; flex-shrink: 0; }
+    .qacc-item.open .qacc-chevron { transform: rotate(180deg); color: var(--cobalt-light); }
+    .qacc-body { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1); }
+    .qacc-item.open .qacc-body { max-height: 1200px; }
+    .qacc-content { padding: 0 22px 22px; }
+    .qacc-text { font-size: 13px; color: var(--text-muted); line-height: 1.75; margin-bottom: 14px; }
+    .qacc-bullets { list-style: none; padding: 0; margin: 0 0 12px; }
+    .qacc-bullets li { font-size: 12px; color: var(--text-muted); line-height: 1.65; padding-left: 16px; position: relative; margin-bottom: 6px; }
+    .qacc-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--cobalt-light); opacity: 0.6; }
+    .qacc-sub { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cobalt-light); margin: 14px 0 8px; opacity: 0.8; }
+    .qacc-example { background: rgba(68,136,255,0.06); border: 1px solid rgba(68,136,255,0.15); border-radius: 6px; padding: 12px 16px; font-size: 12px; color: var(--text-muted); line-height: 1.65; margin-bottom: 12px; font-style: italic; }
+    .qacc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+    .qacc-grid-item { background: rgba(68,136,255,0.05); border: 1px solid rgba(68,136,255,0.12); border-radius: 6px; padding: 10px 14px; font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+    .qacc-grid-item strong { display: block; font-size: 11px; color: var(--cobalt-light); margin-bottom: 4px; letter-spacing: 0.06em; }
+    .qacc-warn { display: flex; gap: 8px; font-size: 12px; color: var(--text-muted); line-height: 1.55; padding: 8px 12px; border-radius: 5px; background: rgba(255,100,100,0.05); border: 1px solid rgba(255,100,100,0.15); margin-bottom: 8px; }
+    .qacc-warn::before { content: '⚠'; flex-shrink: 0; }
+    .qacc-phase { display: flex; gap: 14px; margin-bottom: 10px; align-items: flex-start; }
+    .qacc-phase-num { width: 22px; height: 22px; border-radius: 50%; background: rgba(68,136,255,0.15); border: 1px solid rgba(68,136,255,0.35); display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--cobalt-light); flex-shrink: 0; margin-top: 1px; }
+    .qacc-phase-text { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+    .qacc-phase-text strong { color: #e8eef8; display: block; margin-bottom: 2px; font-size: 13px; }
+
+    .quiz-divider { width: 100%; height: 1px; background: rgba(68,136,255,0.12); margin: 36px 0; }
+    .quiz-result-cta { display: inline-flex; align-items: center; gap: 8px; padding: 13px 24px; border-radius: 8px; border: 1px solid var(--cobalt-light); color: var(--cobalt-light); font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-decoration: none; text-transform: uppercase; transition: background 0.2s, color 0.2s; }
+    .quiz-result-cta:hover { background: var(--cobalt-light); color: #060810; }
+    .quiz-reset { margin-top: 20px; background: none; border: none; color: var(--text-muted); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; cursor: pointer; padding: 6px 0; transition: color 0.2s; display: none; align-items: center; gap: 6px; text-transform: uppercase; }
     .quiz-reset:hover { color: var(--cobalt-light); }
     @media (max-width: 768px) {
       .quiz-chips { gap: 8px; }
       .quiz-chip { padding: 11px 14px; font-size: 12px; }
-      .quiz-cards-grid { grid-template-columns: 1fr; }
+      .qacc-grid { grid-template-columns: 1fr; }
     }
   </style>
 
@@ -733,153 +618,389 @@
     const quizState = { who: null, level: null };
 
     const quizContent = {
+
       individu_curieux: {
         tag: 'Individu · Curieux',
-        title: 'L\'IA peut vraiment changer votre quotidien. Voici comment commencer.',
-        intro: 'Vous n\'avez pas encore utilisé l\'IA — ou presque. Ce qu\'il vous faut : les bons outils, les bonnes pratiques, et une feuille de route claire pour démarrer du bon pied.',
-        cards: [
+        title: "L'IA peut vraiment changer votre quotidien. Voici comment commencer.",
+        intro: "Vous n'avez pas encore utilisé l'IA — ou presque. Ce guide vous donne tout ce qu'il faut pour démarrer du bon pied : les bons outils, les bonnes pratiques, et une feuille de route claire.",
+        quote: "La question n'est pas \"est-ce que l'IA peut m'aider ?\" — la réponse est presque toujours oui. La vraie question, c'est : sur quoi commencer ?",
+        sections: [
           {
-            icon: 'bi bi-lightbulb',
-            title: 'Ce que l\'IA peut faire pour vous',
-            text: 'L\'IA lit, écrit, résume, traduit, analyse et génère des idées. Elle fonctionne d\'autant mieux qu\'on lui donne du contexte et des instructions précises.',
-            bullets: ['Rédiger ou corriger un email en quelques secondes', 'Résumer un document long en 5 points clés', 'Brainstormer des idées ou préparer une réunion', 'Reformuler un texte pour le rendre plus convaincant']
+            icon: 'bi bi-info-circle',
+            title: "Ce que l'IA est vraiment",
+            content: `<p class="qacc-text">Claude, ChatGPT, Gemini — ce sont des assistants conversationnels. Vous leur écrivez ce que vous voulez, ils vous répondent en quelques secondes. Ils peuvent rédiger, résumer, traduire, analyser, brainstormer, répondre à des questions.</p>
+            <p class="qacc-text">Ce ne sont pas des moteurs de recherche. Ce ne sont pas des êtres pensants. Ce sont des outils très puissants pour tout ce qui touche au langage — et ils fonctionnent d'autant mieux qu'on leur donne du contexte et des instructions précises.</p>
+            <div class="qacc-sub">Par où commencer ?</div>
+            <ul class="qacc-bullets">
+              <li><strong>Claude (claude.ai)</strong> — Très bon pour la rédaction, l'analyse, les longues conversations. Gratuit.</li>
+              <li><strong>ChatGPT (chatgpt.com)</strong> — Le plus connu. Très polyvalent, grande communauté.</li>
+              <li><strong>Perplexity (perplexity.ai)</strong> — Idéal pour chercher des informations récentes avec sources citées.</li>
+              <li><strong>NotebookLM (Google)</strong> — Pour interroger vos propres documents en langage naturel.</li>
+            </ul>`
           },
           {
             icon: 'bi bi-journal-text',
-            title: 'La méthode C.O.R.E.',
-            text: 'La compétence clé : savoir formuler une demande précise. Plus votre demande est claire et contextualisée, meilleure sera la réponse.',
-            bullets: ['C — Contexte : qui vous êtes et votre situation', 'O — Objectif : ce que vous voulez obtenir', 'R — Rôle : quel expert l\'IA doit incarner', 'E — Exigences : ton, format, longueur']
+            title: "Comment parler à l'IA : la méthode C.O.R.E.",
+            content: `<p class="qacc-text">La qualité d'une réponse dépend presque entièrement de la qualité de la demande. La règle d'or : plus votre demande est précise, claire et contextualisée, meilleure sera la réponse.</p>
+            <div class="qacc-sub">Les trois ingrédients d'une bonne demande</div>
+            <ul class="qacc-bullets">
+              <li><strong>Le contexte</strong> — Qui vous êtes et quelle est la situation</li>
+              <li><strong>L'objectif</strong> — Ce que vous voulez obtenir précisément</li>
+              <li><strong>Les contraintes</strong> — Le format, le ton, la longueur</li>
+            </ul>
+            <div class="qacc-sub">La méthode C.O.R.E.</div>
+            <ul class="qacc-bullets">
+              <li>C — Contexte : qui vous êtes / votre situation</li>
+              <li>O — Objectif : ce que vous voulez obtenir</li>
+              <li>R — Rôle : quel expert l'IA doit incarner</li>
+              <li>E — Exigences : ton, format, longueur, contraintes</li>
+            </ul>
+            <div class="qacc-sub">Exemple complet</div>
+            <div class="qacc-example">« Tu es un expert en productivité personnelle. Je travaille en freelance depuis 2 ans et j'ai du mal à organiser mes journées entre les projets clients et ma prospection. Propose-moi un système simple pour structurer ma semaine, en tenant compte du fait que j'ai des enfants à récupérer à 17h. Format : liste d'étapes pratiques, sans jargon. »</div>
+            <div class="qacc-sub">Itérer, pas recommencer</div>
+            <ul class="qacc-bullets">
+              <li>« Rends-le plus court. »</li>
+              <li>« Utilise un ton plus chaleureux. »</li>
+              <li>« Propose trois alternatives différentes. »</li>
+              <li>« Ajoute un exemple concret. »</li>
+            </ul>`
           },
           {
-            icon: 'bi bi-rocket-takeoff',
-            title: 'Par où commencer ?',
-            text: 'Trois outils gratuits, accessibles dès aujourd\'hui, sans aucune compétence technique.',
-            bullets: ['Claude (claude.ai) — rédaction et analyse', 'ChatGPT (chatgpt.com) — très polyvalent', 'Perplexity — recherche avec sources citées']
-          }
-        ]
-      },
-      individu_expert: {
-        tag: 'Individu · Expert',
-        title: 'Vous avez les bases. Passez à l\'architecture.',
-        intro: 'Il y a un écart entre "utiliser l\'IA" et "avoir un système IA". Un bon système travaille pour vous même quand vous ne pensez pas à le solliciter.',
-        cards: [
-          {
-            icon: 'bi bi-diagram-3',
-            title: 'Compétences qui font la différence',
-            text: 'Aller plus loin que le prompt simple : structurer une méthode de travail cohérente avec vos objectifs réels.',
-            bullets: ['Construire des agents spécialisés avec instructions précises', 'Chaîner des prompts pour décomposer les tâches complexes', 'Créer une base de connaissances personnelle (NotebookLM, Projets Claude)']
+            icon: 'bi bi-lightning',
+            title: "Ce que vous pouvez faire dès aujourd'hui",
+            content: `<p class="qacc-text">10 usages concrets pour commencer — sans aucune compétence technique :</p>
+            <ul class="qacc-bullets">
+              <li>Rédiger ou corriger un email professionnel en quelques secondes</li>
+              <li>Résumer un document long en 5 points clés</li>
+              <li>Brainstormer des idées (nom de produit, plan d'article, contenu réseaux)</li>
+              <li>Préparer des questions pour un entretien, une réunion, une négociation</li>
+              <li>Traduire un texte en conservant le ton original</li>
+              <li>Reformuler un texte pour le rendre plus clair ou plus convaincant</li>
+              <li>Créer un planning de semaine à partir de vos contraintes</li>
+              <li>Obtenir des explications simples sur un sujet complexe</li>
+              <li>Rédiger une fiche produit ou un post pour les réseaux</li>
+              <li>Simuler une conversation difficile pour s'y préparer</li>
+            </ul>`
           },
           {
-            icon: 'bi bi-arrow-repeat',
-            title: 'Automatiser vos workflows',
-            text: 'Identifier 1 ou 2 tâches vraiment répétitives et les automatiser — avec une règle fondamentale : garder un humain dans la boucle sur toute action à effet réel.',
-            bullets: ['Make ou Zapier — relier vos outils sans coder', 'Google Apps Script — gratuit, intégré à Google Workspace', 'LM Studio — IA locale pour vos données confidentielles']
+            icon: 'bi bi-exclamation-triangle',
+            title: "Les erreurs les plus fréquentes",
+            content: `<div class="qacc-warn">Être trop vague : « Rédige un email » sans contexte ni objectif. L'IA invente ce qu'elle ne sait pas.</div>
+            <div class="qacc-warn">Demander trop de choses en une fois : découpez les tâches complexes en plusieurs demandes.</div>
+            <div class="qacc-warn">Ne pas préciser le public cible : un texte pour un recruteur et un texte pour un ami ne se rédigent pas pareil.</div>
+            <div class="qacc-warn">Faire confiance aux chiffres sans vérifier : l'IA peut inventer des statistiques. Remontez toujours à la source.</div>
+            <div class="qacc-warn">Coller des données confidentielles dans un outil grand public non sécurisé.</div>`
+          },
+          {
+            icon: 'bi bi-calendar3',
+            title: "Votre feuille de route — 30 premiers jours",
+            content: `<div class="qacc-phase"><div class="qacc-phase-num">1</div><div class="qacc-phase-text"><strong>Semaine 1 — Choisir et explorer</strong>Ouvrez un compte gratuit sur Claude ou ChatGPT. Passez 30 minutes à tester des demandes simples. Observez comment la qualité change selon la précision.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">2</div><div class="qacc-phase-text"><strong>Semaine 2 — Appliquer C.O.R.E.</strong>Prenez une tâche réelle et rédigez un prompt structuré. Comparez le résultat. Construisez vos 3 premiers prompts réutilisables.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">3</div><div class="qacc-phase-text"><strong>Semaines 3–4 — Créer votre espace de travail</strong>Configurez un Projet dans votre assistant avec vos informations personnelles et préférences de format. Centralisez vos prompts.</div></div>`
           },
           {
             icon: 'bi bi-currency-euro',
-            title: 'En faire un levier de revenus',
-            text: 'Vos compétences IA ont de la valeur sur le marché — souvent plus que vous ne le pensez.',
-            bullets: ['Proposer des prestations augmentées par l\'IA', 'Former et accompagner d\'autres personnes', 'Créer des micro-outils ou des prompts packagés']
+            title: "En faire un levier de revenus",
+            content: `<div class="qacc-phase"><div class="qacc-phase-num">1</div><div class="qacc-phase-text"><strong>Proposer des services que vous faites déjà, plus vite</strong>Rédaction, traduction, création de contenu — l'IA vous permet de prendre plus de clients sans travailler plus.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">2</div><div class="qacc-phase-text"><strong>Créer du contenu pour monétiser une expertise</strong>Newsletters, guides, cours en ligne — l'IA vous aide à structurer et rédiger autour de ce que vous connaissez bien.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">3</div><div class="qacc-phase-text"><strong>Accompagner d'autres personnes dans leurs premiers pas</strong>Dans quelques mois, votre expérience aura de la valeur pour ceux qui n'ont pas encore commencé.</div></div>`
           }
         ]
       },
-      pme_curieux: {
-        tag: 'Petite entreprise · Curieuse',
-        title: 'Votre entreprise a tout pour tirer profit de l\'IA. Par où commencer ?',
-        intro: 'Les entreprises qui démarrent maintenant ont un avantage : elles peuvent partir sur de bonnes bases directement. Ce qui compte, c\'est une intégration méthodique — pas une adoption précipitée.',
-        cards: [
+
+      individu_expert: {
+        tag: 'Individu · Expert',
+        title: "Vous avez les bases. Passez à l'architecture.",
+        intro: "Il y a un écart entre \"utiliser l'IA\" et \"avoir un système IA\" — un ensemble de workflows, d'assistants configurés et d'automatisations qui travaillent pour vous même quand vous ne pensez pas à les solliciter.",
+        quote: "Un bon prompt vous fait gagner 10 minutes. Un bon système IA vous fait gagner plusieurs heures par semaine, de façon régulière.",
+        sections: [
           {
-            icon: 'bi bi-gear',
-            title: 'Ce que l\'IA peut changer concrètement',
-            text: 'Avant de parler d\'outils ou de budget, voici ce que l\'IA peut faire dans le quotidien d\'une entreprise comme la vôtre.',
-            bullets: ['Emails de suivi, relances, rapports récurrents automatisés', 'Réponses plus rapides et personnalisation à l\'échelle', 'Propositions commerciales et comptes rendus produits en minutes']
+            icon: 'bi bi-diagram-3',
+            title: "Les compétences qui font vraiment la différence",
+            content: `<p class="qacc-text">À ce stade, l'enjeu n'est plus d'apprendre à utiliser l'IA — c'est de l'utiliser avec plus de profondeur et de cohérence.</p>
+            <ul class="qacc-bullets">
+              <li><strong>Construire des agents spécialisés</strong> — Configurer un assistant avec des instructions très précises, une personnalité, une bibliothèque de documents et un comportement défini.</li>
+              <li><strong>Chaîner des prompts</strong> — Décomposer une tâche complexe en étapes successives pour un résultat plus précis et contrôlable.</li>
+              <li><strong>Travailler avec ses propres données</strong> — Charger ses documents, créer une base de connaissances personnelle via NotebookLM ou Projets Claude.</li>
+              <li><strong>Automatiser sans coder</strong> — Concevoir des workflows avec Make ou Zapier qui font travailler plusieurs outils ensemble de façon autonome.</li>
+            </ul>
+            <div class="qacc-sub">Les outils à maîtriser</div>
+            <ul class="qacc-bullets">
+              <li><strong>Projets Claude</strong> — Espace de travail par domaine, instructions permanentes, documents de référence.</li>
+              <li><strong>NotebookLM</strong> — Déposez vos documents et interrogez-les en langage naturel.</li>
+              <li><strong>Make (make.com)</strong> — Automatisations visuelles complexes sans coder.</li>
+              <li><strong>LM Studio</strong> — Modèles IA en local pour les données confidentielles.</li>
+              <li><strong>Perplexity</strong> — Recherche factuelle avec sources citées.</li>
+            </ul>`
           },
           {
-            icon: 'bi bi-map',
-            title: 'La feuille de route recommandée',
-            text: 'Démarrer avec l\'IA ne signifie pas tout transformer d\'un coup. Une progression en 4 phases, réaliste et progressive.',
-            bullets: ['Identifier vos 2–3 cas d\'usage prioritaires avec Cobalt', 'Déployer un assistant IA configuré pour votre contexte', 'Former vos équipes aux bonnes pratiques', 'Automatiser les premiers flux répétitifs']
-          },
-          {
-            icon: 'bi bi-patch-question',
-            title: 'Les questions que vous vous posez',
-            text: 'Faut-il un budget important ? Nos données sont-elles sécurisées ? Les équipes vont-elles résister ?',
-            bullets: ['Les outils utiles coûtent 20–30€/utilisateur/mois', 'Cobalt vous aide à définir quelles données vont dans le cloud', 'L\'adoption réussit quand l\'IA fait gagner du temps sur ce qu\'on n\'aime pas faire']
-          }
-        ]
-      },
-      pme_expert: {
-        tag: 'Petite entreprise · Experte',
-        title: 'Vous avez les bases. Il est temps d\'accélérer.',
-        intro: 'Vous utilisez déjà l\'IA au quotidien. Mais les gains restent ponctuels, individuels. Ce que vous cherchez : transformer des usages épars en une architecture qui produit des résultats systématiques.',
-        cards: [
-          {
-            icon: 'bi bi-gear-wide-connected',
-            title: 'Les deux leviers prioritaires',
-            text: 'À ce stade de maturité, deux axes avancent en parallèle — ils ne sont pas séquentiels.',
-            bullets: ['Automatiser les flux répétitifs (suivi client, reporting, données)', 'Connecter l\'IA à votre CRM, messagerie, comptabilité', 'Mettre en place des indicateurs pour quantifier les gains']
-          },
-          {
-            icon: 'bi bi-list-check',
-            title: 'Ce que Cobalt met en place',
-            text: 'Cobalt intervient à trois niveaux selon vos priorités immédiates.',
-            bullets: ['Diagnostic : cartographie des flux à fort ROI', 'Déploiement d\'agents IA ou automatisations no-code (Make, Zapier)', 'Activation des leviers de croissance avec KPIs définis']
-          },
-          {
-            icon: 'bi bi-calendar2-check',
-            title: 'Feuille de route 90 jours',
-            text: 'Une montée en puissance réaliste, sans disruption de vos opérations en cours.',
-            bullets: ['Sem. 1–2 : Atelier diagnostic, 3 chantiers prioritaires', 'Sem. 3–5 : Premières automatisations sur processus chronophages', 'Sem. 6–12 : Connexion aux outils existants + leviers de croissance']
-          }
-        ]
-      },
-      corp_curieux: {
-        tag: 'Grande entreprise · Curieuse',
-        title: 'Comprendre l\'IA pour mieux la faire travailler pour vous.',
-        intro: 'Vouloir comprendre l\'IA avant de l\'intégrer n\'est pas une marque de prudence excessive — c\'est une marque de sérieux. Les entreprises qui réussissent leur transformation sont celles qui ont cadré les enjeux avant de déployer des outils.',
-        cards: [
-          {
-            icon: 'bi bi-info-circle',
-            title: 'Ce que l\'IA est — et ce qu\'elle n\'est pas',
-            text: 'L\'IA est excellente pour rédiger, analyser, résumer et structurer. Elle est moins fiable sur les chiffres précis et les décisions stratégiques.',
-            bullets: ['Elle augmente l\'expertise métier — elle ne la remplace pas', 'Elle s\'améliore avec des demandes précises et du contexte', 'Elle ne remplace pas le jugement humain ni la relation client']
-          },
-          {
-            icon: 'bi bi-people',
-            title: 'Deux objectifs, une même méthode',
-            text: 'Selon votre priorité, Cobalt adapte son intervention à votre situation réelle.',
-            bullets: ['Maîtriser l\'IA : ateliers pratiques, bibliothèque de prompts, règles d\'usage', 'Projet sur mesure : cadrage, prototype, déploiement, formation', 'Dans les deux cas : transfert de compétences inclus']
-          },
-          {
-            icon: 'bi bi-patch-question',
-            title: '5 questions à se poser avant de démarrer',
-            text: 'Un cadrage honnête vaut mieux qu\'un déploiement précipité.',
-            bullets: ['Quelles tâches consomment le plus de temps sans créer de valeur ?', 'Quelles données avez-vous déjà disponibles ?', 'Quelles sont vos contraintes réglementaires ?']
-          }
-        ]
-      },
-      corp_expert: {
-        tag: 'Grande entreprise · Experte',
-        title: 'Une vision IA claire. Une exécution sur mesure.',
-        intro: 'Entre une stratégie IA cohérente à l\'échelle de l\'organisation et sa réalisation technique, il y a un pas que beaucoup n\'arrivent pas à franchir seules. C\'est précisément là qu\'intervient Cobalt.',
-        cards: [
-          {
-            icon: 'bi bi-diagram-2',
-            title: 'Stratégie ou projet : deux approches',
-            text: 'Cobalt adapte son intervention selon que votre priorité est de structurer une stratégie IA ou de réaliser un projet technique spécifique.',
-            bullets: ['Cartographie des besoins, feuille de route par département', 'Développement d\'agents IA, chatbots métier, outils internes', 'Connexion aux systèmes en place (ERP, CRM, messagerie)']
-          },
-          {
-            icon: 'bi bi-list-ol',
-            title: 'Méthode en 4 phases',
-            text: 'Un projet IA réussi n\'est pas seulement un projet technique — c\'est un projet d\'organisation.',
-            bullets: ['Cadrage & faisabilité : contraintes, architecture (1–2 sem.)', 'Prototype fonctionnel avec itérations utilisateurs (2–4 sem.)', 'Déploiement, intégration, documentation, transfert d\'autonomie']
+            icon: 'bi bi-arrow-repeat',
+            title: "Phase 4 — Automatisation et assistants personnalisés",
+            content: `<p class="qacc-text">L'objectif : identifier 1 ou 2 workflows vraiment répétitifs dans votre quotidien et les automatiser.</p>
+            <div class="qacc-grid">
+              <div class="qacc-grid-item"><strong>Assistants</strong>GPTs personnalisés ou Projets Claude — un assistant spécialisé pour une tâche fréquente.</div>
+              <div class="qacc-grid-item"><strong>Zapier / Make</strong>Relier vos outils entre eux sans coder : formulaire → email automatique, résumé de réunion → Notion.</div>
+              <div class="qacc-grid-item"><strong>Google Apps Script</strong>Gratuit, intégré à Google Workspace. Idéal pour automatiser Sheets, Gmail ou Drive.</div>
+              <div class="qacc-grid-item"><strong>Revenus freelance</strong>Prestations augmentées par l'IA, micro-produits numériques, accompagnement d'autres personnes.</div>
+            </div>
+            <div class="qacc-warn">Sur toute automatisation à effet réel — envoi d'un email, publication, modification de données — gardez un humain dans la boucle. Testez avant de faire confiance.</div>`
           },
           {
             icon: 'bi bi-shield-lock',
-            title: 'Sécurité & souveraineté',
-            text: 'Toute stratégie IA sérieuse commence par une politique claire sur les données.',
-            bullets: ['Définir ce qui va dans le cloud vs ce qui reste en local', 'Segmenter les usages IA par niveau de sensibilité', 'Auditer régulièrement les outils et maintenir la conformité']
+            title: "Phase 5 — Autonomie, souveraineté et durabilité",
+            content: `<ul class="qacc-bullets">
+              <li><strong>IA locale pour le confidentiel</strong> — LM Studio ou Ollama : modèles ouverts sur votre machine, sans que vos données ne quittent votre appareil.</li>
+              <li><strong>Veille légère et régulière</strong> — Une source fiable, un rendez-vous mensuel. Pas besoin de suivre chaque nouveauté.</li>
+              <li><strong>Règle local vs cloud</strong> — Local pour les données confidentielles, cloud pour le reste.</li>
+              <li><strong>Garde-fou anti-dépendance</strong> — Continuez à produire certaines analyses sans IA pour rester maître de votre expertise.</li>
+            </ul>`
+          },
+          {
+            icon: 'bi bi-currency-euro',
+            title: "En faire un vrai levier de revenus",
+            content: `<div class="qacc-phase"><div class="qacc-phase-num">1</div><div class="qacc-phase-text"><strong>Proposer des prestations augmentées par l'IA</strong>Rédaction, analyse, création de contenu — des services que vous livrez plus vite et à meilleure qualité grâce à vos workflows.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">2</div><div class="qacc-phase-text"><strong>Former et accompagner d'autres personnes</strong>Ateliers, formations, coaching — de nombreux particuliers et TPE cherchent quelqu'un qui peut leur montrer concrètement comment utiliser l'IA.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">3</div><div class="qacc-phase-text"><strong>Créer des micro-outils ou des prompts packagés</strong>Des assistants personnalisés, des bibliothèques de prompts sectoriels, des templates configurés — des ressources qui ont de la valeur sur le marché.</div></div>`
+          },
+          {
+            icon: 'bi bi-question-circle',
+            title: "Si vous avez un projet précis",
+            content: `<p class="qacc-text">Vous avez une idée qui mijote — un outil à créer, un chatbot, une automatisation ambitieuse. Cobalt peut vous aider à aller plus vite.</p>
+            <div class="qacc-phase"><div class="qacc-phase-num">1</div><div class="qacc-phase-text"><strong>Cadrer le projet avec précision</strong>Ce que l'outil doit faire, à qui il s'adresse, quelles données il utilise, quelles sont les contraintes.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">2</div><div class="qacc-phase-text"><strong>Valider la faisabilité</strong>Certaines idées sont réalisables en quelques heures avec les bons outils. D'autres nécessitent un développement sur mesure.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">3</div><div class="qacc-phase-text"><strong>Choisir la bonne architecture</strong>No-code ou développement ? API ou interface native ? Cloud ou local ? Cobalt vous aide à choisir pour les bonnes raisons.</div></div>`
+          }
+        ]
+      },
+
+      pme_curieux: {
+        tag: 'Petite entreprise · Curieuse',
+        title: "Votre entreprise a tout pour tirer profit de l'IA. Par où commencer ?",
+        intro: "Ce dossier s'adresse aux dirigeants et équipes qui n'ont pas encore intégré l'IA dans leur organisation — et qui veulent démarrer de façon structurée, sans se perdre dans la complexité.",
+        quote: "Les gains rapides existent. Mais les gains durables viennent d'une intégration méthodique, pas d'une adoption précipitée.",
+        sections: [
+          {
+            icon: 'bi bi-lightbulb',
+            title: "Vous n'avez pas de retard. Vous avez une opportunité.",
+            content: `<p class="qacc-text">Les entreprises qui démarrent maintenant ont un avantage : elles n'ont pas à désapprendre de mauvaises habitudes prises avec les premières générations d'outils. Elles peuvent partir sur de bonnes bases, directement.</p>
+            <p class="qacc-text">Ce qui compte, ce n'est pas d'être le premier à utiliser l'IA. C'est de l'utiliser de façon cohérente, sécurisée et mesurable — dans votre contexte, avec vos contraintes.</p>`
+          },
+          {
+            icon: 'bi bi-gear',
+            title: "Ce que l'IA peut faire pour votre entreprise, concrètement",
+            content: `<ul class="qacc-bullets">
+              <li><strong>Automatiser les tâches chronophages</strong> — Emails de suivi, relances, rapports récurrents, traitement de données — des heures récupérées chaque semaine.</li>
+              <li><strong>Améliorer la relation client</strong> — Réponses plus rapides, personnalisation à l'échelle, suivi sans faille. L'IA libère du temps pour ce qui compte.</li>
+              <li><strong>Produire plus vite, mieux</strong> — Propositions commerciales, fiches produits, comptes rendus — en une fraction du temps habituel.</li>
+              <li><strong>Analyser pour décider</strong> — Synthèse de données, veille concurrentielle, identification des tendances — disponibles en minutes.</li>
+            </ul>`
+          },
+          {
+            icon: 'bi bi-journal-text',
+            title: "Votre premier pas : la méthode C.O.R.E.",
+            content: `<p class="qacc-text">Avant même de penser à automatisation ou à stratégie, il y a une compétence fondamentale que vos équipes doivent acquérir : savoir parler à l'IA.</p>
+            <ul class="qacc-bullets">
+              <li>C — Contexte : Qui vous êtes, votre secteur, la situation</li>
+              <li>O — Objectif : Ce que vous voulez obtenir précisément</li>
+              <li>R — Rôle : L'expertise que l'IA doit incarner</li>
+              <li>E — Exigences : Ton, format, longueur, contraintes</li>
+            </ul>
+            <div class="qacc-sub">Exemple</div>
+            <div class="qacc-example">« Tu es un expert en relation client pour une entreprise de services B2B. Rédige un email de relance pour un prospect qui n'a pas répondu depuis 2 semaines, sur un ton chaleureux et professionnel, en 5 lignes maximum. »</div>
+            <div class="qacc-sub">Réflexes simples à adopter immédiatement</div>
+            <ul class="qacc-bullets">
+              <li>Donnez toujours du contexte : qui vous êtes, à qui s'adresse le résultat, dans quel but</li>
+              <li>Précisez le format attendu : email, tableau, liste, résumé en 3 points…</li>
+              <li>Itérez : la première réponse est un point de départ</li>
+              <li>Vérifiez toujours les faits et chiffres générés</li>
+              <li>Ne mettez jamais de données clients confidentielles dans un outil grand public non sécurisé</li>
+            </ul>`
+          },
+          {
+            icon: 'bi bi-map',
+            title: "La feuille de route recommandée par Cobalt",
+            content: `<div class="qacc-phase"><div class="qacc-phase-num">1</div><div class="qacc-phase-text"><strong>Identifier vos 2–3 cas d'usage prioritaires</strong>Quelles tâches consomment le plus de temps ? Cobalt réalise ce diagnostic avec vous en 1 à 2 ateliers.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">2</div><div class="qacc-phase-text"><strong>Déployer un assistant IA sur les tâches prioritaires</strong>Mise en place d'un espace de travail IA configuré pour votre contexte. Vos équipes gagnent en efficacité dès la première semaine.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">3</div><div class="qacc-phase-text"><strong>Former vos équipes aux bonnes pratiques</strong>Atelier de formation pratique : formuler des demandes efficaces, construire une bibliothèque de prompts, définir les règles d'usage interne.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">4</div><div class="qacc-phase-text"><strong>Automatiser les premiers flux</strong>Sur la base des résultats observés, déploiement des premières automatisations no-code. Mesure des gains, ajustements.</div></div>`
+          },
+          {
+            icon: 'bi bi-patch-question',
+            title: "Les questions que se posent souvent les dirigeants",
+            content: `<div class="qacc-sub">Faut-il un budget important pour commencer ?</div>
+            <p class="qacc-text">Non. Les outils les plus utiles pour une première intégration coûtent entre 20 et 30€ par utilisateur et par mois. L'investissement principal, c'est le temps de mise en place — que Cobalt minimise.</p>
+            <div class="qacc-sub">Nos données sont-elles en sécurité ?</div>
+            <p class="qacc-text">C'est la bonne question. La réponse dépend des outils choisis et de la façon dont ils sont configurés. Cobalt vous aide à définir une politique claire : quelles données peuvent aller dans le cloud, lesquelles doivent rester en interne.</p>
+            <div class="qacc-sub">Nos équipes vont-elles résister ?</div>
+            <p class="qacc-text">L'adoption réussit quand l'IA fait gagner du temps sur des tâches que les équipes n'aiment pas faire — pas quand elle semble menacer leur expertise. Cobalt conçoit les déploiements en partant de ce principe.</p>`
+          }
+        ]
+      },
+
+      pme_expert: {
+        tag: 'Petite entreprise · Experte',
+        title: "Vous avez les bases. Il est temps d'accélérer.",
+        intro: "Ce dossier s'adresse aux entreprises qui utilisent déjà l'IA — et qui veulent en faire un véritable levier d'automatisation et de croissance, pas seulement un outil parmi d'autres.",
+        quote: "L'IA utilisée au cas par cas génère de la satisfaction. L'IA intégrée dans les processus génère de la compétitivité.",
+        sections: [
+          {
+            icon: 'bi bi-binoculars',
+            title: "Là où vous en êtes — et ce que ça signifie",
+            content: `<p class="qacc-text">Vous avez franchi la première étape : l'IA fait partie de votre quotidien. Peut-être ChatGPT pour rédiger des emails, un outil de génération de contenu, quelques automatisations légères. C'est un vrai avantage sur vos concurrents qui hésitent encore.</p>
+            <p class="qacc-text">Mais cette expérience met aussi en lumière une limite : les gains restent ponctuels, individuels, difficilement mesurables à l'échelle de l'entreprise. Ce que vous cherchez maintenant, c'est une cohérence — transformer des usages épars en une architecture IA qui produit des résultats systématiques.</p>`
+          },
+          {
+            icon: 'bi bi-gear-wide-connected',
+            title: "Les deux leviers qui changent l'échelle",
+            content: `<div class="qacc-grid">
+              <div class="qacc-grid-item"><strong>⚙️ Automatiser</strong>Identifier les flux répétitifs (suivi client, reporting, traitement de données) et les confier à des agents IA configurés sur mesure.</div>
+              <div class="qacc-grid-item"><strong>📈 Structurer pour la croissance</strong>Utiliser l'IA pour améliorer la conversion, personnaliser l'expérience client et scaler sans augmenter proportionnellement les coûts.</div>
+              <div class="qacc-grid-item"><strong>🔗 Connecter vos outils</strong>Brancher l'IA sur votre CRM, messagerie, comptabilité et outils métier pour qu'elle agisse dans votre environnement réel.</div>
+              <div class="qacc-grid-item"><strong>📊 Mesurer pour piloter</strong>Mettre en place des indicateurs simples pour quantifier le temps gagné, les erreurs évitées et l'impact sur le chiffre d'affaires.</div>
+            </div>`
+          },
+          {
+            icon: 'bi bi-list-check',
+            title: "Ce que Cobalt met en place concrètement",
+            content: `<div class="qacc-phase"><div class="qacc-phase-num">1</div><div class="qacc-phase-text"><strong>Diagnostic de vos processus actuels</strong>Cartographie des flux où du temps est perdu, des tâches à faible valeur ajoutée, et des données sous-exploitées. Résultat : une liste priorisée des chantiers à fort ROI.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">2</div><div class="qacc-phase-text"><strong>Conception et déploiement des automatisations</strong>Développement d'agents IA sur mesure ou configuration d'outils no-code (Make, Zapier, Power Automate). Chaque automatisation est testée, documentée et transférée à vos équipes.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">3</div><div class="qacc-phase-text"><strong>Activation des leviers de croissance</strong>Déploiement d'outils IA pour la génération de leads, la personnalisation client, et l'optimisation de votre présence digitale — avec des KPIs définis dès le départ.</div></div>
+            <div class="qacc-sub">Exemples de missions réalisées</div>
+            <ul class="qacc-bullets">
+              <li><strong>Automatisation du suivi commercial</strong> — Connexion CRM + messagerie pour générer automatiquement des relances personnalisées et des synthèses de pipeline.</li>
+              <li><strong>Reporting mensuel automatisé</strong> — Agent IA qui consolide les données de vente, de production et de facturation chaque fin de mois.</li>
+              <li><strong>Génération de contenu à l'échelle</strong> — Système de production de fiches produit, posts réseaux et emails clients à partir d'un brief court.</li>
+            </ul>`
+          },
+          {
+            icon: 'bi bi-calendar3',
+            title: "Votre feuille de route des 90 prochains jours",
+            content: `<div class="qacc-phase"><div class="qacc-phase-num">1</div><div class="qacc-phase-text"><strong>Semaines 1–2 : Atelier de diagnostic</strong>Cartographie des processus, identification des 3 chantiers prioritaires, définition des indicateurs de succès.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">2</div><div class="qacc-phase-text"><strong>Semaines 3–5 : Premières automatisations</strong>Déploiement sur les processus les plus chronophages. Tests en conditions réelles, ajustements.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">3</div><div class="qacc-phase-text"><strong>Semaines 6–8 : Connexion aux outils existants</strong>CRM, messagerie, comptabilité. Formation des équipes concernées.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">4</div><div class="qacc-phase-text"><strong>Semaines 9–12 : Leviers de croissance</strong>Mise en place du tableau de bord de suivi. Bilan et planification de la phase suivante.</div></div>`
+          },
+          {
+            icon: 'bi bi-shield-check',
+            title: "Garder le contrôle à chaque étape",
+            content: `<p class="qacc-text">L'automatisation ne signifie pas déléguer sans surveillance. Chez Cobalt, chaque système livré intègre par défaut une validation humaine sur toute action à effet réel — envoi d'un email, publication, modification de données. Vous restez aux commandes des décisions ; l'IA s'occupe de l'exécution répétitive.</p>
+            <p class="qacc-text">Sur la sécurité des données : les outils que nous déployons respectent les permissions déjà en place dans vos systèmes. Aucune donnée sensible ne transite par des outils grand public non sécurisés. Nous documentons chaque choix technique et vous en expliquons les implications.</p>`
+          }
+        ]
+      },
+
+      corp_curieux: {
+        tag: 'Grande entreprise · Curieuse',
+        title: "Comprendre l'IA pour mieux la faire travailler pour vous.",
+        intro: "Ce dossier s'adresse aux dirigeants et équipes qui veulent comprendre l'IA avant d'agir — et à ceux qui ont une idée de projet précise mais ne savent pas comment la concrétiser.",
+        quote: "Agir sans comprendre, c'est prendre un risque. Comprendre sans agir, c'est laisser passer une opportunité. La bonne posture, c'est les deux ensemble.",
+        sections: [
+          {
+            icon: 'bi bi-info-circle',
+            title: "Ce que l'IA est — et ce qu'elle n'est pas",
+            content: `<ul class="qacc-bullets">
+              <li><strong>L'IA est excellente pour</strong> : rédiger, reformuler, résumer, analyser des documents, générer des options, structurer de l'information, répondre à des questions sur une base documentaire.</li>
+              <li><strong>L'IA est moins fiable pour</strong> : les chiffres précis et récents, les questions réglementaires complexes, les décisions stratégiques qui nécessitent un contexte humain.</li>
+              <li><strong>L'IA ne remplace pas</strong> : l'expertise métier, le jugement humain, la relation client, la créativité stratégique. Elle les augmente.</li>
+              <li><strong>L'IA s'améliore avec</strong> : des demandes précises, du contexte, des exemples. Mieux vous l'instruisez, meilleur est le résultat.</li>
+            </ul>`
+          },
+          {
+            icon: 'bi bi-journal-text',
+            title: "Apprendre à parler à l'IA : la méthode C.O.R.E.",
+            content: `<p class="qacc-text">La compétence la plus importante pour tirer profit de l'IA n'est pas technique — c'est la capacité à formuler des demandes précises et structurées.</p>
+            <ul class="qacc-bullets">
+              <li>C — Contexte : Quelle est votre situation ? Qui vous êtes, votre secteur, le sujet concerné.</li>
+              <li>O — Objectif : Quel résultat souhaitez-vous ? Soyez précis sur ce que vous attendez.</li>
+              <li>R — Rôle : Quel expert l'IA doit-elle incarner ?</li>
+              <li>E — Exigences : Quelles règles doit-elle respecter ? (ton, format, longueur, contraintes)</li>
+            </ul>
+            <div class="qacc-sub">Exemples de prompts professionnels</div>
+            <div class="qacc-example">Pour structurer une réunion : « Tu es un consultant en organisation d'entreprise. Voici mes notes brutes d'une réunion de direction [notes]. Rédige un compte rendu structuré avec : contexte, décisions prises, actions à mener par qui, prochaine échéance. »</div>
+            <div class="qacc-example">Pour comprendre un document complexe : « Voici un contrat de prestation [texte]. Résume-moi en 5 points les éléments les plus importants : engagements réciproques, délais, conditions de résiliation, pénalités, points d'attention. »</div>`
+          },
+          {
+            icon: 'bi bi-people',
+            title: "Votre feuille de route selon votre objectif",
+            content: `<div class="qacc-sub">Objectif : Maîtriser l'IA</div>
+            <div class="qacc-phase"><div class="qacc-phase-num">1</div><div class="qacc-phase-text"><strong>Sem. 1–2</strong>Diagnostic des besoins, identification des cas d'usage prioritaires par équipe.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">2</div><div class="qacc-phase-text"><strong>Sem. 3–4</strong>Atelier de formation C.O.R.E., construction de la bibliothèque de prompts.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">3</div><div class="qacc-phase-text"><strong>Sem. 5–8</strong>Déploiement des assistants IA configurés, mise en place des règles d'usage interne.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">4</div><div class="qacc-phase-text"><strong>Sem. 9–12</strong>Premières automatisations, bilan des gains, feuille de route long terme.</div></div>
+            <div class="qacc-sub">Objectif : Projet sur mesure</div>
+            <div class="qacc-phase"><div class="qacc-phase-num">1</div><div class="qacc-phase-text"><strong>Sem. 1–2</strong>Cadrage du projet, analyse de faisabilité technique et fonctionnelle.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">2</div><div class="qacc-phase-text"><strong>Sem. 3–4</strong>Prototype fonctionnel, premières itérations avec les utilisateurs métier.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">3</div><div class="qacc-phase-text"><strong>Sem. 5–8</strong>Développement et intégration dans votre environnement existant.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">4</div><div class="qacc-phase-text"><strong>Sem. 9–12</strong>Déploiement en production, formation des équipes, documentation.</div></div>`
+          },
+          {
+            icon: 'bi bi-patch-question',
+            title: "5 questions à se poser avant de démarrer",
+            content: `<ul class="qacc-bullets">
+              <li>Quelles sont les 3 tâches dans mon organisation qui consomment le plus de temps sans créer de valeur ?</li>
+              <li>Quelles données ai-je déjà disponibles qui pourraient alimenter un système IA ?</li>
+              <li>Quelles sont les contraintes réglementaires ou de confidentialité à prendre en compte dans mon secteur ?</li>
+              <li>Qui dans mon organisation sera le plus ouvert à expérimenter ? (Ce sont les bons candidats pour un pilote.)</li>
+              <li>Quel serait le signe concret, au bout de 3 mois, que l'investissement valait la peine ?</li>
+            </ul>`
+          }
+        ]
+      },
+
+      corp_expert: {
+        tag: 'Grande entreprise · Experte',
+        title: "Une vision IA claire. Une exécution sur mesure.",
+        intro: "Ce dossier s'adresse aux entreprises qui ont déjà une expérience de l'IA et qui veulent aller plus loin : structurer une vraie stratégie ou concrétiser un projet précis — agent vocal, outil interne, solution métier.",
+        quote: "Avoir une vision IA sans architecture pour la porter, c'est laisser l'avantage compétitif sur la table.",
+        sections: [
+          {
+            icon: 'bi bi-binoculars',
+            title: "De l'expérimentation à la stratégie",
+            content: `<p class="qacc-text">Vous utilisez l'IA. Vous en connaissez la valeur. Mais entre les usages qui fonctionnent bien et une stratégie IA cohérente à l'échelle de l'entreprise — ou entre une idée de projet et sa réalisation technique — il y a un pas que beaucoup d'organisations n'arrivent pas à franchir seules.</p>
+            <p class="qacc-text">Ce n'est pas un problème de compétences. C'est un problème de méthode, de ressources et de priorisation. C'est précisément là qu'intervient Cobalt.</p>`
+          },
+          {
+            icon: 'bi bi-diagram-2',
+            title: "Deux besoins, une même exigence de précision",
+            content: `<div class="qacc-grid">
+              <div class="qacc-grid-item"><strong>🎓 Structurer votre stratégie IA</strong>Cartographie des besoins, feuille de route par département, formation des équipes, gouvernance des données et des outils.</div>
+              <div class="qacc-grid-item"><strong>💡 Réaliser votre projet sur mesure</strong>Développement d'agents IA, d'outils internes, de chatbots métier ou de solutions d'automatisation complexes.</div>
+              <div class="qacc-grid-item"><strong>🔧 Intégrer dans l'existant</strong>Connexion aux systèmes en place (ERP, CRM, messagerie), respect des politiques de sécurité, formation des utilisateurs.</div>
+              <div class="qacc-grid-item"><strong>📐 Documenter et pérenniser</strong>Chaque livrable est documenté et transféré à vos équipes. L'objectif : que vous soyez autonomes après notre intervention.</div>
+            </div>`
+          },
+          {
+            icon: 'bi bi-list-ol',
+            title: "Notre méthode pour les projets sur mesure",
+            content: `<div class="qacc-phase"><div class="qacc-phase-num">1</div><div class="qacc-phase-text"><strong>Cadrage & faisabilité (1–2 semaines)</strong>Définition précise du besoin, analyse technique de faisabilité, identification des contraintes (données, sécurité, budget), choix de l'architecture.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">2</div><div class="qacc-phase-text"><strong>Prototype fonctionnel (2–4 semaines)</strong>Développement d'un premier prototype testable par les utilisateurs métier. Itérations rapides basées sur les retours.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">3</div><div class="qacc-phase-text"><strong>Déploiement & intégration</strong>Mise en production dans votre environnement, connexion aux outils existants, tests de charge et de sécurité, documentation technique complète.</div></div>
+            <div class="qacc-phase"><div class="qacc-phase-num">4</div><div class="qacc-phase-text"><strong>Transfert & autonomie</strong>Formation des équipes, documentation des processus, définition d'un plan de maintenance. Cobalt reste disponible pour les évolutions futures.</div></div>
+            <div class="qacc-sub">Types de projets réalisés</div>
+            <ul class="qacc-bullets">
+              <li><strong>Agent vocal relation client</strong> — Qualification automatique des appels, redirection intelligente, collecte d'informations avant transfert à un conseiller.</li>
+              <li><strong>Outil interne de recherche documentaire</strong> — Interrogation en langage naturel d'une base documentaire interne (contrats, procédures, historiques clients).</li>
+              <li><strong>Automatisation du reporting</strong> — Pipeline qui consolide plusieurs sources, produit les rapports hebdomadaires et alerte sur les anomalies.</li>
+            </ul>`
+          },
+          {
+            icon: 'bi bi-graph-up',
+            title: "Ce que le diagnostic révèle toujours",
+            content: `<div class="qacc-grid">
+              <div class="qacc-grid-item"><strong>Ce qui est sous-utilisé</strong>Les données clients existantes · Les documents internes non structurés · Les processus de validation manuels · La communication répétitive</div>
+              <div class="qacc-grid-item"><strong>Ce qui peut être transformé</strong>Le parcours client et la personnalisation · La vitesse de production de contenu · La qualité du suivi commercial · La prise de décision basée sur les données</div>
+            </div>`
+          },
+          {
+            icon: 'bi bi-shield-lock',
+            title: "Sécurité, souveraineté et gouvernance",
+            content: `<p class="qacc-text">Toute stratégie IA sérieuse commence par une politique claire sur les données. Cobalt vous aide à définir les règles du jeu :</p>
+            <ul class="qacc-bullets">
+              <li>Quelles données peuvent alimenter des outils cloud, et lesquelles doivent rester en local ou dans votre infrastructure.</li>
+              <li>Comment segmenter les usages IA par niveau de sensibilité des informations traitées.</li>
+              <li>Comment former les équipes à ces règles et les intégrer dans les processus existants.</li>
+              <li>Comment auditer régulièrement les outils déployés et maintenir la conformité réglementaire.</li>
+            </ul>`
           }
         ]
       }
@@ -899,38 +1020,43 @@
       const data = quizContent[key];
       if (!data) return;
 
-      const cardsHtml = data.cards.map(c => `
-        <div class="quiz-card">
-          <div class="quiz-card-icon"><i class="${c.icon}"></i></div>
-          <div class="quiz-card-title">${c.title}</div>
-          <div class="quiz-card-text">${c.text}</div>
-          <ul class="quiz-card-bullets">
-            ${c.bullets.map(b => `<li>${b}</li>`).join('')}
-          </ul>
-        </div>
-      `).join('');
+      let uid = 0;
+      const accordionHtml = data.sections.map(s => {
+        const id = 'qacc-' + (uid++);
+        return `
+          <div class="qacc-item" id="${id}">
+            <div class="qacc-header" onclick="qaccToggle('${id}')">
+              <div class="qacc-header-left">
+                <span class="qacc-icon"><i class="${s.icon}"></i></span>
+                <span class="qacc-title">${s.title}</span>
+              </div>
+              <i class="bi bi-chevron-down qacc-chevron"></i>
+            </div>
+            <div class="qacc-body">
+              <div class="qacc-content">${s.content}</div>
+            </div>
+          </div>`;
+      }).join('');
 
       document.getElementById('quiz-result-inner').innerHTML = `
-        <div class="quiz-result-header">
-          <div class="quiz-result-tag">${data.tag}</div>
-          <div class="quiz-result-title">${data.title}</div>
-          <div class="quiz-result-intro">${data.intro}</div>
-        </div>
-        <div class="quiz-cards-grid">${cardsHtml}</div>
+        <div class="quiz-result-tag">${data.tag}</div>
+        <div class="quiz-result-title">${data.title}</div>
+        <div class="quiz-result-intro">${data.intro}</div>
+        ${data.quote ? `<div class="quiz-result-quote">&laquo;&nbsp;${data.quote}&nbsp;&raquo;</div>` : ''}
+        <div class="quiz-accordion">${accordionHtml}</div>
         <div class="quiz-divider"></div>
-        <a href="#contact" class="quiz-result-cta">
-          <i class="bi bi-calendar2-check"></i>
-          Discutons de votre situation
-        </a>
+        <a href="#contact" class="quiz-result-cta"><i class="bi bi-calendar2-check"></i> Discutons de votre situation</a>
       `;
 
       const result = document.getElementById('quiz-result');
       result.classList.add('visible');
       document.getElementById('quiz-reset').style.display = 'flex';
+      setTimeout(() => result.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+    }
 
-      setTimeout(() => {
-        result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }, 100);
+    function qaccToggle(id) {
+      const item = document.getElementById(id);
+      item.classList.toggle('open');
     }
 
     function quizReset() {
