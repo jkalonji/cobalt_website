@@ -71,7 +71,7 @@
       },
       "speakable": {
         "@type": "SpeakableSpecification",
-        "cssSelector": ["#hero", "#solution", "#faq"]
+        "cssSelector": ["#hero", "#produits", "#faq"]
       }
     },
     {
@@ -145,7 +145,7 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -172,144 +172,56 @@
     <p class="hero-sub">Cobalt conçoit des solutions sur mesure pour redonner à vos équipes le temps de ce qui compte vraiment.</p>
     <div class="hero-actions">
       <a href="#contact" class="btn btn-fill">Premier échange gratuit</a>
-      <a href="#solution" class="btn">Voir comment ça marche</a>
+      <a href="#produits" class="btn">Voir nos solutions</a>
     </div>
   </section>
 
   <section class="section" id="probleme">
     <div class="section-label">Problème</div>
-    <h2>Chaque heure perdue sur des tâches répétitives est une heure volée à votre croissance.</h2>
+    <h2>Qui s'occupe de votre business quand vous dormez ?</h2>
     <div class="problem-grid">
       <div class="problem-item">
         <div class="problem-num">01</div>
-        <div class="problem-title">Temps gaspillé</div>
-        <div class="problem-desc">Vos équipes passent des heures sur des tâches sans valeur ajoutée (plannings, relances, saisies, appels entrants). Chaque heure perdue est une heure de productivité qui disparaît.</div>
+        <div class="problem-title">Un lead frustré est un lead perdu</div>
+        <div class="problem-desc">Un appel sans réponse, un message qui attend : il part chez le concurrent. Et il ne revient pas.</div>
       </div>
       <div class="problem-item">
         <div class="problem-num">02</div>
-        <div class="problem-title">Erreurs humaines</div>
-        <div class="problem-desc">La répétition engendre l'inattention. Erreurs de saisie, oublis, mauvaises transmissions (les tâches manuelles sont une source de friction constante et coûteuse).</div>
+        <div class="problem-title">L'erreur humaine coûte cher</div>
+        <div class="problem-desc">Fatigue, oublis, fautes de saisie. Chaque erreur vous coûte du temps, de l'argent et la confiance de vos clients.</div>
       </div>
       <div class="problem-item">
         <div class="problem-num">03</div>
-        <div class="problem-title">Croissance bloquée</div>
-        <div class="problem-desc">Impossible de scaler une entreprise dont les processus reposent sur l'humain à chaque étape. Vos concurrents automatisent. Vous, vous attendez.</div>
+        <div class="problem-title">Votre temps est fait pour vos clients</div>
+        <div class="problem-desc">Pas pour les relances ni la paperasse. Déléguez le répétitif, gardez l'humain.</div>
       </div>
     </div>
   </section>
 
-  <section class="section" id="solution">
-    <div class="section-label">Solution</div>
-    <h2>On analyse, on conçoit, on déploie. Vous récupérez du temps.</h2>
-    <div class="orbital-container" id="orbitalTimeline">
-
-      <!-- Centre pulsant -->
-      <div class="orbital-center">
-        <div class="orbital-ping ping1"></div>
-        <div class="orbital-ping ping2"></div>
-        <div class="orbital-core"></div>
-        <div class="orbital-center-label">Cobalt</div>
+  <section class="section" id="produits">
+    <div class="section-label">Nos solutions</div>
+    <h2>Un seul objectif : vous libérer du temps.</h2>
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-icon">🎙️</div>
+        <div class="product-title">Agent Vocal IA</div>
+        <div class="product-desc">Un assistant vocal qui répond à vos appels entrants 24h/24, 7j/7 (prise de rendez-vous, questions fréquentes, transmissions internes). Votre téléphone ne sonne plus dans le vide.</div>
       </div>
-
-      <!-- Orbite -->
-      <div class="orbital-ring"></div>
-
-      <!-- Nœuds injectés par JS -->
-      <div id="orbitalNodes"></div>
-
-    </div>
-
-    <!-- Template carte détail (cloné par JS) -->
-    <template id="cardTemplate">
-      <div class="orbital-card">
-        <div class="orbital-card-connector"></div>
-        <div class="orbital-card-title"></div>
-        <div class="orbital-card-desc"></div>
+      <div class="product-card">
+        <div class="product-icon">⚙️</div>
+        <div class="product-title">Automatisation Interne</div>
+        <div class="product-desc">Plannings, relances, emails répétitifs, suivi client, saisies administratives (nous automatisons les processus qui mobilisent vos équipes sans créer de valeur).</div>
       </div>
-    </template>
-
-    <!-- Version mobile -->
-    <div class="cycle-mobile">
-      <div class="cycle-mobile-step">
-        <div class="cycle-mobile-icon">📋</div>
-        <div class="cycle-mobile-content">
-          <div class="cycle-mobile-label">01 — Audit offert</div>
-          <div class="cycle-mobile-sub">On identifie vos frictions</div>
-        </div>
-      </div>
-      <div class="cycle-mobile-arrow">↓</div>
-      <div class="cycle-mobile-step">
-        <div class="cycle-mobile-icon">⚙️</div>
-        <div class="cycle-mobile-content">
-          <div class="cycle-mobile-label">02 — Solution sur mesure</div>
-          <div class="cycle-mobile-sub">IA adaptée à votre métier</div>
-        </div>
-      </div>
-      <div class="cycle-mobile-arrow">↓</div>
-      <div class="cycle-mobile-step">
-        <div class="cycle-mobile-icon">🚀</div>
-        <div class="cycle-mobile-content">
-          <div class="cycle-mobile-label">03 — Déploiement rapide</div>
-          <div class="cycle-mobile-sub">Opérationnel en 2 semaines</div>
-        </div>
-      </div>
-      <div class="cycle-mobile-arrow">↓</div>
-      <div class="cycle-mobile-step">
-        <div class="cycle-mobile-icon">📈</div>
-        <div class="cycle-mobile-content">
-          <div class="cycle-mobile-label">04 — Résultats mesurables</div>
-          <div class="cycle-mobile-sub">Dès le premier mois</div>
-        </div>
-      </div>
-      <div class="cycle-mobile-arrow">↺</div>
-      <div class="cycle-mobile-step cycle-mobile-highlight">
-        <div class="cycle-mobile-icon">🔄</div>
-        <div class="cycle-mobile-content">
-          <div class="cycle-mobile-label">05 — Amélioration continue</div>
-          <div class="cycle-mobile-sub">L'IA s'affine avec vous dans la durée</div>
-        </div>
+      <div class="product-card">
+        <div class="product-icon">🌐</div>
+        <div class="product-title">Présence Digitale</div>
+        <div class="product-desc">Un site web conçu pour convertir, avec intégration native de vos outils IA (formulaires intelligents, prise de contact automatisée, SEO optimisé).</div>
       </div>
     </div>
   </section>
 
-    <section class="section" id="impact">
-    <div class="section-label">Impact</div>
-    <h2>Des résultats concrets, pas des promesses.</h2>
-
-    <!-- Stats générales -->
-    <div class="stats-row">
-      <div class="stat">
-        <div class="stat-value">×4</div>
-        <div class="stat-label">de productivité dans les secteurs exposés à l'IA</div>
-        <div class="stat-context">CA par employé 3× supérieur pour les entreprises adoptant l'IA vs. leurs concurrents</div>
-        <div class="stat-source"><a href="https://www.pwc.fr/fr/publications/series/ai-jobs-barometer.html" target="_blank" rel="noopener">PwC AI Jobs Barometer, 2025</a></div>
-      </div>
-      <div class="stat">
-        <div class="stat-value">−30%</div>
-        <div class="stat-label">de coûts de service client</div>
-        <div class="stat-context">+25% de taux de conversion leads pour les PME utilisant des agents IA</div>
-        <div class="stat-source"><a href="https://www.salemwise.com/insights/automate-repetitive-tasks" target="_blank" rel="noopener">Salesforce Research, 2024</a></div>
-      </div>
-      <div class="stat">
-        <div class="stat-value">−85%</div>
-        <div class="stat-label">d'erreurs humaines sur les tâches de saisie et traitement</div>
-        <div class="stat-context">L'automatisation IA réduit également les coûts opérationnels de 40%</div>
-        <div class="stat-source"><a href="https://www.productivite.ai/blog/ia-productivite-entreprises-gains-temps-2025" target="_blank" rel="noopener">UiPath Research, 2024</a></div>
-      </div>
-      <div class="stat">
-        <div class="stat-value">3,7×</div>
-        <div class="stat-label">le ROI moyen sur 18 mois pour une IA bien déployée</div>
-        <div class="stat-context">Les entreprises appliquant une stratégie IA alignée sur les opérations critiques</div>
-        <div class="stat-source"><a href="https://www.productivite.ai/blog/ia-productivite-entreprises-gains-temps-2025" target="_blank" rel="noopener">McKinsey & Forrester, 2024</a></div>
-      </div>
-    </div>
-
-    <!-- Accordéons sectoriels -->
-    <div class="sector-intro">
-      <span class="sector-intro-line"></span>
-      <span class="sector-intro-text">Exemples par secteur</span>
-      <span class="sector-intro-line"></span>
-    </div>
+  <section class="section" id="secteurs">
+    <div class="section-label">Exemples par secteur</div>
 
     <!-- Gooey SVG filter -->
     <svg class="sector-goo-svg" aria-hidden="true">
@@ -446,29 +358,6 @@
         </div>
       </div>
 
-    </div>
-  </section>
-
-
-  <section class="section" id="produits">
-    <div class="section-label">Nos solutions</div>
-    <h2>Un seul objectif : vous libérer du temps.</h2>
-    <div class="products-grid">
-      <div class="product-card">
-        <div class="product-icon">🎙️</div>
-        <div class="product-title">Agent Vocal IA</div>
-        <div class="product-desc">Un assistant vocal qui répond à vos appels entrants 24h/24, 7j/7 (prise de rendez-vous, questions fréquentes, transmissions internes). Votre téléphone ne sonne plus dans le vide.</div>
-      </div>
-      <div class="product-card">
-        <div class="product-icon">⚙️</div>
-        <div class="product-title">Automatisation Interne</div>
-        <div class="product-desc">Plannings, relances, emails répétitifs, suivi client, saisies administratives (nous automatisons les processus qui mobilisent vos équipes sans créer de valeur).</div>
-      </div>
-      <div class="product-card">
-        <div class="product-icon">🌐</div>
-        <div class="product-title">Présence Digitale</div>
-        <div class="product-desc">Un site web conçu pour convertir, avec intégration native de vos outils IA (formulaires intelligents, prise de contact automatisée, SEO optimisé).</div>
-      </div>
     </div>
   </section>
 
