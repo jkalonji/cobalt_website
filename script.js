@@ -80,7 +80,7 @@
     });
   }, { threshold: 0.1 });
 
-  document.querySelectorAll('.problem-item, .product-card, .sim-card, .info-item').forEach(el => {
+  document.querySelectorAll('.problem-item, .product-card, .resource-card, .sim-card, .info-item').forEach(el => {
     observer.observe(el);
   });
 

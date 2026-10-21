@@ -63,7 +63,8 @@
         "Agent vocal IA",
         "Intelligence artificielle appliquée aux entreprises",
         "Transformation digitale des PME",
-        "Automatisation des tâches répétitives"
+        "Automatisation des tâches répétitives",
+        "Veille et actualité de l'intelligence artificielle"
       ],
       "audience": {
         "@type": "Audience",
@@ -71,7 +72,7 @@
       },
       "speakable": {
         "@type": "SpeakableSpecification",
-        "cssSelector": ["#hero", "#produits", "#faq"]
+        "cssSelector": ["#hero", "#produits", "#ressources", "#faq"]
       }
     },
     {
@@ -89,6 +90,26 @@
       "provider": { "@id": "https://cobaltgroupe.xyz/#organization" },
       "description": "Automatisation des processus internes chronophages : plannings, relances, emails répétitifs, saisies administratives, analyse et visualisation de données. Cobalt s'inscrit dans une relation long terme avec ses clients et mène des diagnostics réguliers pour s'assurer que la solution reste alignée avec l'évolution de l'entreprise.",
       "serviceType": "Automatisation de processus internes et gestion des tâches répétitives"
+    },
+    {
+      "@type": "Periodical",
+      "@id": "https://cobaltgroupe.xyz/#newsletter",
+      "name": "Newsletter Cobalt",
+      "url": "https://buttondown.com/jeremie",
+      "description": "Newsletter hebdomadaire de Cobalt : chaque semaine, l'essentiel de l'actualité de l'intelligence artificielle, trié et expliqué pour les entreprises.",
+      "publisher": { "@id": "https://cobaltgroupe.xyz/#organization" },
+      "about": { "@type": "Thing", "name": "Intelligence artificielle" },
+      "isAccessibleForFree": true
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://cobaltgroupe.xyz/#radar",
+      "name": "Radar Cobalt",
+      "url": "https://jkalonji.github.io/Veille-IA/",
+      "description": "Tableau de bord de veille IA de Cobalt, mis à jour quotidiennement : suivi au jour le jour des grands sujets de l'intelligence artificielle, avec les sources de chaque article.",
+      "publisher": { "@id": "https://cobaltgroupe.xyz/#organization" },
+      "about": { "@type": "Thing", "name": "Intelligence artificielle" },
+      "isAccessibleForFree": true
     },
     {
       "@type": "FAQPage",
@@ -132,6 +153,14 @@
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Le premier échange avec Cobalt est gratuit. Il permet d'identifier les besoins et de dimensionner la mission. Le coût de l'audit approfondi est défini lors de ce premier contact, en fonction du périmètre et de la complexité des processus à analyser."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment suivre l'actualité de l'intelligence artificielle avec Cobalt ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cobalt publie deux ressources en accès libre. La Newsletter Cobalt (https://buttondown.com/jeremie), envoyée chaque semaine, résume l'essentiel de l'actualité IA pour les entreprises. Le Radar Cobalt (https://jkalonji.github.io/Veille-IA/) est un tableau de bord de veille qui suit au jour le jour les grands sujets de l'IA (modèles, régulation, puces, grands acteurs du secteur), avec les sources de chaque article."
           }
         }
       ]
@@ -390,6 +419,11 @@
       <div class="faq-item" tabindex="0" role="button" aria-expanded="false">
         <div class="faq-question">Quel est le prix d'un audit Cobalt ?</div>
         <div class="faq-answer">Le premier échange est gratuit. Il permet d'identifier vos besoins et de dimensionner la mission ensemble. Le coût de l'audit approfondi est défini lors de ce premier contact, en fonction du périmètre et de la complexité des processus à analyser.</div>
+      </div>
+
+      <div class="faq-item" tabindex="0" role="button" aria-expanded="false">
+        <div class="faq-question">Comment suivre l'actualité de l'intelligence artificielle avec Cobalt ?</div>
+        <div class="faq-answer">Cobalt publie deux ressources en accès libre. La <a href="https://buttondown.com/jeremie" target="_blank" rel="noopener">Newsletter Cobalt</a>, envoyée chaque semaine, résume l'essentiel de l'actualité IA pour les entreprises. Le <a href="https://jkalonji.github.io/Veille-IA/" target="_blank" rel="noopener">Radar Cobalt</a> est un tableau de bord de veille qui suit au jour le jour les grands sujets de l'IA (modèles, régulation, puces, grands acteurs du secteur), avec les sources de chaque article.</div>
       </div>
 
     </div>
@@ -989,6 +1023,25 @@
     }
   </script>
 
+  <section class="section" id="ressources">
+    <div class="section-label">Ressources</div>
+    <h2>Restez à jour sur l'IA, sans y passer vos journées.</h2>
+    <div class="resources-grid">
+      <a class="resource-card" href="https://buttondown.com/jeremie" target="_blank" rel="noopener">
+        <div class="resource-tag"><i class="bi bi-envelope-paper"></i> Newsletter</div>
+        <div class="resource-title">Newsletter Cobalt</div>
+        <div class="resource-desc">Chaque semaine, l'essentiel de l'actualité IA, trié et expliqué pour les entreprises. Directement dans votre boîte mail.</div>
+        <div class="resource-link">S'abonner <i class="bi bi-arrow-up-right"></i></div>
+      </a>
+      <a class="resource-card" href="https://jkalonji.github.io/Veille-IA/" target="_blank" rel="noopener">
+        <div class="resource-tag"><i class="bi bi-broadcast"></i> Dashboard</div>
+        <div class="resource-title">Radar Cobalt</div>
+        <div class="resource-desc">Notre veille IA en temps réel : les sujets qui bougent, suivis jour après jour, sources à l'appui.</div>
+        <div class="resource-link">Explorer le radar <i class="bi bi-arrow-up-right"></i></div>
+      </a>
+    </div>
+  </section>
+
   <section class="cta-section" id="contact">
     <div class="cta-left">
       <div class="section-label" style="margin-bottom: 28px;">Premier échange gratuit</div>
@@ -1027,6 +1080,10 @@
 
 <footer>
   <div class="footer-logo">COBALT</div>
+  <nav class="footer-links" aria-label="Ressources">
+    <a href="https://buttondown.com/jeremie" target="_blank" rel="noopener">Newsletter</a>
+    <a href="https://jkalonji.github.io/Veille-IA/" target="_blank" rel="noopener">Radar IA</a>
+  </nav>
   <div class="footer-copy">© 2026 — Tous droits réservés</div>
 </footer>
 

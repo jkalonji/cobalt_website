@@ -48,6 +48,7 @@
   /* Fade-in initial state — only when JS is available */
   .js-ready .problem-item,
   .js-ready .product-card,
+  .js-ready .resource-card,
   .js-ready .sim-card,
   .js-ready .info-item {
     opacity: 0;
@@ -708,6 +709,83 @@
     margin-bottom: 12px;
   }
 
+  /* RESOURCES */
+  .resources-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: rgba(68,136,255,0.1);
+    border: 1px solid rgba(68,136,255,0.1);
+  }
+
+  .resource-card {
+    background: var(--ink);
+    padding: 48px 40px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    color: inherit;
+    text-decoration: none;
+    transition: background 0.4s ease;
+  }
+
+  .resource-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 2px;
+    background: linear-gradient(to right, var(--cobalt-light), var(--sky));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .resource-card:hover { background: rgba(68,136,255,0.05); }
+  .resource-card:hover::before { transform: scaleX(1); }
+
+  .resource-tag {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--cobalt-light);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .resource-tag i { font-size: 14px; }
+
+  .resource-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    color: var(--cream);
+    margin-bottom: 14px;
+  }
+
+  .resource-desc {
+    flex: 1;
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 32px;
+    max-width: 420px;
+  }
+
+  .resource-link {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--sky);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .resource-link i { transition: transform 0.3s ease; }
+  .resource-card:hover .resource-link i { transform: translate(3px, -3px); }
+
   /* CTA */
   .cta-section {
     margin: 80px 60px;
@@ -833,6 +911,19 @@
 
   .footer-copy { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; }
 
+  .footer-links { display: flex; gap: 28px; }
+
+  .footer-links a {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--cobalt-light); }
+
   /* FAQ */
   .faq-list {
     display: flex;
@@ -875,6 +966,7 @@
     overflow: hidden;
     transition: max-height 0.35s ease, margin-top 0.3s ease;
   }
+  .faq-answer a { color: var(--cobalt-light); text-decoration: none; }
   .faq-item.open .faq-answer {
     max-height: 300px;
     margin-top: 16px;
@@ -884,7 +976,9 @@
     header { padding: 20px 24px; }
     .hero, .section { padding-left: 24px; padding-right: 24px; }
     .hero h1 { font-size: 42px; }
-    .problem-grid, .products-grid { grid-template-columns: 1fr; }
+    .problem-grid, .products-grid, .resources-grid { grid-template-columns: 1fr; }
+    .resource-card { padding: 36px 24px; }
+    footer { flex-direction: column; gap: 20px; padding: 36px 24px; text-align: center; }
     .products-grid { gap: 0; }
     .product-card { padding: 36px 24px; }
     .sim-container, .cta-section { grid-template-columns: 1fr; }

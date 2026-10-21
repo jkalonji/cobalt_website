@@ -1,0 +1,22 @@
+# Cobalt
+
+> Cobalt est une entreprise française (Paris) qui conçoit des solutions sur mesure pour automatiser les tâches répétitives des PME, notamment grâce à l'intelligence artificielle : agents vocaux IA, automatisation des processus internes et présence digitale. Cobalt publie aussi deux ressources de veille IA en accès libre : la Newsletter Cobalt (hebdomadaire) et le Radar Cobalt (tableau de bord quotidien).
+
+Cobalt s'adresse aux cabinets médicaux, restaurants, agences immobilières, salons, cabinets juridiques, artisans et PME en France. Le premier échange est gratuit ; une solution clé en main est déployée en environ deux semaines.
+
+## Veille et actualité de l'IA
+
+- [Newsletter Cobalt](https://buttondown.com/jeremie): newsletter hebdomadaire qui résume chaque semaine l'essentiel de l'actualité de l'intelligence artificielle, triée et expliquée pour les entreprises.
+- [Radar Cobalt](https://jkalonji.github.io/Veille-IA/): tableau de bord de veille IA mis à jour quotidiennement, qui suit au jour le jour les grands sujets de l'IA (modèles, régulation, puces, grands acteurs du secteur) avec les sources de chaque article.
+
+## Services
+
+- [Agent Vocal IA](https://cobaltgroupe.xyz/#produits): assistant vocal qui répond aux appels entrants 24h/24, 7j/7 (prise de rendez-vous, questions fréquentes, prise de commande, SAV de premier niveau) et redirige vers un humain pour les demandes complexes.
+- [Automatisation Interne](https://cobaltgroupe.xyz/#produits): automatisation des plannings, relances, emails répétitifs, suivi client, saisies administratives, analyse et visualisation de données.
+- [Présence Digitale](https://cobaltgroupe.xyz/#produits): site web conçu pour convertir, avec outils IA intégrés (formulaires intelligents, prise de contact automatisée, SEO).
+
+## En savoir plus
+
+- [Exemples par secteur](https://cobaltgroupe.xyz/#secteurs): chiffres sourcés sur l'impact de l'IA dans le médical, la restauration, l'immobilier, les salons, le juridique et les PME.
+- [FAQ](https://cobaltgroupe.xyz/#faq): questions fréquentes sur Cobalt, les délais, les tâches automatisables et le prix.
+- [Premier échange gratuit](https://cobaltgroupe.xyz/#contact): prise de rendez-vous de 30 minutes.
