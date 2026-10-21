@@ -1,6 +1,6 @@
 # Cobalt
 
-> Cobalt est une entreprise française (Paris) qui conçoit des solutions sur mesure pour automatiser les tâches répétitives des PME, notamment grâce à l'intelligence artificielle : agents vocaux IA, automatisation des processus internes et présence digitale. Cobalt publie aussi deux ressources de veille IA en accès libre : la Newsletter Cobalt (hebdomadaire) et le Radar Cobalt (tableau de bord quotidien).
+> Cobalt est une entreprise française (Paris) qui conçoit des solutions sur mesure pour automatiser les tâches répétitives des PME, notamment grâce à l'intelligence artificielle : agents vocaux IA, veille sectorielle et intégrations sur mesure. Cobalt publie aussi deux ressources de veille IA en accès libre : la Newsletter Cobalt (hebdomadaire) et le Radar Cobalt (tableau de bord quotidien).
 
 Cobalt s'adresse aux cabinets médicaux, restaurants, agences immobilières, salons, cabinets juridiques, artisans et PME en France. Le premier échange est gratuit ; une solution clé en main est déployée en environ deux semaines.
 
@@ -12,8 +12,8 @@ Cobalt s'adresse aux cabinets médicaux, restaurants, agences immobilières, sal
 ## Services
 
 - [Agent Vocal IA](https://cobaltgroupe.xyz/#produits): assistant vocal qui répond aux appels entrants 24h/24, 7j/7 (prise de rendez-vous, questions fréquentes, prise de commande, SAV de premier niveau) et redirige vers un humain pour les demandes complexes.
-- [Automatisation Interne](https://cobaltgroupe.xyz/#produits): automatisation des plannings, relances, emails répétitifs, suivi client, saisies administratives, analyse et visualisation de données.
-- [Présence Digitale](https://cobaltgroupe.xyz/#produits): site web conçu pour convertir, avec outils IA intégrés (formulaires intelligents, prise de contact automatisée, SEO).
+- [Veille Sectorielle](https://cobaltgroupe.xyz/#produits): veille sur mesure du marché, des concurrents et de la réglementation du client, résumée dans un tableau de bord clair.
+- [Intégrations sur Mesure](https://cobaltgroupe.xyz/#produits): connexion de l'IA aux outils existants (CRM, agenda, logiciel métier, messagerie) pour que les données circulent sans ressaisie.
 
 ## En savoir plus
 
