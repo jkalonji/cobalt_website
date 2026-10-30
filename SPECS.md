@@ -12,7 +12,9 @@ Cobalt est une société proposant des **solutions IA sur mesure pour les PME**.
 
 **Positionnement** : Automatiser les tâches répétitives pour rendre du temps aux équipes.
 
-**Tagline actuelle** : *"Vos tâches répétitives ont une date d'expiration."*
+**Accroche actuelle** : *"Qui s'occupe de votre business quand vous n'êtes pas disponible ?"*
+
+**Cible actuelle** : agents immobiliers indépendants (mandataires en réseau et agents à leur compte), qui gèrent seuls prospection, prise de rendez-vous, visites et suivi des dossiers. Ne jamais utiliser le terme « IAD » sur le site (nom d'un réseau précis).
 
 ---
 
@@ -32,17 +34,7 @@ Cobalt est une société proposant des **solutions IA sur mesure pour les PME**.
 
 | Persona | Profil | Déclencheur |
 |---|---|---|
-| **Dirigeant PME** | CEO/gérant, 10–200 employés | Coûts opérationnels qui grimpent, croissance bloquée par les process manuels |
-| **Responsable opérations** | COO, office manager, responsable admin | Équipe surchargée de tâches sans valeur ajoutée |
-
-### Secteurs cibles
-
-- Médical (cabinets, cliniques)
-- Restauration
-- Immobilier
-- Salons de coiffure / beauté
-- Juridique (cabinets d'avocats)
-- PME généralistes
+| **Agent immobilier indépendant** | Mandataire en réseau ou agent à son compte, travaille seul | Appels manqués pendant les visites, prospection délaissée, administratif qui déborde sur les soirées |
 
 ### Zone géographique
 

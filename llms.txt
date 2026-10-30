@@ -1,8 +1,8 @@
 # Cobalt
 
-> Cobalt est une entreprise française (Paris) qui conçoit des solutions sur mesure pour automatiser les tâches répétitives des PME, notamment grâce à l'intelligence artificielle : agents vocaux IA, veille sectorielle et intégrations sur mesure. Cobalt publie aussi deux ressources de veille IA en accès libre : la Newsletter Cobalt (hebdomadaire) et le Radar Cobalt (tableau de bord quotidien).
+> Cobalt est une entreprise française (Paris) qui conçoit des solutions sur mesure pour automatiser les tâches répétitives des agents immobiliers indépendants, notamment grâce à l'intelligence artificielle : agents vocaux IA, veille du marché local et intégrations sur mesure. Cobalt publie aussi deux ressources de veille IA en accès libre : la Newsletter Cobalt (hebdomadaire) et le Radar Cobalt (tableau de bord quotidien).
 
-Cobalt s'adresse aux cabinets médicaux, restaurants, agences immobilières, salons, cabinets juridiques, artisans et PME en France. Le premier échange est gratuit ; une solution clé en main est déployée en environ deux semaines.
+Cobalt s'adresse aux agents immobiliers indépendants en France (mandataires en réseau comme agents à leur compte), qui gèrent seuls la prospection, la prise de rendez-vous, les visites et le suivi des dossiers. Le premier échange est gratuit ; une solution clé en main est déployée en environ deux semaines.
 
 ## Veille et actualité de l'IA
 
@@ -11,12 +11,12 @@ Cobalt s'adresse aux cabinets médicaux, restaurants, agences immobilières, sal
 
 ## Services
 
-- [Agent Vocal IA](https://cobaltgroupe.xyz/#produits): assistant vocal qui répond aux appels entrants 24h/24, 7j/7 (prise de rendez-vous, questions fréquentes, prise de commande, SAV de premier niveau) et redirige vers un humain pour les demandes complexes.
-- [Veille Sectorielle](https://cobaltgroupe.xyz/#produits): veille sur mesure du marché, des concurrents et de la réglementation du client, résumée dans un tableau de bord clair.
-- [Intégrations sur Mesure](https://cobaltgroupe.xyz/#produits): connexion de l'IA aux outils existants (CRM, agenda, logiciel métier, messagerie) pour que les données circulent sans ressaisie.
+- [Agent Vocal IA](https://cobaltgroupe.xyz/#produits): assistant vocal qui répond aux appels 24h/24, 7j/7, notamment pendant les visites (questions sur les biens, qualification des acheteurs, prise de rendez-vous de visite) et transmet un résumé à l'agent pour les demandes qui nécessitent son jugement.
+- [Veille Sectorielle](https://cobaltgroupe.xyz/#produits): veille sur mesure du marché immobilier local (prix, biens des confrères, réglementation), résumée dans un tableau de bord clair.
+- [Intégrations sur Mesure](https://cobaltgroupe.xyz/#produits): connexion de l'IA aux outils existants (logiciel de transaction, agenda, portails d'annonces, messagerie) pour que les données circulent sans ressaisie.
 
 ## En savoir plus
 
-- [Exemples par secteur](https://cobaltgroupe.xyz/#secteurs): chiffres sourcés sur l'impact de l'IA dans le médical, la restauration, l'immobilier, les salons, le juridique et les PME.
+- [Exemples concrets](https://cobaltgroupe.xyz/#secteurs): scénarios avant/après Cobalt pour la prospection, la prise de rendez-vous, les visites et le suivi des dossiers.
 - [FAQ](https://cobaltgroupe.xyz/#faq): questions fréquentes sur Cobalt, les délais, les tâches automatisables et le prix.
 - [Premier échange gratuit](https://cobaltgroupe.xyz/#contact): prise de rendez-vous de 30 minutes.
